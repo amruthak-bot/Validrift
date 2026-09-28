@@ -1,0 +1,9 @@
+services:
+  validrift-api:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./validrift.db:/app/validrift.db

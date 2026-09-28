@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_dashboard" name="shell-type"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=JetBrains+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}
+    ::-webkit-scrollbar{display:none;}
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-container": "#e5eeff",
+            "on-background": "#0b1c30",
+            "outline-variant": "#c6c6cd",
+            "error-container": "#ffdad6",
+            "on-error-container": "#93000a",
+            "on-tertiary-container": "#0c9488",
+            "surface-container-highest": "#d3e4fe",
+            "tertiary-fixed": "#89f5e7",
+            "inverse-primary": "#bec6e0",
+            "primary-fixed-dim": "#bec6e0",
+            "tertiary-fixed-dim": "#6bd8cb",
+            "background": "#f8f9ff",
+            "surface-tint": "#565e74",
+            "on-primary-container": "#7c839b",
+            "on-primary-fixed-variant": "#3f465c",
+            "on-secondary-container": "#fefcff",
+            "surface-variant": "#d3e4fe",
+            "primary": "#000000",
+            "secondary": "#0051d5",
+            "surface-bright": "#f8f9ff",
+            "on-secondary-fixed-variant": "#003ea8",
+            "primary-container": "#131b2e",
+            "outline": "#76777d",
+            "surface-container-low": "#eff4ff",
+            "on-error": "#ffffff",
+            "surface": "#f8f9ff",
+            "surface-container-high": "#dce9ff",
+            "tertiary": "#000000",
+            "on-primary-fixed": "#131b2e",
+            "secondary-fixed-dim": "#b4c5ff",
+            "on-tertiary-fixed": "#00201d",
+            "tertiary-container": "#00201d",
+            "on-surface-variant": "#45464d",
+            "surface-container-lowest": "#ffffff",
+            "on-primary": "#ffffff",
+            "secondary-fixed": "#dbe1ff",
+            "on-secondary": "#ffffff",
+            "inverse-on-surface": "#eaf1ff",
+            "on-secondary-fixed": "#00174b",
+            "error": "#ba1a1a",
+            "on-tertiary-fixed-variant": "#005049",
+            "surface-dim": "#cbdbf5",
+            "secondary-container": "#316bf3",
+            "primary-fixed": "#dae2fd",
+            "on-surface": "#0b1c30",
+            "inverse-surface": "#213145",
+            "on-tertiary": "#ffffff"
+          },
+          borderRadius: {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          spacing: {
+            "space-xl": "2rem",
+            "space-xs": "0.25rem",
+            "gutter-dense": "0.5rem",
+            "space-md": "0.75rem",
+            "space-sm": "0.5rem",
+            "margin-compact": "1rem",
+            "gutter": "1rem",
+            "space-lg": "1.25rem",
+            "margin": "1.5rem"
+          },
+          fontFamily: {
+            "label-lg": ["JetBrains Mono"],
+            "headline-md": ["Inter"],
+            "body-md": ["Inter"],
+            "label-md": ["JetBrains Mono"],
+            "body-sm": ["Inter"],
+            "headline-sm": ["Inter"],
+            "label-sm": ["JetBrains Mono"],
+            "headline-lg": ["Inter"],
+            "display-lg": ["Inter"],
+            "body-lg": ["Inter"]
+          },
+          fontSize: {
+            "label-lg": ["13px", {"lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+            "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "body-md": ["13px", {"lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400"}],
+            "label-md": ["11px", {"lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+            "body-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.005em", "fontWeight": "400"}],
+            "headline-sm": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "600"}],
+            "label-sm": ["10px", {"lineHeight": "12px", "letterSpacing": "0.04em", "fontWeight": "600"}],
+            "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+            "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+            "body-lg": ["15px", {"lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "400"}]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased">
+<!-- Left Sidebar (Kept dark, crisp, professional) -->
+<aside class="fixed left-0 top-0 h-full w-64 bg-primary-container z-50 flex flex-col justify-between select-none shadow-[1px_0_0_0_rgba(255,255,255,0.06)]">
+<div class="flex flex-col">
+<div class="h-16 px-space-md flex items-center gap-space-sm border-b border-white/5">
+<img alt="Brand logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UnBVqMEWgJoFnXWwaYf243t0jmVTXzBpOGdQ31de_JcYWyBkz00SCir5rhlO_l25FOX7FDR9qmCE-xVjNEW85b6pGZxrxtD83q4NM1t58uZ1d8MeqHiDZBXAzeMvsQ9nJqjCjmbO0yqSn4F6b2ozJk0cuCiwD5pEYfGn0KwZchIXQgPp80Nr6CbeyRZtjJlUya4lxN4ik_A9cezbZ5Oy8LElWvq2di-4_iI4uID1hc2tFl1PWKcQyuhA"/>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm tracking-wider text-on-primary font-bold">VALIDRIFT</span>
+<span class="font-label-sm text-label-sm text-on-primary-container tracking-wider uppercase">Manufacturing Memory</span>
+</div>
+</div>
+<div class="px-space-md py-space-sm">
+<span class="font-label-sm text-label-sm tracking-wider uppercase text-on-primary-container/70 px-space-xs">Operations</span>
+</div>
+<nav class="flex flex-col gap-1 px-space-sm">
+<a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg transition-colors bg-secondary text-on-secondary font-medium shadow-sm" href="#">
+<span class="material-symbols-outlined text-[18px]">dashboard</span>
+<span>Overview</span>
+</a>
+<button data-action="goto-new-incident" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-primary-container hover:bg-white/5 hover:text-on-primary transition-colors font-body-md text-body-md text-left w-full">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>New Incident</span>
+</button>
+<button data-action="goto-audit" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-primary-container hover:bg-white/5 hover:text-on-primary transition-colors font-body-md text-body-md text-left w-full">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span>Validity Audit</span>
+</button>
+<button class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-primary-container hover:bg-white/5 hover:text-on-primary transition-colors font-body-md text-body-md text-left w-full" onclick="openModal('record-process-modal')">
+<span class="material-symbols-outlined text-[18px]">published_with_changes</span>
+<span>Record Process Change</span>
+</button>
+</nav>
+</div>
+<div class="p-space-md border-t border-white/5 bg-black/15 flex flex-col gap-space-sm">
+<div class="flex items-center justify-between px-space-xs py-1 rounded bg-white/5 border border-white/10">
+<div class="flex items-center gap-2">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary-fixed opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary-fixed"></span>
+</span>
+<span class="font-label-sm text-label-sm text-on-primary font-medium" data-health-badge>Hindsight Connected</span>
+</div>
+<span class="font-label-sm text-label-sm text-tertiary-fixed bg-tertiary-fixed/15 px-1 rounded">LIVE</span>
+</div>
+<div class="flex flex-col gap-0.5 px-space-xs">
+<span class="font-label-sm text-label-sm text-on-primary-container">Active Target</span>
+<span class="font-label-md text-label-md text-on-primary font-medium truncate">Demo: Sealer-02</span>
+</div>
+<button class="w-full flex items-center justify-center gap-space-xs py-1.5 px-space-sm rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 text-on-primary-container hover:text-on-primary font-label-sm text-label-sm transition-colors" data-action="reset-demo" type="button">
+<span class="material-symbols-outlined text-[14px]">restart_alt</span>
+<span>Reset Demo</span>
+</button>
+</div>
+</aside>
+<!-- Main App Shell -->
+<div class="pl-64 flex flex-col min-h-screen">
+<!-- Top Header -->
+<header class="fixed top-0 left-64 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-md border-b border-outline-variant/30 z-40 px-space-lg flex items-center justify-between">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-md text-label-md">
+<span class="material-symbols-outlined text-[16px]">memory</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Manufacturing Memory</span>
+<span class="text-outline">/</span>
+<span class="text-on-surface-variant">Telemetry</span>
+</div>
+</div>
+<div class="hidden md:flex items-center gap-space-xs px-space-md py-1 bg-surface-container-low border border-outline-variant/40 rounded-full font-label-sm text-label-sm text-on-surface-variant shadow-sm">
+<span class="font-bold text-on-surface">SEALER-02</span>
+<span class="text-outline">•</span>
+<span>FILM-B</span>
+<span class="text-outline">•</span>
+<span class="text-secondary font-semibold">R11</span>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="hidden lg:flex items-center gap-1.5 px-space-sm py-1 bg-surface-container rounded-full border border-outline-variant/40">
+<span class="h-1.5 w-1.5 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium" data-health-badge>Hindsight Active</span>
+</div>
+<button class="relative flex items-center gap-space-xs px-space-sm py-1.5 rounded-lg border border-outline-variant/40 hover:bg-surface-container-low text-on-surface font-body-md text-body-md transition-colors" onclick="toggleDrawer()" type="button">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">history_edu</span>
+<span class="hidden sm:inline font-body-sm text-body-sm">Memory Activity</span>
+<span class="h-4 w-4 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-[10px] flex items-center justify-center font-bold" data-memory-count>3</span>
+</button>
+<button class="flex items-center gap-1.5 px-space-md py-1.5 bg-secondary hover:bg-secondary-container text-on-secondary rounded-lg font-body-md text-body-md font-medium shadow-sm transition-colors" data-action="goto-new-incident" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>New Incident</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-sm text-on-primary font-bold text-xs">
+          OP
+        </div>
+</div>
+</header>
+<!-- Main Workspace -->
+<main class="relative pt-16 bg-surface flex-1 w-full">
+<!-- Quick Action Toast -->
+<div class="fixed bottom-6 right-8 bg-primary-container text-on-primary px-space-md py-space-sm rounded-lg shadow-xl z-50 transform translate-y-24 opacity-0 transition-all duration-300 flex items-center gap-space-sm font-label-md text-label-md border border-white/10 pointer-events-none" id="quick-action-toast">
+<span class="material-symbols-outlined text-[18px] text-tertiary-fixed">check_circle</span>
+<span id="toast-message">Action processed successfully.</span>
+</div>
+<!-- Main Canvas Container: Cleaned with 30-40% progressive disclosure -->
+<div class="px-margin py-margin flex flex-col gap-space-lg max-w-[1600px] mx-auto w-full">
+<!-- HERO SECTION: Title + Signature Rail & Recommendation -->
+<section class="grid grid-cols-1 xl:grid-cols-12 gap-gutter items-stretch">
+<!-- Left 7 Cols: Clean Headline + Signature Memory Validity Rail -->
+<div class="xl:col-span-7 flex flex-col gap-space-sm justify-between">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm text-secondary font-semibold uppercase tracking-widest">Manufacturing Memory Intelligence</span>
+<span class="h-1.5 w-1.5 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">TARGET: SEALER-02</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-on-surface font-bold tracking-tight">Manufacturing Memory</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+                Know not only what worked before — know whether it still works here.
+              </p>
+</div>
+<!-- Signature Component: The Memory Validity Rail -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm border border-outline-variant/40 flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">linear_scale</span>
+<span class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider font-bold">Deterministic Memory Validity Trajectory</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Active Envelope: <strong class="text-on-surface font-label-md">Film-B / R11</strong></span>
+</div>
+<!-- Rail Pipeline -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-sm relative items-stretch">
+<!-- Step 1: Historical -->
+<div class="bg-surface-container-low/70 rounded-lg p-space-sm flex flex-col justify-between gap-2 border border-outline-variant/30">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-wider font-semibold">Historical Context</span>
+<span class="px-1.5 py-0.5 rounded font-label-sm text-[10px] font-bold bg-[#DCFCE7] text-[#15803D] border border-[#BBF7D0]">VALIDATED</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-on-surface">Film-A / R10</span>
+<span class="font-body-md text-body-md font-semibold text-on-surface">Temp +5°C</span>
+</div>
+<div class="pt-1.5 border-t border-outline-variant/20 flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-on-surface-variant">Evidence:</span>
+<span class="font-bold text-[#15803D]">4/4 (100%)</span>
+</div>
+</div>
+<!-- Step 2: Current (Drifted) with process change milestone -->
+<div class="bg-surface-container-low/70 rounded-lg p-space-sm flex flex-col justify-between gap-2 border border-error/30 relative">
+<div class="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-surface-container-highest px-2 py-0.2 rounded-full border border-outline-variant/40 shadow-xs whitespace-nowrap">
+<span class="font-label-sm text-[9px] text-on-surface font-bold uppercase tracking-tight">20 Sep · Film-A→B, R10→R11</span>
+</div>
+<div class="flex items-center justify-between pt-0.5">
+<span class="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-wider font-semibold">Current Context</span>
+<span class="px-1.5 py-0.5 rounded font-label-sm text-[10px] font-bold bg-[#FEE2E2] text-[#DC2626] border border-[#FCA5A5]">DRIFTED</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-on-surface">Film-B / R11</span>
+<span class="font-body-md text-body-md text-outline line-through font-semibold">Temp +5°C</span>
+</div>
+<div class="pt-1.5 border-t border-outline-variant/20 flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-on-surface-variant">Outcome:</span>
+<span class="font-bold text-[#DC2626]">0/2 (Failed)</span>
+</div>
+</div>
+<!-- Step 3: New Learning -->
+<div class="bg-surface-container-low/70 rounded-lg p-space-sm flex flex-col justify-between gap-2 border border-secondary/40 relative">
+<div class="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-secondary-fixed px-2 py-0.2 rounded-full border border-secondary/20 shadow-xs whitespace-nowrap">
+<span class="font-label-sm text-[9px] text-on-secondary-fixed font-bold uppercase tracking-tight">New Evidence</span>
+</div>
+<div class="flex items-center justify-between pt-0.5">
+<span class="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-wider font-semibold">New Learning</span>
+<span class="px-1.5 py-0.5 rounded font-label-sm text-[10px] font-bold bg-[#CCFBF1] text-[#0F766E] border border-[#99F6E4]">SUPPORTED</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-on-surface">Film-B / R11</span>
+<span class="font-body-md text-body-md text-secondary font-bold">Pressure +8%</span>
+</div>
+<div class="pt-1.5 border-t border-outline-variant/20 flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-on-surface-variant">Ledger:</span>
+<span class="font-bold text-[#0F766E]">2/2 Successes</span>
+</div>
+</div>
+</div>
+<!-- Axiom Quote Block -->
+<div class="px-space-sm py-1.5 rounded-lg bg-surface-container-low/50 border border-outline-variant/20 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-secondary">format_quote</span>
+<p class="font-body-sm text-body-sm italic text-on-surface">
+                  “The memory wasn't wrong. Its validity drifted.”
+                  <span class="font-label-sm text-on-surface-variant not-italic ml-2">— Hindsight Validity Axiom</span>
+</p>
+</div>
+</div>
+</div>
+<!-- Right 5 Cols: Main Recommendation Card -->
+<div class="xl:col-span-5 flex flex-col">
+<div class="bg-surface-container-lowest rounded-xl shadow-md border border-outline-variant/40 flex flex-col justify-between h-full overflow-hidden">
+<!-- Card Header -->
+<div data-current-rec class="px-space-md py-2.5 bg-primary-container text-on-primary flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary-fixed opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary-fixed"></span>
+</span>
+<span class="font-label-sm text-label-sm tracking-wider uppercase font-semibold text-tertiary-fixed">Current Recommendation</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-primary-container px-2 py-0.5 rounded bg-white/5 border border-white/10" data-rec="defect">Defect: Weak Seal</span>
+</div>
+<!-- Card Body -->
+<div class="p-space-md flex flex-col gap-space-sm flex-1 justify-between">
+<div class="bg-surface-container-low/70 rounded-lg p-space-md border border-secondary/20 flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold uppercase tracking-wider">Corrective Action Indicated</span>
+<div class="flex flex-wrap items-baseline justify-between gap-2">
+<div class="font-headline-lg text-headline-lg font-bold text-on-surface" data-rec="fix">
+                      Increase Pressure +8%
+                    </div>
+<span class="px-2.5 py-0.5 rounded font-label-sm text-[11px] font-bold bg-[#CCFBF1] text-[#0F766E] border border-[#99F6E4]" data-rec="verdict">
+                      SUPPORTED (2/2)
+                    </span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-1" data-rec="context">Context: <strong class="text-on-surface">Film-B / R11 (Active)</strong> · Station: Sealer-02</span>
+</div>
+<div class="p-space-sm rounded-lg bg-surface border border-outline-variant/20 flex flex-col gap-0.5">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Validity Rationale</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant" data-rec="evidence">
+                    Previous <strong class="text-on-surface">Temperature +5°C</strong> was verified for Film-A but drifted on Film-B due to higher melt viscosity. Modulating pressure resolves weak seal without thermal degradation.
+                  </p>
+</div>
+<!-- CTAs -->
+<div class="flex items-center gap-space-sm pt-1">
+<button class="flex-1 flex items-center justify-center gap-1.5 px-space-md py-2.5 bg-secondary hover:bg-secondary-container text-on-secondary rounded-lg font-body-md text-body-md font-semibold transition-colors shadow-sm" data-action="view-recommendation" type="button">
+<span>View Recommendation</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+<button data-action="goto-audit" class="flex items-center justify-center gap-1 px-space-md py-2.5 bg-surface-container hover:bg-surface-container-high text-on-surface rounded-lg font-body-md text-body-md font-medium border border-outline-variant/40 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px] text-secondary">verified</span>
+<span>Run Memory Validity Audit</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- KPI STRIP: Sleek single-row 4 metrics -->
+<section class="w-full">
+<div class="bg-surface-container-lowest rounded-xl shadow-xs border border-outline-variant/40 p-space-md grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-outline-variant/30">
+<!-- Metric 1 -->
+<div class="flex flex-col gap-1 px-space-md py-1 md:py-0">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-semibold">Learned Fixes</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">psychology</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface" data-kpi="learned_fixes">18</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Sealer-02 records</span>
+</div>
+</div>
+<!-- Metric 2 -->
+<div class="flex flex-col gap-1 px-space-md py-1 md:py-0">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-semibold">Validity Alerts</span>
+<span class="h-2 w-2 rounded-full bg-[#EA580C]"></span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface" data-kpi="validity_alerts">6</span>
+<span class="font-label-sm text-label-sm text-[#EA580C] font-semibold" data-kpi-sub="alerts">4 Reval · 2 Drifted</span>
+</div>
+</div>
+<!-- Metric 3 -->
+<div class="flex flex-col gap-1 px-space-md py-1 md:py-0">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-semibold">Recent Incidents</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">calendar_today</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface" data-kpi="recent_incidents">8</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Past 7 operating days</span>
+</div>
+</div>
+<!-- Metric 4 -->
+<div class="flex flex-col gap-1 px-space-md py-1 md:py-0">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-semibold">Hindsight Memories</span>
+<span class="material-symbols-outlined text-[16px] text-secondary">all_inclusive</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg font-bold text-secondary" data-kpi="hindsight_memories">42</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Active retain snapshots</span>
+</div>
+</div>
+</div>
+</section>
+<!-- COMPACT PRODUCTION CONTEXT -->
+<section class="w-full">
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm border border-outline-variant/40 flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">Current Production Context</span>
+<span class="px-2 py-0.5 rounded-full font-label-sm text-label-sm font-semibold bg-surface-container-high text-secondary border border-secondary/20 flex items-center gap-1">
+<span class="h-1.5 w-1.5 rounded-full bg-secondary"></span>
+                  SYNCHRONIZED
+                </span>
+</div>
+<!-- Parameter Chips -->
+<div class="flex flex-wrap items-center gap-2" data-context-chips>
+<div class="flex items-center gap-1.5 px-space-sm py-1 bg-surface-container-low rounded border border-outline-variant/30 font-label-sm text-label-sm">
+<span class="text-on-surface-variant">Machine:</span>
+<span class="font-bold text-on-surface">Sealer-02</span>
+</div>
+<div class="flex items-center gap-1.5 px-space-sm py-1 bg-surface-variant/40 rounded border border-secondary/30 font-label-sm text-label-sm">
+<span class="text-on-surface-variant">Material:</span>
+<span class="font-bold text-secondary">Film-B</span>
+<span class="text-[9px] bg-secondary text-on-secondary px-1 rounded font-bold uppercase">CHANGED</span>
+</div>
+<div class="flex items-center gap-1.5 px-space-sm py-1 bg-surface-variant/40 rounded border border-secondary/30 font-label-sm text-label-sm">
+<span class="text-on-surface-variant">Supplier:</span>
+<span class="font-bold text-secondary">FlexPack</span>
+<span class="text-[9px] bg-secondary text-on-secondary px-1 rounded font-bold uppercase">CHANGED</span>
+</div>
+<div class="flex items-center gap-1.5 px-space-sm py-1 bg-surface-variant/40 rounded border border-secondary/30 font-label-sm text-label-sm">
+<span class="text-on-surface-variant">Recipe:</span>
+<span class="font-bold text-secondary">R11</span>
+<span class="text-[9px] bg-secondary text-on-secondary px-1 rounded font-bold uppercase">CHANGED</span>
+</div>
+<div class="flex items-center gap-1.5 px-space-sm py-1 bg-surface-container-low rounded border border-outline-variant/30 font-label-sm text-label-sm">
+<span class="text-on-surface-variant">Firmware:</span>
+<span class="font-bold text-on-surface">V3.1 (Nominal)</span>
+</div>
+</div>
+</div>
+<!-- Primary Action -->
+<div class="flex items-center gap-2 w-full md:w-auto">
+<button data-action="goto-audit" class="w-full md:w-auto flex items-center justify-center gap-2 px-space-lg py-2.5 bg-secondary hover:bg-secondary-container text-on-secondary rounded-lg font-body-md text-body-md font-semibold transition-all shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span>Run Memory Validity Audit</span>
+</button>
+</div>
+</div>
+</section>
+<!-- KNOWLEDGE REQUIRING ATTENTION: 2 critical attention items cleanly presented -->
+<section class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface">Knowledge Requiring Attention</h2>
+<span class="px-2 py-0.5 rounded-full font-label-sm text-label-sm font-bold bg-error-container text-on-error-container" data-attention-count>
+                2 Action Items
+              </span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant hidden sm:inline">Prioritized by context shift impact</span>
+</div>
+<div class="flex flex-col gap-space-sm" data-attention-list>
+<!-- Item 1: DRIFTED -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm border border-outline-variant/40 hover:border-error/40 transition-all flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md">
+<div class="flex items-start gap-space-md flex-1">
+<span class="mt-0.5 px-2.5 py-1 rounded font-label-sm text-[11px] font-bold bg-[#FEE2E2] text-[#DC2626] border border-[#FCA5A5] flex items-center gap-1.5 whitespace-nowrap">
+<span class="h-1.5 w-1.5 rounded-full bg-[#DC2626]"></span>
+                  DRIFTED
+                </span>
+<div class="flex flex-col gap-1">
+<div class="flex items-baseline gap-2">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">Temperature +5°C</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">(Defect: Weak Seal)</span>
+</div>
+<div class="flex flex-wrap items-center gap-x-4 gap-y-1 font-label-sm text-label-sm">
+<span class="text-on-surface-variant">Historical Film-A / R10: <strong class="text-[#15803D] font-bold">4 / 4 Successes (VALIDATED)</strong></span>
+<span class="text-outline">•</span>
+<span class="text-on-surface-variant">Current Film-B / R11: <strong class="text-[#DC2626] font-bold">0 / 2 Successes (DRIFTED)</strong></span>
+</div>
+</div>
+</div>
+<button class="flex items-center gap-1.5 px-space-md py-2 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-body-md text-body-md font-medium border border-outline-variant/30 transition-colors whitespace-nowrap" onclick="showToast('Loading Fix Passport for Temperature +5°C...')" type="button">
+<span>View Fix Passport</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+<!-- Item 2: REVALIDATION REQUIRED -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm border border-outline-variant/40 hover:border-[#D97706]/40 transition-all flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md">
+<div class="flex items-start gap-space-md flex-1">
+<span class="mt-0.5 px-2.5 py-1 rounded font-label-sm text-[11px] font-bold bg-[#FEF3C7] text-[#B45309] border border-[#FDE68A] flex items-center gap-1.5 whitespace-nowrap">
+<span class="h-1.5 w-1.5 rounded-full bg-[#B45309]"></span>
+                  REVALIDATION REQUIRED
+                </span>
+<div class="flex flex-col gap-1">
+<div class="flex items-baseline gap-2">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">Cooling Time +3 sec</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">(Defect: Wrinkling)</span>
+</div>
+<div class="flex flex-wrap items-center gap-x-4 gap-y-1 font-label-sm text-label-sm">
+<span class="text-on-surface-variant">Historical Film-A / R10: <strong class="text-[#15803D] font-bold">3 / 3 Successes (VALIDATED)</strong></span>
+<span class="text-outline">•</span>
+<span class="text-on-surface-variant">Current Film-B / R11: <strong class="text-on-surface-variant font-bold">Untested under new material</strong></span>
+</div>
+</div>
+</div>
+<button class="flex items-center gap-1.5 px-space-md py-2 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-body-md text-body-md font-medium border border-outline-variant/30 transition-colors whitespace-nowrap" onclick="showToast('Scheduling validation trial for Cooling Time +3 sec...')" type="button">
+<span>Review Evidence</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- OPERATIONAL EVIDENCE & ACTIVITY SPLIT (2 Columns) -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-stretch">
+<!-- Left 6 Cols: Recent Plant Learning (only latest 4 key events in a clean mini-stepper) -->
+<div class="lg:col-span-6 bg-surface-container-lowest rounded-xl p-space-md shadow-sm border border-outline-variant/40 flex flex-col justify-between">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between pb-2 border-b border-outline-variant/20">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">history</span>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Recent Plant Learning</h3>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Sealer-02 Key Milestones</span>
+</div>
+<!-- Mini-Stepper: 4 Clean Events -->
+<div data-learning-list class="relative pl-6 flex flex-col gap-space-sm before:content-[''] before:absolute before:left-2 before:top-2 before:bottom-2 before:w-0.5 before:bg-outline-variant/30">
+<!-- Event 1 -->
+<div class="relative flex items-start justify-between gap-space-sm">
+<span class="absolute -left-6 mt-1 h-2.5 w-2.5 rounded-full bg-[#0F766E] ring-4 ring-surface-container-lowest"></span>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold">27 Sep</span>
+<span class="font-body-md text-body-md font-semibold text-on-surface">Pressure +8% succeeded</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">QI-1039 · Film-B / R11 · Zero weak seals detected</span>
+</div>
+<span class="font-label-sm text-[10px] px-1.5 py-0.5 rounded bg-[#CCFBF1] text-[#0F766E] font-bold">SUPPORTED</span>
+</div>
+<!-- Event 2 -->
+<div class="relative flex items-start justify-between gap-space-sm">
+<span class="absolute -left-6 mt-1 h-2.5 w-2.5 rounded-full bg-[#DC2626] ring-4 ring-surface-container-lowest"></span>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold">24 Sep</span>
+<span class="font-body-md text-body-md font-semibold text-on-surface">Temperature +5°C failed</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">QI-1035 · Film-B / R11 · Thermal transfer inadequate</span>
+</div>
+<span class="font-label-sm text-[10px] px-1.5 py-0.5 rounded bg-[#FEE2E2] text-[#DC2626] font-bold">DRIFT DETECTED</span>
+</div>
+<!-- Event 3 -->
+<div class="relative flex items-start justify-between gap-space-sm">
+<span class="absolute -left-6 mt-1 h-2.5 w-2.5 rounded-full bg-secondary ring-4 ring-surface-container-lowest"></span>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm text-secondary font-bold">20 Sep</span>
+<span class="font-body-md text-body-md font-semibold text-secondary">Process Change recorded</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Film-A → Film-B, R10 → R11 validity boundary reset</span>
+</div>
+<span class="font-label-sm text-[10px] px-1.5 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed font-bold">BOUNDARY SHIFT</span>
+</div>
+<!-- Event 4 -->
+<div class="relative flex items-start justify-between gap-space-sm">
+<span class="absolute -left-6 mt-1 h-2.5 w-2.5 rounded-full bg-[#15803D] ring-4 ring-surface-container-lowest"></span>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold">18 Sep</span>
+<span class="font-body-md text-body-md font-semibold text-on-surface">Temperature +5°C validated</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">QI-1030 · Film-A baseline verification 4/4</span>
+</div>
+<span class="font-label-sm text-[10px] px-1.5 py-0.5 rounded bg-[#DCFCE7] text-[#15803D] font-bold">VALIDATED</span>
+</div>
+</div>
+</div>
+<div class="pt-2 border-t border-outline-variant/20 mt-2 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">4 milestones shown</span>
+<button class="font-label-sm text-label-sm text-secondary font-semibold hover:underline" onclick="toggleDrawer()" type="button">Detailed Memory Log →</button>
+</div>
+</div>
+<!-- Right 6 Cols: Hindsight Memory Activity (Clean 3 latest items + Open Drawer button) -->
+<div class="lg:col-span-6 bg-surface-container-lowest rounded-xl p-space-md shadow-sm border border-outline-variant/40 flex flex-col justify-between">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between pb-2 border-b border-outline-variant/20">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">neurology</span>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Hindsight Memory Activity</h3>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-medium">REAL-TIME</span>
+</div>
+<!-- 3 Clean Rows: RETAIN, RECALL, REFLECT -->
+<div class="flex flex-col gap-2" data-memory-panel>
+<!-- Row 1: RETAIN -->
+<div class="p-2.5 rounded-lg bg-surface-container-low/50 border border-outline-variant/20 flex flex-col gap-1 hover:bg-surface-container-low transition-colors">
+<div class="flex items-center justify-between">
+<span class="px-2 py-0.2 rounded font-label-sm text-[10px] font-bold bg-[#CCFBF1] text-[#0F766E] border border-[#99F6E4] flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">archive</span>
+                      RETAIN
+                    </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">2 min ago</span>
+</div>
+<span class="font-body-md text-body-md font-semibold text-on-surface">Pressure +8% outcome saved for incident QI-1039</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Retained deterministic tensile strength (19.1 N) under Film-B recipe context.</span>
+</div>
+<!-- Row 2: RECALL -->
+<div class="p-2.5 rounded-lg bg-surface-container-low/50 border border-outline-variant/20 flex flex-col gap-1 hover:bg-surface-container-low transition-colors">
+<div class="flex items-center justify-between">
+<span class="px-2 py-0.2 rounded font-label-sm text-[10px] font-bold bg-secondary-fixed text-on-secondary-fixed border border-secondary/20 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">find_in_page</span>
+                      RECALL
+                    </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">7 min ago</span>
+</div>
+<span class="font-body-md text-body-md font-semibold text-on-surface">6 weak-seal experiences retrieved for Sealer-02</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Filtered out invalidated thermal actions under active Film-B / R11 context envelope.</span>
+</div>
+<!-- Row 3: REFLECT -->
+<div class="p-2.5 rounded-lg bg-surface-container-low/50 border border-outline-variant/20 flex flex-col gap-1 hover:bg-surface-container-low transition-colors">
+<div class="flex items-center justify-between">
+<span class="px-2 py-0.2 rounded font-label-sm text-[10px] font-bold bg-surface-container-high text-on-surface-variant border border-outline-variant/40 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">auto_graph</span>
+                      REFLECT
+                    </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">8 min ago</span>
+</div>
+<span class="font-body-md text-body-md font-semibold text-on-surface">Compared Temperature +5°C effectiveness baselines</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Cross-context drift analysis flagged 100% confidence drop after 20 Sep recipe shift.</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-2 flex items-center justify-center gap-1.5 py-2 px-space-md rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-body-md text-body-md font-semibold border border-outline-variant/40 transition-colors" onclick="toggleDrawer()" type="button">
+<span>Open Full Memory Activity Drawer</span>
+<span class="material-symbols-outlined text-[16px]">menu_open</span>
+</button>
+</div>
+</section>
+<!-- RECENT INCIDENTS & MEMORY LEDGER: 4 Latest rows + clean accordion toggle -->
+<section class="flex flex-col gap-space-sm">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+<div class="flex items-center gap-space-sm">
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface">Recent Incidents &amp; Memory Ledger</h2>
+<span class="px-2 py-0.5 rounded font-label-sm text-label-sm text-on-surface-variant bg-surface-container border border-outline-variant/30">
+                4 Displayed · 42 Total
+              </span>
+</div>
+<div class="flex items-center gap-2">
+<input class="h-8 px-space-sm bg-surface-container-lowest rounded border border-outline-variant/40 text-on-surface font-body-sm text-body-sm placeholder:text-outline focus:outline-none focus:border-secondary w-48" placeholder="Filter incidents..." type="text"/>
+<button class="h-8 px-space-sm bg-secondary text-on-secondary font-label-sm text-label-sm rounded flex items-center gap-1 transition-colors hover:bg-secondary-container" onclick="openModal('record-incident-modal')" type="button">
+<span class="material-symbols-outlined text-[14px]">add</span>
+<span>Record Incident</span>
+</button>
+</div>
+</div>
+<!-- Incidents Table Container -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/40 overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="h-9 bg-surface-container-low border-b border-outline-variant/30 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+<th class="px-space-md font-bold">Incident</th>
+<th class="px-space-md font-bold">Date</th>
+<th class="px-space-md font-bold">Defect</th>
+<th class="px-space-md font-bold">Context</th>
+<th class="px-space-md font-bold">Action Taken</th>
+<th class="px-space-md font-bold">Outcome</th>
+<th class="px-space-md font-bold">Validity State</th>
+<th class="px-space-md font-bold text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/20 font-body-sm text-body-sm text-on-surface" data-incidents-tbody>
+<!-- Row 1: QI-1039 -->
+<tr class="h-11 hover:bg-surface-container-low/50 transition-colors">
+<td class="px-space-md font-label-md text-label-md font-bold text-secondary">
+<span class="cursor-pointer hover:underline" onclick="showToast('Incident QI-1039 selected')">QI-1039</span>
+</td>
+<td class="px-space-md font-label-sm text-label-sm text-on-surface-variant whitespace-nowrap">27 Sep 2026</td>
+<td class="px-space-md font-medium">Weak Seal</td>
+<td class="px-space-md font-label-md text-label-md">Film-B / R11</td>
+<td class="px-space-md font-semibold text-on-surface">Pressure +8%</td>
+<td class="px-space-md">
+<span class="font-label-sm text-[10px] px-2 py-0.5 rounded font-bold bg-[#DCFCE7] text-[#15803D]">SUCCESS</span>
+</td>
+<td class="px-space-md">
+<span class="px-2 py-0.5 rounded font-label-sm text-[10px] font-bold bg-[#CCFBF1] text-[#0F766E] border border-[#99F6E4]">
+                        SUPPORTED
+                      </span>
+</td>
+<td class="px-space-md text-right">
+<button class="font-label-sm text-secondary font-semibold hover:underline" onclick="openOutcomeModal('QI-1039', 'Pressure +8%')" type="button">Details</button>
+</td>
+</tr>
+<!-- Row 2: QI-1035 -->
+<tr class="h-11 hover:bg-surface-container-low/50 transition-colors">
+<td class="px-space-md font-label-md text-label-md font-bold text-secondary">
+<span class="cursor-pointer hover:underline" onclick="showToast('Incident QI-1035 selected')">QI-1035</span>
+</td>
+<td class="px-space-md font-label-sm text-label-sm text-on-surface-variant whitespace-nowrap">24 Sep 2026</td>
+<td class="px-space-md font-medium">Weak Seal</td>
+<td class="px-space-md font-label-md text-label-md">Film-B / R11</td>
+<td class="px-space-md text-outline">Temperature +5°C</td>
+<td class="px-space-md">
+<span class="font-label-sm text-[10px] px-2 py-0.5 rounded font-bold bg-[#FEE2E2] text-[#DC2626]">FAILURE</span>
+</td>
+<td class="px-space-md">
+<span class="px-2 py-0.5 rounded font-label-sm text-[10px] font-bold bg-[#FEE2E2] text-[#DC2626] border border-[#FCA5A5]">
+                        DRIFTED
+                      </span>
+</td>
+<td class="px-space-md text-right">
+<button class="font-label-sm text-secondary font-semibold hover:underline" onclick="openOutcomeModal('QI-1035', 'Temperature +5°C')" type="button">Details</button>
+</td>
+</tr>
+<!-- Row 3: QI-1032 -->
+<tr class="h-11 hover:bg-surface-container-low/50 transition-colors">
+<td class="px-space-md font-label-md text-label-md font-bold text-secondary">
+<span class="cursor-pointer hover:underline" onclick="showToast('Incident QI-1032 selected')">QI-1032</span>
+</td>
+<td class="px-space-md font-label-sm text-label-sm text-on-surface-variant whitespace-nowrap">22 Sep 2026</td>
+<td class="px-space-md font-medium">Weak Seal</td>
+<td class="px-space-md font-label-md text-label-md">Film-B / R11</td>
+<td class="px-space-md text-outline">Temperature +5°C</td>
+<td class="px-space-md">
+<span class="font-label-sm text-[10px] px-2 py-0.5 rounded font-bold bg-[#FEE2E2] text-[#DC2626]">FAILURE</span>
+</td>
+<td class="px-space-md">
+<span class="px-2 py-0.5 rounded font-label-sm text-[10px] font-bold bg-[#FEE2E2] text-[#DC2626] border border-[#FCA5A5]">
+                        DRIFTED
+                      </span>
+</td>
+<td class="px-space-md text-right">
+<button class="font-label-sm text-secondary font-semibold hover:underline" onclick="openOutcomeModal('QI-1032', 'Temperature +5°C')" type="button">Details</button>
+</td>
+</tr>
+<!-- Row 4: QI-1030 -->
+<tr class="h-11 hover:bg-surface-container-low/50 transition-colors">
+<td class="px-space-md font-label-md text-label-md font-bold text-secondary">
+<span class="cursor-pointer hover:underline" onclick="showToast('Incident QI-1030 selected')">QI-1030</span>
+</td>
+<td class="px-space-md font-label-sm text-label-sm text-on-surface-variant whitespace-nowrap">18 Sep 2026</td>
+<td class="px-space-md font-medium">Weak Seal</td>
+<td class="px-space-md font-label-md text-label-md">Film-A / R10</td>
+<td class="px-space-md font-semibold text-on-surface">Temperature +5°C</td>
+<td class="px-space-md">
+<span class="font-label-sm text-[10px] px-2 py-0.5 rounded font-bold bg-[#DCFCE7] text-[#15803D]">SUCCESS</span>
+</td>
+<td class="px-space-md">
+<span class="px-2 py-0.5 rounded font-label-sm text-[10px] font-bold bg-[#DCFCE7] text-[#15803D] border border-[#BBF7D0]">
+                        VALIDATED
+                      </span>
+</td>
+<td class="px-space-md text-right">
+<button class="font-label-sm text-secondary font-semibold hover:underline" onclick="openOutcomeModal('QI-1030', 'Temperature +5°C')" type="button">Details</button>
+</td>
+</tr>
+<!-- Accordion Expanded Rows (QI-1028 + Archive records) -->
+<tr class="hidden bg-surface-container-low/20" id="extra-row-1">
+<td class="px-space-md font-label-md text-label-md font-bold text-secondary">
+<span class="cursor-pointer hover:underline" onclick="showToast('Incident QI-1028 selected')">QI-1028</span>
+</td>
+<td class="px-space-md font-label-sm text-label-sm text-on-surface-variant whitespace-nowrap">15 Sep 2026</td>
+<td class="px-space-md font-medium">Weak Seal</td>
+<td class="px-space-md font-label-md text-label-md">Film-A / R10</td>
+<td class="px-space-md font-semibold text-on-surface">Temperature +5°C</td>
+<td class="px-space-md">
+<span class="font-label-sm text-[10px] px-2 py-0.5 rounded font-bold bg-[#DCFCE7] text-[#15803D]">SUCCESS</span>
+</td>
+<td class="px-space-md">
+<span class="px-2 py-0.5 rounded font-label-sm text-[10px] font-bold bg-[#DCFCE7] text-[#15803D] border border-[#BBF7D0]">
+                        VALIDATED
+                      </span>
+</td>
+<td class="px-space-md text-right">
+<button class="font-label-sm text-secondary font-semibold hover:underline" onclick="openOutcomeModal('QI-1028', 'Temperature +5°C')" type="button">Details</button>
+</td>
+</tr>
+<tr class="hidden bg-surface-container-low/20" id="extra-row-2">
+<td class="px-space-md font-label-md text-label-md font-bold text-secondary">
+<span class="cursor-pointer hover:underline" onclick="showToast('Incident QI-1024 selected')">QI-1024</span>
+</td>
+<td class="px-space-md font-label-sm text-label-sm text-on-surface-variant whitespace-nowrap">11 Sep 2026</td>
+<td class="px-space-md font-medium">Wrinkling</td>
+<td class="px-space-md font-label-md text-label-md">Film-A / R10</td>
+<td class="px-space-md font-semibold text-on-surface">Cooling Time +3 sec</td>
+<td class="px-space-md">
+<span class="font-label-sm text-[10px] px-2 py-0.5 rounded font-bold bg-[#DCFCE7] text-[#15803D]">SUCCESS</span>
+</td>
+<td class="px-space-md">
+<span class="px-2 py-0.5 rounded font-label-sm text-[10px] font-bold bg-[#DCFCE7] text-[#15803D] border border-[#BBF7D0]">
+                        VALIDATED
+                      </span>
+</td>
+<td class="px-space-md text-right">
+<button class="font-label-sm text-secondary font-semibold hover:underline" onclick="openOutcomeModal('QI-1024', 'Cooling Time +3 sec')" type="button">Details</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Accordion Toggle Button Footer -->
+<div class="px-space-md py-2.5 bg-surface-container-low/50 border-t border-outline-variant/30 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant"><span data-incidents-note>Showing latest 4 active records</span></span>
+<button class="flex items-center gap-1 font-label-sm text-label-sm text-secondary font-semibold hover:underline" id="accordion-toggle-btn" onclick="toggleExtraLedger()" type="button">
+<span id="accordion-toggle-text">View all 42 records in Ledger</span>
+<span class="material-symbols-outlined text-[16px] transition-transform" id="accordion-icon">expand_more</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+<!-- SLIDE-OVER DRAWER: Hindsight Memory Activity (Overlay) -->
+<div class="fixed inset-0 bg-black/40 z-50 transition-opacity opacity-0 pointer-events-none" id="drawer-backdrop" onclick="toggleDrawer()"></div>
+<aside class="fixed top-0 right-0 h-full w-96 max-w-[90vw] bg-surface-container-lowest border-l border-outline-variant/40 shadow-2xl z-50 transform translate-x-full transition-transform duration-200 ease-in-out flex flex-col" id="activity-drawer">
+<div class="h-16 px-space-lg flex items-center justify-between border-b border-outline-variant/30">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[20px]">neurology</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Memory Activity</span>
+</div>
+<button class="p-1 text-on-surface-variant hover:text-on-surface rounded-lg hover:bg-surface-container" onclick="toggleDrawer()" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Filter chips -->
+<div class="px-space-lg py-2 border-b border-outline-variant/30 bg-surface-container-low/50">
+<div class="flex items-center gap-1 bg-surface-container rounded-lg p-0.5 font-label-sm text-label-sm">
+<button class="flex-1 py-1 text-center bg-surface-container-lowest text-on-surface font-semibold rounded shadow-xs" type="button">All (42)</button>
+<button class="flex-1 py-1 text-center text-on-surface-variant hover:text-on-surface rounded" type="button">Retain</button>
+<button class="flex-1 py-1 text-center text-on-surface-variant hover:text-on-surface rounded" type="button">Recall</button>
+<button class="flex-1 py-1 text-center text-on-surface-variant hover:text-on-surface rounded" type="button">Reflect</button>
+</div>
+</div>
+<!-- Drawer Stream -->
+<div class="flex-1 overflow-y-auto p-space-md flex flex-col gap-2" data-memory-drawer-list>
+<div class="p- space-sm p-3 rounded-lg border border-outline-variant/30 bg-surface-container-lowest flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-secondary font-bold">RECALL EVENT</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">2m ago</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface">Thermal tolerance deviation matched with incident #R11-A89.</p>
+</div>
+<div class="p-3 rounded-lg border border-outline-variant/30 bg-surface-container-lowest flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-tertiary-container font-bold">RETAIN SNAPSHOT</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">14m ago</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface">Auto-indexed sealing parameter drift matrix for SEALER-02.</p>
+</div>
+<div class="p-3 rounded-lg border border-outline-variant/30 bg-surface-container-lowest flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold">REFLECT CYCLE</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">42m ago</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface">Context transition detected: pack film resin modified from Film-A to Film-B.</p>
+</div>
+</div>
+</aside>
+<!-- MODAL 1: Record Process Change -->
+<div class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4 backdrop-blur-xs" id="record-process-modal">
+<div class="bg-surface-container-lowest rounded-xl max-w-lg w-full border border-outline-variant/40 shadow-2xl overflow-hidden flex flex-col">
+<div class="px-space-lg py-3.5 bg-primary-container text-on-primary flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-tertiary-fixed">published_with_changes</span>
+<span class="font-headline-sm text-headline-sm font-semibold">Record Process Change</span>
+</div>
+<button class="text-on-primary-container hover:text-on-primary" onclick="closeModal('record-process-modal')">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<form class="p-space-lg flex flex-col gap-space-sm" data-process-form>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm font-semibold text-on-surface uppercase">Machine Target</label>
+<input class="px-space-sm py-2 bg-surface-container-low rounded border border-outline-variant/40 text-on-surface font-body-sm" readonly="" type="text" value="Sealer-02 (Active Line 1)"/>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm font-semibold text-on-surface uppercase">New Material</label>
+<input class="px-space-sm py-2 bg-surface-container-lowest rounded border border-outline-variant/40 text-on-surface font-body-sm" required="" type="text" value="Film-B (FlexPack)"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm font-semibold text-on-surface uppercase">Recipe Version</label>
+<input class="px-space-sm py-2 bg-surface-container-lowest rounded border border-outline-variant/40 text-on-surface font-body-sm" required="" type="text" value="R11"/>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm font-semibold text-on-surface uppercase">Shift Justification / Notes</label>
+<textarea class="px-space-sm py-2 bg-surface-container-lowest rounded border border-outline-variant/40 text-on-surface font-body-sm h-20 placeholder:text-outline" placeholder="Enter batch lot, supplier shift details..."></textarea>
+</div>
+<div class="flex items-center justify-end gap-2 pt-2 border-t border-outline-variant/20">
+<button class="px-space-md py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-body-md text-body-md" onclick="closeModal('record-process-modal')" type="button">Cancel</button>
+<label class="flex items-center gap-2 font-body-sm text-body-sm text-on-surface"><input type="checkbox" data-pc="run_audit" checked class="text-secondary focus:ring-secondary rounded"> Run Memory Validity Audit after saving</label>
+            <button class="px-space-lg py-2 rounded-lg bg-secondary hover:bg-secondary-container text-on-secondary font-body-md text-body-md font-semibold" type="submit">Save Change &amp; Audit Memory</button>
+</div>
+</form>
+</div>
+</div>
+<!-- MODAL 2: Record Incident & Outcome -->
+<div class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4 backdrop-blur-xs" id="record-incident-modal">
+<div class="bg-surface-container-lowest rounded-xl max-w-lg w-full border border-outline-variant/40 shadow-2xl overflow-hidden flex flex-col">
+<div class="px-space-lg py-3.5 bg-primary-container text-on-primary flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-tertiary-fixed">add_circle</span>
+<span class="font-headline-sm text-headline-sm font-semibold" id="incident-modal-title">Record Incident Outcome</span>
+</div>
+<button class="text-on-primary-container hover:text-on-primary" onclick="closeModal('record-incident-modal')">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<form class="p-space-lg flex flex-col gap-space-sm" data-incident-form>
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm font-semibold text-on-surface uppercase">Incident ID</label>
+<input class="px-space-sm py-2 bg-surface-container-low rounded border border-outline-variant/40 text-on-surface font-body-sm font-bold" id="incident-id-input" readonly="" type="text" value="QI-1040"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm font-semibold text-on-surface uppercase">Observed Defect</label>
+<select class="px-space-sm py-2 bg-surface-container-lowest rounded border border-outline-variant/40 text-on-surface font-body-sm">
+<option>Weak Seal (Heater Bank 1)</option>
+<option>Wrinkling</option>
+<option>Seal Blistering</option>
+<option>Film Misalignment</option>
+</select>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm font-semibold text-on-surface uppercase">Action Applied</label>
+<input class="px-space-sm py-2 bg-surface-container-lowest rounded border border-outline-variant/40 text-on-surface font-body-sm" id="incident-action-input" required="" type="text" value="Pressure +8%"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm font-semibold text-on-surface uppercase">Observed Outcome</label>
+<div class="grid grid-cols-2 gap-2">
+<label class="flex items-center gap-2 p-2 rounded border border-outline-variant/40 cursor-pointer hover:bg-surface-container-low">
+<input checked="" class="text-secondary focus:ring-secondary" name="outcome" type="radio" value="SUCCESS"/>
+<span class="font-label-sm text-[#15803D] font-bold">SUCCESS (Resolved)</span>
+</label>
+<label class="flex items-center gap-2 p-2 rounded border border-outline-variant/40 cursor-pointer hover:bg-surface-container-low">
+<input class="text-error focus:ring-error" name="outcome" type="radio" value="FAILURE"/>
+<span class="font-label-sm text-[#DC2626] font-bold">FAILURE (Drifted)</span>
+</label>
+</div>
+</div>
+<div class="flex items-center justify-end gap-2 pt-2 border-t border-outline-variant/20">
+<button class="px-space-md py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-body-md text-body-md" onclick="closeModal('record-incident-modal')" type="button">Cancel</button>
+<button class="px-space-lg py-2 rounded-lg bg-secondary hover:bg-secondary-container text-on-secondary font-body-md text-body-md font-semibold" type="submit">Retain in Hindsight</button>
+</div>
+</form>
+</div>
+</div>
+<!-- Interactive JavaScript -->
+<script>
+    function showToast(msg) {
+      const toast = document.getElementById('quick-action-toast');
+      const textElem = document.getElementById('toast-message');
+      if (textElem && toast) {
+        textElem.innerText = msg;
+        toast.classList.remove('translate-y-24', 'opacity-0');
+        toast.classList.add('translate-y-0', 'opacity-100');
+        setTimeout(() => {
+          toast.classList.add('translate-y-24', 'opacity-0');
+          toast.classList.remove('translate-y-0', 'opacity-100');
+        }, 3000);
+      }
+    }
+
+    function triggerAudit() {
+      showToast('Running Memory Validity Audit on Sealer-02 (Film-B / R11)...');
+      setTimeout(() => {
+        showToast('Memory Audit Complete: 1 Supported (Pressure +8%), 1 Drifted (Temp +5°C).');
+      }, 1400);
+    }
+
+    function toggleDrawer() {
+      const drawer = document.getElementById('activity-drawer');
+      const backdrop = document.getElementById('drawer-backdrop');
+      if (drawer && backdrop) {
+        const isOpen = !drawer.classList.contains('translate-x-full');
+        if (isOpen) {
+          drawer.classList.add('translate-x-full');
+          backdrop.classList.add('opacity-0', 'pointer-events-none');
+          backdrop.classList.remove('opacity-100');
+        } else {
+          drawer.classList.remove('translate-x-full');
+          backdrop.classList.remove('opacity-0', 'pointer-events-none');
+          backdrop.classList.add('opacity-100');
+        }
+      }
+    }
+
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    }
+
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    function openOutcomeModal(id, action) {
+      const idInput = document.getElementById('incident-id-input');
+      const actionInput = document.getElementById('incident-action-input');
+      const modalTitle = document.getElementById('incident-modal-title');
+      if (idInput && actionInput) {
+        idInput.value = id;
+        actionInput.value = action;
+        if (modalTitle) modalTitle.innerText = 'Incident Dossier: ' + id;
+      }
+      openModal('record-incident-modal');
+    }
+
+    function handleProcessSubmit(e) {
+      e.preventDefault();
+      closeModal('record-process-modal');
+      showToast('Process change recorded: Validity boundaries updated in Hindsight.');
+    }
+
+    function handleIncidentSubmit(e) {
+      e.preventDefault();
+      closeModal('record-incident-modal');
+      showToast('Incident outcome logged and retained in plant memory ledger.');
+    }
+
+    function toggleExtraLedger() {
+      const row1 = document.getElementById('extra-row-1');
+      const row2 = document.getElementById('extra-row-2');
+      const icon = document.getElementById('accordion-icon');
+      const text = document.getElementById('accordion-toggle-text');
+      
+      if (row1 && row2) {
+        const isHidden = row1.classList.contains('hidden');
+        if (isHidden) {
+          row1.classList.remove('hidden');
+          row2.classList.remove('hidden');
+          if (icon) icon.classList.add('rotate-180');
+          if (text) text.innerText = 'Collapse Ledger view';
+        } else {
+          row1.classList.add('hidden');
+          row2.classList.add('hidden');
+          if (icon) icon.classList.remove('rotate-180');
+          if (text) text.innerText = 'View all 42 records in Ledger';
+        }
+      }
+    }
+  </script>
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/common.js"></script>
+<script src="js/dashboard.js"></script>
+</body></html>

@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1840" viewBox="0 0 1600 1840">
+<rect width="1600" height="1840" fill="#0d1526"/>
+<defs>
+<marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+<path d="M 0 1 L 9 5 L 0 9 z" fill="#2dd4bf"/>
+</marker>
+<marker id="arrBack" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+<path d="M 10 1 L 1 5 L 10 9 z" fill="#2dd4bf"/>
+</marker>
+</defs>
+<text x="800" y="62" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="44" font-weight="800" fill="#eef3fa">VALIDRIFT</text>
+<text x="800" y="100" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="500" fill="#2dd4bf">Change-Aware Manufacturing Memory — Architecture</text>
+<text x="800" y="132" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="400" fill="#8fa3bf" font-style="italic">“The memory wasn’t wrong. Its validity drifted.”</text>
+<rect x="520" y="170" width="560" height="80" rx="40" fill="#151d2e" stroke="#31435f" stroke-width="1.5"/>
+<text x="800.0" y="209.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="25" font-weight="700" fill="#eef3fa">Quality Engineer</text>
+<text x="800.0" y="237.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="17" font-weight="400" fill="#8fa3bf">decision-support user</text>
+<circle cx="594" cy="196.0" r="16" fill="none" stroke="#2dd4bf" stroke-width="3"/>
+<path d="M 572 242.0 A 22 22 0 0 1 616 242.0" fill="none" stroke="#2dd4bf" stroke-width="3" stroke-linecap="round"/>
+<rect x="520" y="306" width="560" height="88" rx="14" fill="#151d2e" stroke="#31435f" stroke-width="1.5"/>
+<text x="800.0" y="349.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="25" font-weight="700" fill="#eef3fa">Validrift Frontend</text>
+<text x="800.0" y="377.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="17" font-weight="400" fill="#8fa3bf">vanilla JS + Tailwind · 5 pages</text>
+<rect x="520" y="450" width="560" height="88" rx="14" fill="#151d2e" stroke="#31435f" stroke-width="1.5"/>
+<text x="800.0" y="493.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="25" font-weight="700" fill="#eef3fa">FastAPI Backend</text>
+<text x="800.0" y="521.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="17" font-weight="400" fill="#8fa3bf">REST API · /api/health · /docs</text>
+<rect x="520" y="594" width="560" height="88" rx="14" fill="#151d2e" stroke="#31435f" stroke-width="1.5"/>
+<text x="800.0" y="637.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="25" font-weight="700" fill="#eef3fa">Structured Context / Incident Data</text>
+<text x="800.0" y="665.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="17" font-weight="400" fill="#8fa3bf">machine · material · supplier · recipe · firmware</text>
+<rect x="520" y="738" width="560" height="96" rx="14" fill="#102e2c" stroke="#2dd4bf" stroke-width="2"/>
+<text x="800.0" y="773.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="25" font-weight="700" fill="#eef3fa">Hindsight</text>
+<text x="800.0" y="801.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="17" font-weight="400" fill="#8fa3bf">RETAIN / RECALL / REFLECT</text>
+<text x="800.0" y="825.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="17" font-weight="400" fill="#8fa3bf">persistent memory cloud</text>
+<rect x="520" y="890" width="560" height="96" rx="14" fill="#0e3a38" stroke="#2dd4bf" stroke-width="2.5"/>
+<text x="800.0" y="925.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="25" font-weight="700" fill="#eef3fa">Deterministic Validity Engine</text>
+<text x="800.0" y="953.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="17" font-weight="400" fill="#8fa3bf">pure functions over evidence</text>
+<text x="800.0" y="977.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="17" font-weight="400" fill="#8fa3bf">no LLM in the scoring path</text>
+<rect x="520" y="1042" width="560" height="104" rx="14" fill="#151d2e" stroke="#31435f" stroke-width="1.5"/>
+<text x="800.0" y="1081.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="25" font-weight="700" fill="#eef3fa">Context-Scoped Fix Validity</text>
+<text x="800.0" y="1109.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="17" font-weight="400" fill="#8fa3bf">VALIDATED · SUPPORTED · UNVERIFIED</text>
+<text x="800.0" y="1133.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="17" font-weight="400" fill="#8fa3bf">REVALIDATION REQUIRED · DRIFTED · INSUFFICIENT EVIDENCE</text>
+<rect x="520" y="1202" width="560" height="88" rx="14" fill="#122b3d" stroke="#2dd4bf" stroke-width="2"/>
+<text x="800.0" y="1245.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="25" font-weight="700" fill="#eef3fa">Recommendation</text>
+<text x="800.0" y="1273.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="17" font-weight="400" fill="#8fa3bf">best fix for the current context</text>
+<rect x="520" y="1346" width="560" height="88" rx="14" fill="#151d2e" stroke="#31435f" stroke-width="1.5"/>
+<text x="800.0" y="1389.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="25" font-weight="700" fill="#eef3fa">Recorded Outcome</text>
+<text x="800.0" y="1417.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="17" font-weight="400" fill="#8fa3bf">engineer records the actual result</text>
+<rect x="520" y="1490" width="560" height="88" rx="14" fill="#102e2c" stroke="#2dd4bf" stroke-width="2"/>
+<text x="800.0" y="1533.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="25" font-weight="700" fill="#eef3fa">Hindsight RETAIN</text>
+<text x="800.0" y="1561.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="17" font-weight="400" fill="#8fa3bf">outcome stored as new evidence</text>
+<rect x="520" y="1634" width="560" height="88" rx="14" fill="#102e2c" stroke="#2dd4bf" stroke-width="2"/>
+<text x="800.0" y="1677.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="25" font-weight="700" fill="#eef3fa">Future recommendations improve</text>
+<text x="800.0" y="1705.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="17" font-weight="400" fill="#8fa3bf">the learning loop</text>
+<line x1="800" y1="250" x2="800" y2="302" stroke="#2dd4bf" stroke-width="3" marker-end="url(#arr)"/>
+<line x1="800" y1="394" x2="800" y2="446" stroke="#2dd4bf" stroke-width="3" marker-end="url(#arr)"/>
+<line x1="800" y1="538" x2="800" y2="590" stroke="#2dd4bf" stroke-width="3" marker-end="url(#arr)"/>
+<line x1="800" y1="682" x2="800" y2="734" stroke="#2dd4bf" stroke-width="3" marker-end="url(#arr)"/>
+<line x1="800" y1="834" x2="800" y2="886" stroke="#2dd4bf" stroke-width="3" marker-end="url(#arr)"/>
+<line x1="800" y1="986" x2="800" y2="1038" stroke="#2dd4bf" stroke-width="3" marker-end="url(#arr)"/>
+<line x1="800" y1="1146" x2="800" y2="1198" stroke="#2dd4bf" stroke-width="3" marker-end="url(#arr)"/>
+<line x1="800" y1="1290" x2="800" y2="1342" stroke="#2dd4bf" stroke-width="3" marker-end="url(#arr)"/>
+<line x1="800" y1="1434" x2="800" y2="1486" stroke="#2dd4bf" stroke-width="3" marker-end="url(#arr)"/>
+<line x1="800" y1="1578" x2="800" y2="1630" stroke="#2dd4bf" stroke-width="3" marker-end="url(#arr)"/>
+<rect x="80" y="444.0" width="390" height="100" rx="14" fill="#121a29" stroke="#3b4f70" stroke-width="1.5"/>
+<text x="275.0" y="481.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="23" font-weight="700" fill="#eef3fa">SQLite</text>
+<text x="275.0" y="509.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="400" fill="#8fa3bf">structured storage</text>
+<text x="275.0" y="533.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="400" fill="#8fa3bf">incidents · interventions · outcomes</text>
+<line x1="520" y1="494.0" x2="470" y2="494.0" stroke="#2dd4bf" stroke-width="2.5" opacity="0.85" marker-start="url(#arrBack)" marker-end="url(#arr)"/>
+<rect x="1130" y="886.0" width="390" height="104" rx="14" fill="#121a29" stroke="#3b4f70" stroke-width="1.5"/>
+<text x="1325.0" y="925.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="23" font-weight="700" fill="#eef3fa">Memory Validity Audit</text>
+<text x="1325.0" y="953.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="400" fill="#8fa3bf">process-change-triggered review</text>
+<text x="1325.0" y="977.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="400" fill="#8fa3bf">flags drifted fixes</text>
+<line x1="1080" y1="938.0" x2="1130" y2="938.0" stroke="#2dd4bf" stroke-width="2.5" opacity="0.85" marker-end="url(#arr)"/>
+<rect x="1130" y="1044.0" width="390" height="100" rx="14" fill="#121a29" stroke="#3b4f70" stroke-width="1.5"/>
+<text x="1325.0" y="1081.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="23" font-weight="700" fill="#eef3fa">Fix Passport</text>
+<text x="1325.0" y="1109.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="400" fill="#8fa3bf">per-fix validity across contexts</text>
+<text x="1325.0" y="1133.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="400" fill="#8fa3bf">history preserved, never deleted</text>
+<line x1="1080" y1="1094.0" x2="1130" y2="1094.0" stroke="#2dd4bf" stroke-width="2.5" opacity="0.85" marker-end="url(#arr)"/>
+<path d="M 520 1678.0 L 178 1678.0 Q 150 1678.0 150 1650.0 L 150 1274.0 Q 150 1246.0 178 1246.0 L 514 1246.0" fill="none" stroke="#2dd4bf" stroke-width="3" stroke-dasharray="12 9" opacity="0.95" marker-end="url(#arr)"/>
+<text x="124" y="1462.0" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="600" fill="#2dd4bf" transform="rotate(-90 124 1462.0)">feedback loop</text>
+<text x="800" y="1778" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="18" font-weight="400" fill="#8fa3bf" font-style="italic">Decision support for Quality Engineers — Validrift never controls machines.</text>
+</svg>

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-tertiary-fixed": "#00201d", "surface": "#f8f9ff", "tertiary-container": "#00201d", "surface-container-low": "#eff4ff", "on-tertiary-container": "#0c9488", "surface-dim": "#cbdbf5", "on-secondary-fixed": "#00174b", "inverse-on-surface": "#eaf1ff", "surface-tint": "#565e74", "secondary-fixed": "#dbe1ff", "on-primary-fixed": "#131b2e", "secondary-container": "#316bf3", "on-primary-container": "#7c839b", "error": "#ba1a1a", "surface-container-lowest": "#ffffff", "primary-container": "#131b2e", "inverse-surface": "#213145", "on-error-container": "#93000a", "primary-fixed": "#dae2fd", "on-secondary-container": "#fefcff", "outline": "#76777d", "surface-bright": "#f8f9ff", "on-secondary-fixed-variant": "#003ea8", "primary-fixed-dim": "#bec6e0", "on-secondary": "#ffffff", "tertiary-fixed-dim": "#6bd8cb", "tertiary-fixed": "#89f5e7", "outline-variant": "#c6c6cd", "primary": "#000000", "on-primary": "#ffffff", "surface-container-high": "#dce9ff", "inverse-primary": "#bec6e0", "surface-variant": "#d3e4fe", "on-surface": "#0b1c30", "background": "#f8f9ff", "on-tertiary-fixed-variant": "#005049", "surface-container-highest": "#d3e4fe", "on-error": "#ffffff", "surface-container": "#e5eeff", "on-tertiary": "#ffffff", "tertiary": "#000000", "secondary": "#0051d5", "secondary-fixed-dim": "#b4c5ff", "on-background": "#0b1c30", "on-surface-variant": "#45464d", "on-primary-fixed-variant": "#3f465c", "error-container": "#ffdad6" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "space-lg": "1.25rem", "space-sm": "0.5rem", "gutter": "1rem", "space-xs": "0.25rem", "gutter-dense": "0.5rem", "space-xl": "2rem", "margin-compact": "1rem", "margin": "1.5rem", "space-md": "0.75rem" }, "fontFamily": { "label-sm": ["JetBrains Mono"], "body-md": ["Inter"], "display-lg": ["Inter"], "headline-lg": ["Inter"], "label-md": ["JetBrains Mono"], "body-lg": ["Inter"], "body-sm": ["Inter"], "headline-sm": ["Inter"], "headline-md": ["Inter"], "label-lg": ["JetBrains Mono"] }, "fontSize": { "label-sm": ["10px", { "lineHeight": "12px", "letterSpacing": "0.04em", "fontWeight": "600" }], "body-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400" }], "display-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "label-md": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500" }], "body-lg": ["15px", { "lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "400" }], "body-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.005em", "fontWeight": "400" }], "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "600" }], "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-lg": ["13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500" }] } } } };</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-primary-container text-on-primary-container z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col"><div class="h-16 px-space-md flex items-center gap-space-sm bg-primary-container"><img alt="Brand logo. - Primary color: #0f172a - Font: inter - Mode: light - Roundness: rounded-sm" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UnBVqMEWgJoFnXWwaYf243t0jmVTXzBpOGdQ31de_JcYWyBkz00SCir5rhlO_l25FOX7FDR9qmCE-xVjNEW85b6pGZxrxtD83q4NM1t58uZ1d8MeqHiDZBXAzeMvsQ9nJqjCjmbO0yqSn4F6b2ozJk0cuCiwD5pEYfGn0KwZchIXQgPp80Nr6CbeyRZtjJlUya4lxN4ik_A9cezbZ5Oy8LElWvq2di-4_iI4uID1hc2tFl1PWKcQyuhA"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold tracking-tight text-white leading-none">VALIDRIFT</span><span class="font-label-sm text-label-sm text-on-primary-container tracking-wider uppercase mt-0.5">MANUFACTURING MEMORY</span></div></div><div class="px-space-md py-space-sm"><span class="font-label-sm text-label-sm text-on-primary-container uppercase tracking-wider px-space-sm">OPERATIONAL CORE</span></div><nav class="flex flex-col gap-space-xs px-space-sm" data-active-classes="bg-secondary-container text-on-secondary-container font-semibold"><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-primary-container hover:bg-surface-variant hover:text-on-surface transition-colors font-body-md text-body-md" data-path="overview-dashboard" href="#"><span class="material-symbols-outlined text-[18px]">dashboard</span><span>Overview / Dashboard</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-2 rounded transition-colors bg-secondary-container text-on-secondary-container font-semibold" data-path="new-quality-incident" href="#"><span class="material-symbols-outlined text-[18px]">add_alert</span><span>New Incident</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-primary-container hover:bg-surface-variant hover:text-on-surface transition-colors font-body-md text-body-md" data-path="recommendation" href="#"><span class="material-symbols-outlined text-[18px]">psychology</span><span>Recommendations</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-primary-container hover:bg-surface-variant hover:text-on-surface transition-colors font-body-md text-body-md" data-path="memory-validity-audit" href="#"><span class="material-symbols-outlined text-[18px]">verified</span><span>Validity Audit</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-primary-container hover:bg-surface-variant hover:text-on-surface transition-colors font-body-md text-body-md" data-path="fix-passport" href="#"><span class="material-symbols-outlined text-[18px]">assignment_turned_in</span><span>Fix Passports</span></a></nav></div><div class="p-space-md bg-inverse-surface/40 m-space-sm rounded flex flex-col gap-space-sm"><div class="flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-on-tertiary-container animate-pulse"></span><span class="font-label-sm text-label-sm text-white">Hindsight Connected</span></div><span class="font-label-sm text-label-sm text-tertiary-fixed bg-tertiary-container px-1.5 py-0.5 rounded">LIVE</span></div><div class="flex flex-col gap-0.5 pt-space-xs"><span class="font-label-sm text-label-sm text-on-primary-container">ACTIVE TARGET</span><span class="font-body-sm text-body-sm font-semibold text-white truncate">Demo: Sealer-02</span></div><button class="w-full flex items-center justify-center gap-space-xs py-1.5 px-space-sm rounded bg-surface-variant hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors" type="button"><span class="material-symbols-outlined text-[14px]">restart_alt</span><span>Reset Demo</span></button></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-lg"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs font-label-md text-label-md text-on-surface-variant"><span class="text-on-surface font-semibold">Line 4</span><span>/</span><span>Station B</span><span>/</span><span class="text-secondary font-semibold">Sealer Unit 02</span></div></div><div class="flex items-center gap-space-xs px-space-md py-1 rounded bg-surface-container-low"><span class="w-2 h-2 rounded-full bg-on-tertiary-container"></span><span class="font-label-sm text-label-sm text-on-surface font-semibold tracking-wide uppercase">SEALER-02 • FILM-B • R11</span></div><div class="flex items-center gap-space-sm"><div class="hidden xl:flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container"><span class="material-symbols-outlined text-[14px] text-on-tertiary-container">memory</span><span class="font-label-sm text-label-sm text-on-surface font-medium">Hindsight Active</span></div><button class="flex items-center gap-space-xs px-space-sm py-1.5 rounded bg-surface-container-low hover:bg-surface-container text-on-surface font-body-sm text-body-sm transition-colors cursor-pointer" onclick="document.getElementById('memory-activity-drawer').classList.toggle('translate-x-full'); document.getElementById('drawer-backdrop').classList.toggle('hidden');" type="button"><span class="material-symbols-outlined text-[16px]">history</span><span>Memory Activity</span><span class="px-1.5 py-0.2 rounded bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-bold">4</span></button><a class="flex items-center gap-space-xs px-space-md py-1.5 rounded bg-secondary hover:bg-secondary-container text-on-secondary font-body-md text-body-md font-medium transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.05)]" data-path="new-quality-incident" href="#"><span class="material-symbols-outlined text-[16px]">add</span><span>New Incident</span></a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center ml-space-xs"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="relative pt-16 bg-surface min-h-screen"><div class="w-full max-w-[1280px] mx-auto px-space-lg py-space-lg"><div class="flex flex-col w-full">
+<!-- Top Breadcrumb & Machine Telemetry Meta Bar -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm mb-space-lg">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Manufacturing Memory</span>
+<span class="text-on-surface-variant font-label-sm text-label-sm">/</span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold uppercase tracking-wider">New Incident</span>
+</div>
+<div class="flex items-center gap-space-sm mt-0.5">
+<h1 class="font-display-lg text-display-lg font-bold text-on-surface tracking-tight">New Quality Incident</h1>
+<span class="inline-flex items-center px-space-sm py-0.5 rounded bg-surface-container text-on-surface font-label-sm text-label-sm uppercase tracking-wider">
+          QI-1042
+        </span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-3xl">
+        Describe the observed problem. Validrift will recall relevant plant experience and evaluate whether prior corrective actions remain valid under today's production baseline.
+      </p>
+</div>
+<!-- Machine Anchor & Stream Diagnostics -->
+<div class="flex flex-col items-start md:items-end gap-space-xs shrink-0 self-start md:self-auto">
+<div class="flex items-center gap-space-xs">
+<span class="inline-flex items-center gap-1.5 px-space-sm py-1 rounded bg-surface-container-high text-on-surface font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>STAGE 01 • INGESTION</span>
+</span>
+<span class="inline-flex items-center gap-1.5 px-space-sm py-1 rounded bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[12px] text-tertiary-fixed">sensors</span>
+<span>Hindsight Context Bus Connected</span>
+</span>
+</div>
+<div class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-lowest shadow-sm">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">token</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">ANCHOR:</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Sealer-02</span>
+<span class="font-label-sm text-label-sm text-outline font-normal">0x7F29...BA12</span>
+</div>
+</div>
+</div>
+<!-- Primary Asymmetric Two-Column Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- LEFT COLUMN: Guided Ingestion Flow (68% / 8 cols) -->
+<div class="lg:col-span-8 flex flex-col gap-space-lg">
+<!-- STEP 1: Incident Observation & Capture -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden transition-all">
+<!-- Step Header Division -->
+<div class="flex items-center justify-between px-space-lg py-space-md bg-surface-container-low/60 border-b border-surface-container-low">
+<div class="flex items-center gap-space-sm">
+<span class="flex items-center justify-center w-6 h-6 rounded bg-primary-container text-white font-label-sm text-label-sm">
+              01
+            </span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">Step 1 — Incident Details</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Observed anomaly taxonomy and operator symptom description</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Captured:</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">28 Sep 2026, 7:30 PM</span>
+</div>
+</div>
+<div class="p-space-lg flex flex-col gap-space-lg">
+<!-- Metadata Mini Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Defect Classification Dropdown (Weak Seal selected) -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-sm text-label-sm text-on-surface font-semibold flex items-center justify-between">
+<span>DEFECT CLASSIFICATION</span>
+<span class="text-secondary uppercase">ASTM F88 / ISO 11607</span>
+</label>
+<div class="relative">
+<select data-ni="defect" class="w-full h-9 px-space-sm bg-surface-container-low text-on-surface font-body-md text-body-md rounded appearance-none focus:outline-none focus:ring-2 focus:ring-secondary/40 cursor-pointer border border-transparent font-medium">
+<option selected="" value="weak-seal">Weak Seal (Delamination / Low Peel)</option>
+<option value="wrinkling">Wrinkling / Creasing</option>
+<option value="leakage">Channel Leaks / Micro-Perforations</option>
+<option value="misalignment">Jaw Overhang / Track Misalignment</option>
+<option value="surface-burn">Surface Burn / Degradation</option>
+</select>
+<span class="material-symbols-outlined absolute right-space-sm top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none text-[16px]">
+                  unfold_more
+                </span>
+</div>
+</div>
+<!-- Target Machine Segment -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-sm text-label-sm text-on-surface font-semibold">TARGET HARDWARE CELL</label>
+<div class="flex items-center justify-between h-9 px-space-sm bg-surface-container-low rounded border border-transparent">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-on-tertiary-container"></span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Sealer Unit 02</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">(Line 4 • Bay B)</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary uppercase font-semibold">LOCKED TO TELEMETRY</span>
+</div>
+</div>
+</div>
+<!-- Severity Level Segmented Control -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<label class="font-label-sm text-label-sm text-on-surface font-semibold uppercase">Operational Severity Tier</label>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Influences search radius and memory drift weighting</span>
+</div>
+<div class="grid grid-cols-3 gap-space-sm p-1 bg-surface-container-low rounded" data-ni-severity>
+<button class="py-2 px-space-sm rounded font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-lowest transition-all text-center" data-sev="LOW" type="button">
+                Low (Advisory)
+              </button>
+<button class="py-2 px-space-sm rounded bg-secondary text-white font-body-sm text-body-sm font-semibold shadow-sm flex items-center justify-center gap-space-xs transition-all" data-sev="MEDIUM" type="button">
+<span class="material-symbols-outlined text-[15px]">warning</span>
+<span>Medium (Disrupted)</span>
+</button>
+<button class="py-2 px-space-sm rounded font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-lowest transition-all text-center" data-sev="HIGH" type="button">
+                High (Shutdown)
+              </button>
+</div>
+</div>
+<!-- Problem Notes (Observable Symptoms) -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<label class="font-label-sm text-label-sm text-on-surface font-semibold uppercase" for="problem-notes">
+                Observable Symptoms
+              </label>
+<span class="font-label-sm text-label-sm text-secondary font-medium">94 CHARACTERS ENTERED</span>
+</div>
+<textarea class="w-full p-space-sm bg-surface-container-low text-on-surface font-body-md text-body-md rounded focus:outline-none focus:ring-2 focus:ring-secondary/40 resize-none leading-relaxed" id="problem-notes" rows="3">Seal strength is below specification across multiple samples from the current Film-B production run.</textarea>
+<div class="flex items-start gap-space-xs p-space-sm rounded bg-surface-container-low text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-secondary mt-0.5 shrink-0">info</span>
+<p class="font-body-sm text-body-sm">
+<strong class="font-semibold text-on-surface">Validrift Ingestion Guardrail:</strong> Record observable symptoms and measured failure modes only. You do not need to diagnose root cause now; memory graphs will correlate latent dependencies.
+              </p>
+</div>
+</div>
+</div>
+</section>
+<!-- STEP 2: Current Production Context (Clear Compact Card) -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<div class="flex items-center justify-between px-space-lg py-space-md bg-surface-container-low/60 border-b border-surface-container-low">
+<div class="flex items-center gap-space-sm">
+<span class="flex items-center justify-center w-6 h-6 rounded bg-primary-container text-white font-label-sm text-label-sm">
+              02
+            </span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">Step 2 — Current Production Context</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Live factory bus synchronization baseline</span>
+</div>
+</div>
+<span class="inline-flex items-center gap-1 px-space-sm py-0.5 rounded bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed"></span>
+<span>AUTO-DERIVED SNAPSHOT</span>
+</span>
+</div>
+<div class="p-space-lg flex flex-col gap-space-md">
+<!-- Parameter Strip: Machine | Material | Supplier | Recipe | Firmware -->
+<div class="p-space-md rounded-lg bg-surface-container-low border border-surface-container flex flex-wrap items-center justify-between gap-y-3 gap-x-4">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Machine:</span>
+<span class="font-body-md text-body-md font-bold text-on-surface">Sealer-02</span>
+</div>
+<div class="hidden sm:block text-outline-variant font-light">|</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Material:</span>
+<span class="font-body-md text-body-md font-bold text-secondary">Film-B</span>
+<span class="font-label-sm text-label-sm text-error bg-error/10 px-1 py-0.2 rounded font-semibold ml-1">NEW</span>
+</div>
+<div class="hidden sm:block text-outline-variant font-light">|</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Supplier:</span>
+<span class="font-body-md text-body-md font-bold text-on-surface">FlexPack</span>
+</div>
+<div class="hidden sm:block text-outline-variant font-light">|</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Recipe:</span>
+<span class="font-body-md text-body-md font-bold text-on-surface">R11</span>
+</div>
+<div class="hidden sm:block text-outline-variant font-light">|</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Firmware:</span>
+<span class="font-body-md text-body-md font-bold text-on-tertiary-container">V3</span>
+</div>
+</div>
+<!-- Short Note Card -->
+<div class="p-space-md rounded bg-surface-container flex items-start gap-space-sm border-l-4 border-secondary">
+<span class="material-symbols-outlined text-[20px] text-secondary shrink-0 mt-0.5">verified_user</span>
+<p class="font-body-md text-body-md text-on-surface leading-normal">
+            Historical fixes from prior contexts will be verified against <span class="font-semibold text-secondary">Film-B</span> before recommending.
+          </p>
+</div>
+</div>
+</section>
+<!-- STEP 3: Collapsible Optional Manual Parameters -->
+<details class="group bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden transition-all">
+<summary class="flex items-center justify-between px-space-lg py-space-md bg-surface-container-low/60 cursor-pointer list-none select-none hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-space-sm">
+<span class="flex items-center justify-center w-6 h-6 rounded bg-primary-container text-white font-label-sm text-label-sm">
+              03
+            </span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold flex items-center gap-2">
+<span>Add Manual Process Parameters</span>
+<span class="text-secondary font-label-sm text-label-sm font-semibold group-open:hidden">(+)</span>
+</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Optional manual inspection inputs at time of anomaly</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs text-on-surface-variant group-hover:text-on-surface transition-colors">
+<span class="font-label-sm text-label-sm font-semibold uppercase group-open:hidden">Expand</span>
+<span class="font-label-sm text-label-sm font-semibold uppercase hidden group-open:inline">Collapse</span>
+<span class="material-symbols-outlined text-[20px] transition-transform duration-200 group-open:rotate-180">expand_more</span>
+</div>
+</summary>
+<div class="p-space-lg flex flex-col gap-space-md border-t border-surface-container-low">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-space-md">
+<!-- Seal Temperature -->
+<div class="p-space-sm rounded bg-surface-container-low flex flex-col gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Seal Bar Temp</span>
+<div class="flex items-baseline justify-between">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">165°C</span>
+<span class="font-label-sm text-label-sm text-error font-semibold">+5°C Dev</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden mt-1">
+<div class="bg-error h-full w-[78%]"></div>
+</div>
+<span class="font-label-sm text-label-sm text-outline mt-0.5">Target: 160°C ±2°C</span>
+</div>
+<!-- Jaw Pressure -->
+<div class="p-space-sm rounded bg-surface-container-low flex flex-col gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Jaw Pressure</span>
+<div class="flex items-baseline justify-between">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">42 PSI</span>
+<span class="font-label-sm text-label-sm text-on-tertiary-container font-semibold">Nominal</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden mt-1">
+<div class="bg-on-tertiary-container h-full w-[50%]"></div>
+</div>
+<span class="font-label-sm text-label-sm text-outline mt-0.5">Target: 42 PSI ±1.5</span>
+</div>
+<!-- Line Speed -->
+<div class="p-space-sm rounded bg-surface-container-low flex flex-col gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Web Speed</span>
+<div class="flex items-baseline justify-between">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">38 U/M</span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">-5% Speed</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden mt-1">
+<div class="bg-secondary h-full w-[45%]"></div>
+</div>
+<span class="font-label-sm text-label-sm text-outline mt-0.5">Target: 40 U/M</span>
+</div>
+<!-- Cooling Duration -->
+<div class="p-space-sm rounded bg-surface-container-low flex flex-col gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Dwell Quench</span>
+<div class="flex items-baseline justify-between">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">6.0 s</span>
+<span class="font-label-sm text-label-sm text-outline font-semibold">Locked</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden mt-1">
+<div class="bg-outline h-full w-[100%]"></div>
+</div>
+<span class="font-label-sm text-label-sm text-outline mt-0.5">Target: 6.0 s Static</span>
+</div>
+</div>
+</div>
+</details>
+<!-- PRIMARY CTA SECTION -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm p-space-lg flex flex-col gap-space-md border border-secondary/20">
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-space-md">
+<button class="px-space-md py-2.5 rounded bg-surface-container-low hover:bg-surface-container text-on-surface font-body-md text-body-md transition-colors text-center font-medium" type="button">
+            Cancel Incident
+          </button>
+<a class="flex flex-col sm:flex-row items-center justify-center gap-space-sm px-space-xl py-3 rounded-lg bg-secondary hover:bg-secondary-container text-on-secondary transition-all shadow-md hover:shadow-lg text-center group cursor-pointer" data-action="submit-incident" href="#">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[22px] group-hover:scale-110 transition-transform">find_in_page</span>
+<span class="font-headline-sm text-headline-sm font-bold tracking-tight">Find Context-Valid Past Knowledge</span>
+</div>
+<span class="hidden xl:inline text-secondary-fixed text-body-sm font-normal">| Validrift evaluates historical fixes against Film-B</span>
+</a>
+</div>
+<div class="xl:hidden text-center text-on-surface-variant font-label-sm text-label-sm">
+          Validrift evaluates historical fixes against Film-B before recommending.
+        </div>
+</section>
+</div>
+<!-- RIGHT COLUMN: Production Context & Memory Preview (32% / 4 cols) -->
+<div class="lg:col-span-4 flex flex-col gap-space-lg">
+<!-- Active Process Context Card -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<div class="px-space-md py-space-sm bg-surface-container-low/80 flex items-center justify-between border-b border-surface-container-low">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-secondary">memory</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">Active Process Context</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary bg-secondary-fixed px-1.5 py-0.5 rounded font-semibold uppercase">Station B</span>
+</div>
+<div class="p-space-md flex flex-col gap-space-sm">
+<!-- Param List: Sealer-02, Film-B, FlexPack, R11 -->
+<div class="flex flex-col gap-1 font-body-sm text-body-sm">
+<div class="flex items-center justify-between py-1.5 border-b border-surface-container-low">
+<span class="text-on-surface-variant">Machine Asset:</span>
+<span class="font-semibold text-on-surface font-label-md text-label-md" data-ni-ctx="machine">Sealer-02</span>
+</div>
+<div class="flex items-center justify-between py-1.5 border-b border-surface-container-low">
+<span class="text-on-surface-variant">Active Material:</span>
+<span class="font-bold text-secondary font-label-md text-label-md" data-ni-ctx="material">Film-B</span>
+</div>
+<div class="flex items-center justify-between py-1.5 border-b border-surface-container-low">
+<span class="text-on-surface-variant">Supplier:</span>
+<span class="font-semibold text-on-surface font-label-md text-label-md" data-ni-ctx="supplier">FlexPack</span>
+</div>
+<div class="flex items-center justify-between py-1.5">
+<span class="text-on-surface-variant">Active Recipe:</span>
+<span class="font-semibold text-on-surface font-label-md text-label-md" data-ni-ctx="recipe">Recipe R11</span>
+</div>
+</div>
+</div>
+</section>
+<!-- "What Happens Next?" Stepper Card (Clean 4-step vertical stepper) -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm p-space-md flex flex-col gap-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-secondary">psychology</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">What Happens Next?</span>
+</div>
+<div class="flex flex-col gap-space-md pl-1">
+<!-- Step 1: RETAIN -->
+<div class="flex items-start gap-space-sm relative" data-step="1">
+<span class="flex items-center justify-center w-5 h-5 rounded-full bg-secondary-fixed text-secondary font-label-sm text-label-sm font-bold shrink-0 mt-0.5">
+              1
+            </span>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-bold text-on-surface uppercase">1. RETAIN</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-snug">
+                Record incident context into permanent manufacturing memory.
+              </p>
+</div>
+</div>
+<!-- Step 2: RECALL -->
+<div class="flex items-start gap-space-sm relative" data-step="2">
+<span class="flex items-center justify-center w-5 h-5 rounded-full bg-secondary-fixed text-secondary font-label-sm text-label-sm font-bold shrink-0 mt-0.5">
+              2
+            </span>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-bold text-on-surface uppercase">2. RECALL</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-snug">
+                Retrieve similar Weak Seal fixes from plant history.
+              </p>
+</div>
+</div>
+<!-- Step 3: VALIDATE -->
+<div class="flex items-start gap-space-sm relative" data-step="3">
+<span class="flex items-center justify-center w-5 h-5 rounded-full bg-secondary-fixed text-secondary font-label-sm text-label-sm font-bold shrink-0 mt-0.5">
+              3
+            </span>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-bold text-on-surface uppercase">3. VALIDATE</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-snug">
+                Compare Film-A vs Film-B conditions to detect epistemic drift.
+              </p>
+</div>
+</div>
+<!-- Step 4: RECOMMEND -->
+<div class="flex items-start gap-space-sm relative" data-step="4">
+<span class="flex items-center justify-center w-5 h-5 rounded-full bg-secondary text-white font-label-sm text-label-sm font-bold shrink-0 mt-0.5">
+              4
+            </span>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-bold text-on-surface uppercase">4. RECOMMEND</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-snug">
+                Rank context-valid solutions while suppressing unsafe drifted fixes.
+              </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Recent Relevant Memories (Concise summary + pill tags) -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm p-space-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-secondary">history</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">Recent Relevant Memories</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline font-semibold">HINDSIGHT</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant font-medium">
+          2 related memories found in Hindsight:
+        </p>
+<div class="flex flex-col gap-space-xs">
+<!-- Pill Tag 1 -->
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-low border border-surface-container">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm font-bold text-on-surface">QI-1039</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Pressure +8%</span>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-label-sm font-bold bg-tertiary-container text-on-tertiary-container">
+            SUCCESS • SUPPORTED
+          </span>
+</div>
+<!-- Pill Tag 2 -->
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-low border border-surface-container">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm font-bold text-on-surface">QI-1035</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Temp +5°C</span>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-label-sm font-bold bg-error-container text-error">
+            FAILURE • DRIFTED
+          </span>
+</div>
+</div>
+<div class="pt-1 flex items-center justify-end">
+<button class="font-label-sm text-label-sm text-secondary hover:underline font-semibold flex items-center gap-0.5 cursor-pointer" onclick="document.getElementById('memory-activity-drawer').classList.remove('translate-x-full'); document.getElementById('drawer-backdrop').classList.remove('hidden');" type="button">
+<span>View all memories</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</section>
+</div>
+</div>
+</div></div></main></div>
+<!-- Hindsight Memory Activity Drawer (Off-canvas Drawer) -->
+<div class="fixed inset-0 bg-on-surface/40 backdrop-blur-xs z-50 hidden transition-opacity" id="drawer-backdrop" onclick="document.getElementById('memory-activity-drawer').classList.add('translate-x-full'); document.getElementById('drawer-backdrop').classList.add('hidden');"></div>
+<div class="fixed top-0 right-0 h-full w-full sm:w-[420px] bg-surface-container-lowest shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col" id="memory-activity-drawer">
+<div class="h-16 px-space-md border-b border-surface-container-low flex items-center justify-between bg-surface-container-low/60">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[20px]">history</span>
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">Hindsight Memory Activity</span>
+</div>
+<button class="p-1 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors cursor-pointer" onclick="document.getElementById('memory-activity-drawer').classList.add('translate-x-full'); document.getElementById('drawer-backdrop').classList.add('hidden');" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="p-space-md flex-1 overflow-y-auto flex flex-col gap-space-md">
+<div class="p-space-sm rounded bg-surface-container flex items-center justify-between">
+<span class="font-label-sm text-label-sm font-semibold uppercase text-on-surface-variant">Connected Pipeline</span>
+<span class="font-label-sm text-label-sm text-tertiary-fixed bg-tertiary-container px-2 py-0.5 rounded font-bold">SEALER-02 BUS</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Memory 1 -->
+<div class="p-space-sm rounded-lg bg-surface-container-low border border-surface-container flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm font-bold text-on-surface">QI-1039</span>
+<span class="font-label-sm text-label-sm bg-tertiary-container text-on-tertiary-container px-1.5 py-0.2 rounded font-bold">SUPPORTED</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface font-medium">Pressure increase to 45 PSI</div>
+<div class="font-label-sm text-label-sm text-outline">Film-B run • Validated +2.1 N/mm peel strength</div>
+</div>
+<!-- Memory 2 -->
+<div class="p-space-sm rounded-lg bg-surface-container-low border border-surface-container flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm font-bold text-on-surface">QI-1035</span>
+<span class="font-label-sm text-label-sm bg-error-container text-error px-1.5 py-0.2 rounded font-bold">DRIFTED (INVALID)</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface font-medium">Temp elevated to 165°C</div>
+<div class="font-label-sm text-label-sm text-outline">Originally worked on Film-A; caused web shrinkage on Film-B</div>
+</div>
+<!-- Memory 3 -->
+<div class="p-space-sm rounded-lg bg-surface-container-low border border-surface-container flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm font-bold text-on-surface">QI-1028</span>
+<span class="font-label-sm text-label-sm bg-tertiary-container text-on-tertiary-container px-1.5 py-0.2 rounded font-bold">SUPPORTED</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface font-medium">Dwell quench calibration (+0.4s)</div>
+<div class="font-label-sm text-label-sm text-outline">Film-B run • Standardized cooling cycle</div>
+</div>
+<!-- Memory 4 -->
+<div class="p-space-sm rounded-lg bg-surface-container-low border border-surface-container flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm font-bold text-on-surface">QI-1011</span>
+<span class="font-label-sm text-label-sm bg-error-container text-error px-1.5 py-0.2 rounded font-bold">OBSOLETE</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface font-medium">Legacy platen shim adjustment</div>
+<div class="font-label-sm text-label-sm text-outline">Firmware V2 baseline; superseded by V3 PLC automated balance</div>
+</div>
+</div>
+</div>
+<div class="p-space-md border-t border-surface-container-low bg-surface-container-low/40">
+<a class="w-full flex items-center justify-center gap-space-xs py-2 px-space-md rounded bg-secondary text-white font-body-md text-body-md font-semibold hover:bg-secondary-container transition-colors" data-path="memory-validity-audit" href="#">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span>Open Full Validity Audit</span>
+</a>
+</div>
+</div>
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/common.js"></script>
+<script src="js/new-incident.js"></script>
+</body></html>
