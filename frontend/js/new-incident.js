@@ -7,17 +7,17 @@
     "film-misalignment": "Film Misalignment", "surface-burn": "Surface Burn",
     "seal-blistering": "Seal Blistering", "surface-damage": "Surface Damage"
   };
-  var CATEGORY_LABELS = { "pouches": "Pouches & Bags", "flow-wrap": "Flow Wraps", "blister": "Blister Packs" };
+  var CATEGORY_LABELS = { "sealing-unit": "Sealing Unit", "film-feed": "Film Feed", "sealing-jaws": "Sealing Jaws" };
   var CATEGORY_DEFECTS = {
-    "pouches": ["weak-seal", "leakage"],
-    "flow-wrap": ["wrinkling", "surface-wrinkle", "misalignment", "film-misalignment"],
-    "blister": ["surface-burn", "seal-blistering", "surface-damage"]
+    "sealing-unit": ["weak-seal", "leakage", "surface-burn", "seal-blistering"],
+    "film-feed": ["wrinkling", "surface-wrinkle", "film-misalignment"],
+    "sealing-jaws": ["misalignment", "surface-damage"]
   };
-  var state = { severity: "MEDIUM", ctx: null, submitting: false, guided: false, category: "pouches" };
+  var state = { severity: "MEDIUM", ctx: null, submitting: false, guided: false, category: "sealing-unit" };
 
   function paintDefects() {
     var sel = document.querySelector('[data-ni="defect"]');
-    var list = CATEGORY_DEFECTS[state.category] || CATEGORY_DEFECTS.pouches;
+    var list = CATEGORY_DEFECTS[state.category] || CATEGORY_DEFECTS["sealing-unit"];
     var prev = sel.value;
     sel.innerHTML = "";
     list.forEach(function (v) {
@@ -109,7 +109,7 @@
       pstep(1, false);
       var incident = await api.createIncident({
         defect: defect, severity: state.severity, notes: notes,
-        parameters: { product_category: state.category },
+        parameters: { machine_area: state.category },
         machine: ctx.machine || "Sealer-02",
         material: advVal("material", ctx.material || "Film-B"),
         supplier: advVal("supplier", ctx.supplier || "FlexPack"),
@@ -147,8 +147,8 @@
       document.getElementById("guided-where").textContent = "\u2014 Step 1 of 3";
       document.getElementById("guided-next").textContent =
         "Report the current problem. The Weak Seal details are filled in \u2014 just click Analyze Incident.";
-      document.querySelector('[data-ni="product"]').value = "pouches";
-      state.category = "pouches";
+      document.querySelector('[data-ni="product"]').value = "sealing-unit";
+      state.category = "sealing-unit";
       document.querySelector('[data-ni="defect"]').value = "weak-seal";
       document.getElementById("f-notes").value = "Weak seals on Film-B / R11 pouches.";
     }

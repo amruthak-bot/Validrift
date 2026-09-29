@@ -19,8 +19,8 @@
     "new-incident": [
       { sel: '[data-ni="defect"]', title: "Pick the defect",
         body: "Choose what you saw on the line. Related defects seen on this machine appear below, so similar problems are one tap away." },
-      { sel: '[data-ni="product"]', title: "Product category",
-        body: "What was running when it happened? The category is stored with the incident and helps memory retrieval later." },
+      { sel: '[data-ni="product"]', title: "Machine area",
+        body: "Which part of the machine was involved? The area is stored with the incident and helps memory retrieval later." },
       { sel: "#btn-analyze", title: "Analyze",
         body: "Validrift attaches the current machine context automatically, then searches memory for fixes \u2014 and re-checks whether they still apply today.", pos: "top" },
     ],

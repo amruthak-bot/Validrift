@@ -155,20 +155,20 @@
 <p class="font-body-md text-body-md text-on-surface-variant mt-1">Describe the quality problem on the line.</p>
 <form id="incident-form" class="mt-5 flex flex-col gap-4">
 <div>
-<label class="font-label-md text-label-md font-semibold text-on-surface" for="f-product">Product category</label>
+<label class="font-label-md text-label-md font-semibold text-on-surface" for="f-product">Machine area</label>
 <select id="f-product" data-ni="product" class="mt-1 w-full h-11 px-3 rounded-lg bg-surface-container-lowest border border-outline-variant/50 font-body-md text-body-md focus:outline-none focus:border-secondary">
-<option value="pouches">Pouches &amp; Bags</option>
-<option value="flow-wrap">Flow Wraps</option>
-<option value="blister">Blister Packs</option>
+<option value="sealing-unit">Sealing Unit</option>
+<option value="film-feed">Film Feed</option>
+<option value="sealing-jaws">Sealing Jaws</option>
 </select>
-<p class="mt-1 font-label-sm text-label-sm text-on-surface-variant">What was running when it happened — stored with the incident to help memory retrieval.</p>
+<p class="mt-1 font-label-sm text-label-sm text-on-surface-variant">Which part of the machine was involved — stored with the incident to help memory retrieval.</p>
 </div>
 <div>
 <label class="font-label-md text-label-md font-semibold text-on-surface" for="f-defect">Defect</label>
 <select id="f-defect" data-ni="defect" class="mt-1 w-full h-11 px-3 rounded-lg bg-surface-container-lowest border border-outline-variant/50 font-body-md text-body-md focus:outline-none focus:border-secondary">
 </select>
 <div id="related-defects" class="mt-2 hidden">
-<span class="font-label-sm text-label-sm text-on-surface-variant">Related defects seen on this line:</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Related defects on this machine:</span>
 <div id="related-chips" class="mt-1 flex flex-wrap gap-2"></div>
 </div>
 </div>
