@@ -6,11 +6,13 @@
   "use strict";
 
   var ROUTES = {
-    "overview-dashboard": "index.html",
+    "landing": "index.html",
+    "overview-dashboard": "overview.html",
     "new-quality-incident": "new-incident.html",
     "recommendation": "recommendation.html",
     "memory-validity-audit": "validity-audit.html",
     "fix-passport": "fix-passport.html",
+    "memory-activity": "memory-activity.html",
   };
 
   function go(path, params) {

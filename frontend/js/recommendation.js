@@ -1,224 +1,94 @@
-/* Validrift Recommendation page: renders a real recommendation from the API,
-   including evidence, the rejected alternative, memory IDs, reflection,
-   and the Record Outcome flow. */
+/* Validrift Steps 2-3: review recommendation, record result, completion screen. */
 (function () {
   "use strict";
-
-  var recId = null;
-  var rec = null;
-  var incident = null;
+  var recId = null, rec = null, incident = null, guided = false;
+  var beforeSnapshot = null, selectedOutcome = null;
 
   function qs(k) {
     var m = new RegExp("[?&]" + k + "=([^&]*)").exec(window.location.search || "");
     return m ? decodeURIComponent(m[1]) : null;
   }
-
   function setText(sel, text) {
-    var el = document.querySelector('[data-rec="' + sel + '"]');
+    var el = document.querySelector('[data-r="' + sel + '"]');
     if (el && text != null) el.textContent = text;
   }
-
   function ctxLabel(ctx) {
     if (!ctx) return "";
     return (ctx.material || "") + " / " + (ctx.recipe || "");
   }
-
-  function renderHero() {
-    var ev = rec.evaluation || {};
-    var ctx = incident ? { material: incident.material, recipe: incident.recipe } : null;
-    setText("fix-name", rec.recommended_fix);
-    setText("status-pill", rec.validity_status + (ctx ? " (" + ctxLabel(ctx) + ")" : ""));
-    setText("validated-on", ctx ? ctxLabel(ctx) : "");
-    var line = document.querySelector('[data-rec="evidence-line"]');
-    if (line) {
-      var s = ev.current_successes, f = ev.current_failures;
-      if (s == null && f == null) {
-        // Stored recommendations don't persist the evaluation snapshot; derive the
-        // counts from the backend-provided current-context evidence (supporting_evidence).
-        var sup = rec.supporting_evidence || [];
-        s = sup.filter(function (e) { return e.outcome === "SUCCESS"; }).length;
-        f = sup.filter(function (e) { return e.outcome === "FAILURE" || e.outcome === "FAILED"; }).length;
-      }
-      s = s || 0; f = f || 0;
-      line.innerHTML =
-        '<span class="font-semibold text-on-tertiary-container flex items-center gap-1">' +
-        '<span class="material-symbols-outlined text-[18px]">verified</span> ' +
-        window.Validrift.esc(s + (s === 1 ? " success" : " successes")) + "</span>" +
-        '<span class="text-outline-variant">·</span>' +
-        '<span class="text-on-surface">' + window.Validrift.esc(f + (f === 1 ? " failure" : " failures")) + "</span>" +
-        '<span class="text-outline-variant">·</span>' +
-        "<span>Validated on <strong class=\"text-on-surface font-semibold\"" +
-        ' data-rec="validated-on">' + window.Validrift.esc(ctx ? ctxLabel(ctx) : "") + "</strong></span>";
-    }
-    setText("trace-id", "TRACE: " + (rec.trace_id || rec.recommendation_id || ""));
-    setText("modal-title", "Incident " + rec.incident_id + " • " + rec.recommended_fix);
-
-    var link = document.querySelector('[data-rec="fix-passport-link"]');
-    if (link) link.setAttribute("data-path-params", JSON.stringify({ fix: rec.recommended_fix }));
+  function setCrumb(n, done) {
+    document.querySelectorAll("#crumb [data-crumb]").forEach(function (el) {
+      var i = parseInt(el.getAttribute("data-crumb"), 10);
+      var on = done ? true : i <= n;
+      el.classList.toggle("text-secondary", on);
+      el.classList.toggle("font-bold", on);
+      el.classList.toggle("text-on-surface-variant", !on);
+    });
+    var bar = document.getElementById("flow-progress");
+    if (bar) bar.style.width = done ? "100%" : (n === 2 ? 45 : 90) + "%";
+    var label = document.getElementById("step-label");
+    if (label) label.textContent = done ? "Complete" : "Step " + n + " of 3";
   }
-
-  function renderContextBar() {
-    setText("incident-label", "Incident " + rec.incident_id);
-    setText("incident-chip", "Incident: " + rec.incident_id);
-    if (incident) {
-      setText("defect-chip", " " + incident.defect + " (" +
-        (incident.severity || "").charAt(0) + (incident.severity || "").slice(1).toLowerCase() + ")");
-      setText("context-chip", incident.material + " / " + incident.recipe);
-    }
+  function showView(id) {
+    ["view-step2", "view-step3", "view-done"].forEach(function (v) {
+      document.getElementById(v).classList.toggle("hidden", v !== id);
+    });
+    window.scrollTo(0, 0);
   }
-
-  /* Pick the rejected alternative to feature: prefer a DRIFTED one, else first. */
+  function counts(s, f) {
+    return (s || 0) + ((s || 0) === 1 ? " success" : " successes") + " \u00b7 " +
+           (f || 0) + ((f || 0) === 1 ? " failure" : " failures");
+  }
   function pickRejected() {
     var alts = rec.alternative_fixes || [];
     if (!alts.length) return null;
-    var drifted = alts.filter(function (a) { return a.status === "DRIFTED"; });
-    return (drifted[0] || alts[0]);
+    var d = alts.filter(function (a) { return a.status === "DRIFTED"; });
+    return d[0] || alts[0];
   }
 
-  function evTotals(a) {
-    return { s: (a.current_successes || 0) + (a.historical_successes || 0),
-             f: (a.current_failures || 0) + (a.historical_failures || 0) };
-  }
+  function renderStep2() {
+    var V = window.Validrift;
+    var ev = rec.evaluation || {};
+    var s = ev.current_successes, f = ev.current_failures;
+    if (s == null && f == null) {
+      var sup = rec.supporting_evidence || [];
+      s = sup.filter(function (e) { return e.outcome === "SUCCESS"; }).length;
+      f = sup.filter(function (e) { return e.outcome === "FAILURE" || e.outcome === "FAILED"; }).length;
+    }
+    var ctx = incident ? ctxLabel({ material: incident.material, recipe: incident.recipe }) : "Film-B / R11";
+    setText("fix-name", rec.recommended_fix);
+    document.querySelector('[data-r="status-chip"]').innerHTML = V.statusChip(rec.validity_status);
+    document.querySelector('[data-r="evidence-line"]').textContent = counts(s, f);
+    setText("ctx", ctx);
+    setText("why-text", rec.recommended_fix + " has worked " + (s || 0) +
+      ((s || 0) === 1 ? " time" : " times") + " in the current " + ctx + " production context.");
 
-  function renderWhyNot() {
     var rej = pickRejected();
-    if (!rej) {
-      var sec = document.querySelector('[data-rec="why-not-title"]');
-      if (sec) sec.closest("div.rounded-xl").style.display = "none";
-      return;
-    }
-    var t = evTotals(rej);
-    setText("why-not-title", "WHY NOT " + rej.fix_name.toUpperCase() + "?");
-    setText("why-not-sub", rej.fix_name + " " +
-      (rej.status === "DRIFTED"
-        ? "worked historically, but its validity drifted after the process change to the current context."
-        : "is currently " + rej.status.toLowerCase().replace(/_/g, " ") + " for the active context."));
-
-    var left = document.querySelector('[data-rec="why-not-left"]');
-    if (left) {
+    if (rej) {
+      setText("why-not-title", "Why not " + rej.fix_name + "?");
       var h = rej.historical_evidence || [];
-      var hctx = h.length ? ctxLabel(h[0].context) : "";
-      left.innerHTML =
-        '<div class="flex flex-col gap-2"><div class="flex items-center justify-between">' +
-        '<span class="font-label-sm text-label-sm text-on-surface-variant uppercase font-semibold">Historical Context</span>' +
-        window.Validrift.statusChip(rej.status === "DRIFTED" ? "VALIDATED" : rej.status) + "</div>" +
-        '<div class="flex items-baseline justify-between mt-1">' +
-        '<h3 class="font-headline-md text-headline-md font-bold text-on-surface">' + window.Validrift.esc(hctx || "Earlier context") + "</h3>" +
-        '<span class="font-label-md text-label-md font-bold text-on-tertiary-container">' +
-        window.Validrift.esc(rej.historical_successes + " / " + (rej.historical_successes + rej.historical_failures) + " Successes") + "</span></div>" +
-        '<p class="font-body-sm text-body-sm text-on-surface-variant">' + window.Validrift.esc(rec.why || "") + "</p></div>" +
-        '<div class="mt-space-md pt-space-xs"><div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">' +
-        '<div class="bg-on-tertiary-container h-full" style="width:' +
-        (t.s + t.f ? Math.round(100 * rej.historical_successes / Math.max(1, rej.historical_successes + rej.historical_failures)) : 0) +
-        '%"></div></div>' +
-        '<div class="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant mt-1.5">' +
-        "<span>Status: historical record</span>" +
-        '<span class="font-bold text-on-tertiary-container">' + window.Validrift.esc(rej.historical_successes + " successes") + "</span></div></div>";
-    }
-
-    var right = document.querySelector('[data-rec="why-not-right"]');
-    if (right) {
+      setText("before-ctx", h.length && h[0].context ? ctxLabel(h[0].context) : "Film-A / R10");
+      setText("before-fix", rej.fix_name);
+      setText("before-counts", (rej.historical_successes || 0) + " successes \u00b7 " + (rej.historical_failures || 0) + " failures");
+      document.querySelector('[data-r="before-chip"]').innerHTML = V.statusChip("VALIDATED");
       var c = rej.current_evidence || [];
-      right.innerHTML =
-        '<div class="flex flex-col gap-2"><div class="flex items-center justify-between">' +
-        '<span class="font-label-sm text-label-sm text-error uppercase font-bold">Active Context</span>' +
-        window.Validrift.statusChip(rej.status) + "</div>" +
-        '<div class="flex items-baseline justify-between mt-1">' +
-        '<h3 class="font-headline-md text-headline-md font-bold text-on-surface">' +
-        window.Validrift.esc(c.length ? ctxLabel(c[0].context) : (incident ? ctxLabel(incident) : "Current")) + "</h3>" +
-        '<span class="font-label-md text-label-md font-bold text-error">' +
-        window.Validrift.esc(rej.current_successes + " / " + (rej.current_successes + rej.current_failures) + " Successes") + "</span></div>" +
-        '<p class="font-body-sm text-body-sm text-on-surface-variant">Under the active context this fix ' +
-        (rej.status === "DRIFTED" ? "failed " + rej.current_failures + " time(s) — its earlier validity no longer holds." :
-          "is " + rej.status.toLowerCase().replace(/_/g, " ") + ".") + "</p></div>" +
-        '<div class="mt-space-md pt-space-xs"><div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">' +
-        '<div class="bg-error h-full" style="width:' +
-        (rej.current_successes + rej.current_failures ? Math.round(100 * rej.current_failures / (rej.current_successes + rej.current_failures)) : 0) +
-        '%"></div></div>' +
-        '<div class="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant mt-1.5">' +
-        "<span>Status: " + window.Validrift.esc(rej.status) + "</span>" +
-        '<span class="font-bold text-error">' + window.Validrift.esc(rej.current_failures + " failures") + "</span></div></div>";
+      setText("now-ctx", c.length && c[0].context ? ctxLabel(c[0].context) : ctx);
+      setText("now-fix", rej.fix_name);
+      setText("now-counts", (rej.current_successes || 0) + " successes \u00b7 " + (rej.current_failures || 0) + " failures");
+      document.querySelector('[data-r="now-chip"]').innerHTML = V.statusChip(rej.status);
     }
-
-    // point the "Open Fix Passport" link at the rejected fix
-    var title = document.querySelector('[data-rec="why-not-title"]');
-    if (title) {
-      var card = title.closest("div.rounded-xl");
-      var a = card ? card.querySelector('a[data-path="fix-passport"]') : null;
-      if (a) {
-        a.setAttribute("data-path-params", JSON.stringify({ fix: rej.fix_name }));
-        var label = a.querySelectorAll("span")[1];
-        if (label) label.textContent = "Open " + rej.fix_name + " Fix Passport";
-      }
+    var det = document.querySelector('[data-r="evidence-detail"]');
+    if (det) {
+      var parts = [];
+      if (rec.reflection) parts.push("<p>" + V.esc(rec.reflection) + "</p>");
+      var supN = (rec.supporting_evidence || []).length, conN = (rec.conflicting_evidence || []).length;
+      parts.push("<p class=\"mt-2\">" + supN + " supporting record(s) and " + conN +
+        " conflicting record(s) in the current context.</p>");
+      det.innerHTML = parts.join("");
     }
   }
 
-  function evidenceRows() {
-    var rows = [];
-    (rec.supporting_evidence || []).forEach(function (e) {
-      rows.push({ id: e.incident_id || e.intervention_id, date: e.date, ctx: ctxLabel(e.context),
-                  fix: e.fix_name, outcome: e.outcome, validity: "SUPPORTED" });
-    });
-    (rec.conflicting_evidence || []).forEach(function (e) {
-      rows.push({ id: e.incident_id || e.intervention_id, date: e.date, ctx: ctxLabel(e.context),
-                  fix: e.fix_name, outcome: e.outcome, validity: "DRIFTED" });
-    });
-    return rows;
-  }
-
-  function renderMemories() {
-    var body = document.querySelector('[data-rec="memories-body"]');
-    if (!body) return;
-    var rows = evidenceRows();
-    if (!rows.length) {
-      body.innerHTML = '<tr><td colspan="6" class="py-3 px-space-sm text-on-surface-variant">No evidence records.</td></tr>';
-      return;
-    }
-    body.innerHTML = rows.map(function (r) {
-      return "<tr class=\"border-t border-surface-container-low\">" +
-        '<td class="py-2 px-space-sm font-mono">' + window.Validrift.esc(r.id || "") + "</td>" +
-        '<td class="py-2 px-space-sm">' + window.Validrift.esc(window.Validrift.fmtDay(r.date)) + "</td>" +
-        '<td class="py-2 px-space-sm">' + window.Validrift.esc(r.ctx || "") + "</td>" +
-        '<td class="py-2 px-space-sm">' + window.Validrift.esc(r.fix || "") + "</td>" +
-        '<td class="py-2 px-space-sm">' + window.Validrift.statusChip(r.outcome || "") + "</td>" +
-        '<td class="py-2 px-space-sm text-right">' + window.Validrift.statusChip(r.validity || "") + "</td></tr>";
-    }).join("");
-    var head = document.querySelector('[data-rec="memories-body"]');
-    var label = head ? head.closest("div.rounded-xl, section") : null;
-    var count = document.querySelector("#memories-accordion");
-    void count; void label;
-  }
-
-  function renderReflection() {
-    var text = document.querySelector('[data-rec="reflection-text"]');
-    var chips = document.querySelector('[data-rec="reflection-memories"]');
-    if (rec.reflection) {
-      if (text) text.textContent = rec.reflection;
-    } else if (text) {
-      text.textContent = window.ValidriftAPI.EXPLANATION_UNAVAILABLE;
-    }
-    if (chips) {
-      var ids = rec.recalled_memory_ids || [];
-      chips.innerHTML = ids.length
-        ? ids.map(function (id) {
-            return '<span class="font-label-sm text-label-sm font-mono px-2 py-0.5 rounded bg-surface-container text-on-surface">' +
-              window.Validrift.esc(id) + "</span>";
-          }).join("")
-        : '<span class="font-label-sm text-label-sm text-on-surface-variant">No memory IDs recalled for this recommendation.</span>';
-    }
-  }
-
-  /* --- Record Outcome --- */
-  function setOsText(key, text) {
-    var el = document.querySelector('[data-os="' + key + '"]');
-    if (el && text != null) el.textContent = text;
-  }
-
-  var beforeSnapshot = null;
-  function resetOutcomeModal() {
-    var form = document.getElementById("record-outcome-form");
-    var panel = document.getElementById("outcome-success");
-    // Snapshot pre-outcome state for the Before/Now comparison
+  function enterStep3() {
     if (rec && rec.evaluation) {
       beforeSnapshot = {
         status: rec.validity_status,
@@ -226,89 +96,79 @@
         failures: rec.evaluation.current_failures || 0
       };
     }
-    if (form) {
-      form.style.display = "";
-      var actionEl = form.querySelector("#os-action");
-      if (actionEl && rec) actionEl.value = rec.recommended_fix || "";
-      var followedEl = form.querySelector('input[name="followed"]');
-      if (followedEl) followedEl.checked = true;
+    selectedOutcome = guided ? "SUCCESS" : null;
+    paintOutcomes();
+    document.querySelector('[data-r3="fix-line"]').textContent =
+      "Recommendation: " + (rec ? rec.recommended_fix : "");
+    setCrumb(3); showView("view-step3");
+    if (guided) {
+      document.getElementById("guided-where").textContent = "\u2014 Step 3 of 3";
+      document.getElementById("guided-next").textContent =
+        "Record whether the recommendation worked. Success is selected \u2014 just click Save & Learn.";
     }
-    if (panel) panel.classList.add("hidden");
+  }
+  function paintOutcomes() {
+    document.querySelectorAll(".outcome-card").forEach(function (card) {
+      var on = card.getAttribute("data-outcome") === selectedOutcome;
+      card.classList.toggle("border-secondary", on);
+      card.classList.toggle("bg-secondary-fixed/20", on);
+      card.classList.toggle("border-outline-variant/40", !on);
+      card.setAttribute("aria-checked", on ? "true" : "false");
+    });
   }
 
-  function showOutcomeSuccess() {
-    var form = document.getElementById("record-outcome-form");
-    var panel = document.getElementById("outcome-success");
-    if (form) form.style.display = "none";
-    if (!panel) return;
-    panel.classList.remove("hidden");
-    setOsText("os-fix", rec ? rec.recommended_fix : "");
-    setOsText("os-counts", "Updating…");
-    // Before: use the snapshot captured when the modal opened (pre-outcome)
-    var bs = beforeSnapshot ? beforeSnapshot.successes : 0;
-    var bf = beforeSnapshot ? beforeSnapshot.failures : 0;
-    setOsText("os-before-counts", bs + (bs === 1 ? " success" : " successes") + " / " + bf + (bf === 1 ? " failure" : " failures"));
-    var bst = document.querySelector('[data-os="os-before-status"]');
-    if (bst) bst.innerHTML = window.Validrift.statusChip(beforeSnapshot ? beforeSnapshot.status : "—");
+  async function saveOutcome() {
+    var V = window.Validrift, api = window.ValidriftAPI;
+    if (!selectedOutcome) { V.toast("Pick an outcome first: Success, Partially Improved, or Failed."); return; }
+    var btn = document.getElementById("btn-save");
+    btn.disabled = true;
+    btn.querySelector("span:last-child").textContent = "Saving\u2026";
+    try {
+      var notes = document.getElementById("r3-notes").value.trim();
+      await api.recordOutcome(recId, {
+        followed: true,
+        action_taken: rec ? rec.recommended_fix : "",
+        result: selectedOutcome,
+        notes: notes
+      });
+      renderDone();
+    } catch (err) {
+      V.toast(V.errorMessage(err));
+      btn.disabled = false;
+      btn.querySelector("span:last-child").textContent = "Save & Learn";
+    }
+  }
+
+  function renderDone() {
+    var V = window.Validrift, api = window.ValidriftAPI;
+    setCrumb(3, true); showView("view-done");
+    var callout = document.getElementById("guided-callout");
+    if (guided && callout) {
+      callout.classList.remove("hidden");
+      document.getElementById("guided-where").textContent = "\u2014 Done";
+      document.getElementById("guided-next").textContent =
+        "Validrift learned. Finish to go home, or see why Validrift changed.";
+    }
+    document.querySelector('[data-d="fix-name"]').textContent = rec ? rec.recommended_fix : "";
+    var bs = beforeSnapshot ? beforeSnapshot.successes : 0,
+        bf = beforeSnapshot ? beforeSnapshot.failures : 0;
+    document.querySelector('[data-d="before-chip"]').innerHTML =
+      V.statusChip(beforeSnapshot ? beforeSnapshot.status : "\u2014");
+    document.querySelector('[data-d="before-counts"]').textContent = counts(bs, bf);
+    document.querySelector('[data-d="now-counts"]').textContent = "Updating\u2026";
     var ctxKey = incident ? (incident.material + "/" + incident.recipe) : "";
-    window.ValidriftAPI.fixPassport(rec.recommended_fix).then(function (pp) {
-      var contexts = pp.contexts || [];
-      var cur = null;
+    api.fixPassport(rec.recommended_fix).then(function (pp) {
+      var contexts = pp.contexts || [], cur = null;
       contexts.forEach(function (c) {
-        var ev0 = (c.evidence || [])[0];
-        var key = ev0 && ev0.context ? (ev0.context.material + "/" + ev0.context.recipe) : "";
+        var e0 = (c.evidence || [])[0];
+        var key = e0 && e0.context ? (e0.context.material + "/" + e0.context.recipe) : "";
         if (ctxKey && key === ctxKey) cur = c;
       });
       cur = cur || contexts[contexts.length - 1] || {};
-      setOsText("os-counts",
-        (cur.successes || 0) + ((cur.successes || 0) === 1 ? " success" : " successes") + " · " +
-        (cur.failures || 0) + ((cur.failures || 0) === 1 ? " failure" : " failures"));
-      var st = document.querySelector('[data-os="os-status"]');
-      if (st) st.innerHTML = window.Validrift.statusChip(cur.status || "—");
-      var link = document.querySelector('[data-os="os-passport"]');
-      if (link && rec) link.href = window.Validrift.passportUrl(rec.recommended_fix);
+      document.querySelector('[data-d="now-chip"]').innerHTML = V.statusChip(cur.status || "\u2014");
+      document.querySelector('[data-d="now-counts"]').textContent = counts(cur.successes, cur.failures);
     }).catch(function () {
-      setOsText("os-counts", "Saved — reopen the Fix Passport to see updated counts.");
-    });
-    window.Validrift.fillMemoryActivity("[data-memory-activity]");
-  }
-
-  function wireOutcome() {
-    var form = document.getElementById("record-outcome-form");
-    if (!form) return;
-    var openBtn = document.getElementById("open-record-outcome");
-    if (openBtn) openBtn.addEventListener("click", resetOutcomeModal);
-    form.addEventListener("submit", function (ev) {
-      ev.preventDefault();
-      var checked = form.querySelector('input[name="outcome"]:checked');
-      var outcome = checked ? checked.value : "SUCCESS";
-      var notesEl = form.querySelector("#os-notes");
-      var notes = notesEl ? notesEl.value.trim() : "";
-      var followedEl = form.querySelector('input[name="followed"]');
-      var followed = followedEl ? followedEl.checked : true;
-      var actionEl = form.querySelector("#os-action");
-      var actionTaken = actionEl && actionEl.value.trim() ? actionEl.value.trim() : (rec ? rec.recommended_fix : "");
-      var btn = document.getElementById("submit-modal-btn");
-      if (btn) { btn.disabled = true; btn.textContent = "Saving…"; }
-      window.ValidriftAPI.recordOutcome(recId, {
-          followed: followed,
-          action_taken: actionTaken,
-          result: outcome,
-          notes: notes
-        })
-        .then(function (res) {
-          window.Validrift.toast((res && res.message) || ("Outcome recorded: " + outcome));
-          if (typeof toggleModal === "function") toggleModal(true); // keep modal open for the success state
-          return load();
-        })
-        .then(function () { showOutcomeSuccess(); })
-        .catch(function (err) {
-          window.Validrift.toast(window.Validrift.errorMessage(err));
-          if (typeof toggleModal === "function") toggleModal(false);
-        })
-        .finally(function () {
-          if (btn) { btn.disabled = false; btn.textContent = "Save & Learn"; }
-        });
+      document.querySelector('[data-d="now-counts"]').textContent = "Saved \u2014 see the Fix Passport for updated counts.";
     });
   }
 
@@ -319,27 +179,44 @@
         var latest = await api.latestRecommendation();
         recId = latest && latest.recommendation_id;
       }
-      if (!recId) {
-        V.toast("No recommendation yet — log an incident first.");
-        V.go("new-incident.html");
-        return;
-      }
+      if (!recId) { V.toast("No recommendation yet \u2014 log an incident first."); window.location.href = "new-incident.html"; return; }
       rec = await api.recommendation(recId);
       try { incident = await api.incident(rec.incident_id); } catch (e) { incident = null; }
-      renderContextBar();
-      renderHero();
-      renderWhyNot();
-      renderMemories();
-      renderReflection();
-      V.fillMemoryActivity("[data-memory-activity]");
-    } catch (err) {
-      V.toast(V.errorMessage(err));
-    }
+      renderStep2();
+    } catch (err) { V.toast(V.errorMessage(err)); }
   }
 
   document.addEventListener("DOMContentLoaded", function () {
     recId = qs("id");
-    wireOutcome();
+    guided = qs("guided") === "1";
+    setCrumb(2); showView("view-step2");
+    var exitBtn = document.getElementById("exit-flow");
+    exitBtn.textContent = guided ? "Exit Demo" : "Exit";
+    exitBtn.addEventListener("click", function () { window.location.href = "index.html"; });
+    if (guided) {
+      var callout = document.getElementById("guided-callout");
+      callout.classList.remove("hidden");
+      document.getElementById("guided-where").textContent = "\u2014 Step 2 of 3";
+      document.getElementById("guided-next").textContent =
+        "Review the recommendation. Notice why Temperature +5\u00b0C is rejected \u2014 then click Record Result.";
+    }
+    document.getElementById("btn-record").addEventListener("click", enterStep3);
+    document.getElementById("btn-back2").addEventListener("click", function () {
+      setCrumb(2); showView("view-step2");
+    });
+    document.querySelectorAll(".outcome-card").forEach(function (card) {
+      card.addEventListener("click", function () {
+        selectedOutcome = card.getAttribute("data-outcome");
+        paintOutcomes();
+      });
+    });
+    document.getElementById("btn-save").addEventListener("click", saveOutcome);
+    document.getElementById("btn-finish").addEventListener("click", function () {
+      window.location.href = "index.html";
+    });
+    document.getElementById("btn-why-changed").addEventListener("click", function () {
+      window.location.href = "overview.html";
+    });
     load();
   });
 })();

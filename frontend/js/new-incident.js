@@ -1,162 +1,132 @@
-/* Validrift New Incident page: severity selector, live process context,
-   incident creation + recommendation generation with stepper progress. */
+/* Validrift Step 1 of 3: report the problem. Plain progress, no Hindsight jargon. */
 (function () {
   "use strict";
-
   var DEFECT_LABELS = {
-    "weak-seal": "Weak Seal",
-    "wrinkling": "Wrinkling",
-    "leakage": "Channel Leaks",
-    "misalignment": "Jaw Misalignment",
-    "surface-burn": "Surface Burn"
+    "weak-seal": "Weak Seal", "wrinkling": "Wrinkling", "leakage": "Channel Leaks",
+    "misalignment": "Jaw Misalignment", "surface-burn": "Surface Burn"
   };
+  var state = { severity: "MEDIUM", ctx: null, submitting: false, guided: false };
 
-  var state = { severity: "MEDIUM", ctx: null, submitting: false };
-
-  function defectLabel(slug) {
-    return DEFECT_LABELS[slug] || slug;
+  function qs(k) {
+    var m = new RegExp("[?&]" + k + "=([^&]*)").exec(window.location.search || "");
+    return m ? decodeURIComponent(m[1]) : null;
   }
-
-  /* --- severity segmented control --- */
-  var ACTIVE = ["bg-secondary", "text-white", "font-semibold", "shadow-sm"];
-  var INACTIVE = ["text-on-surface-variant", "hover:text-on-surface", "hover:bg-surface-container-lowest"];
-
+  function setCrumb(n) {
+    document.querySelectorAll("#crumb [data-crumb]").forEach(function (el) {
+      var on = parseInt(el.getAttribute("data-crumb"), 10) <= n;
+      el.classList.toggle("text-secondary", on);
+      el.classList.toggle("font-bold", on);
+      el.classList.toggle("text-on-surface-variant", !on);
+    });
+    var bar = document.getElementById("flow-progress");
+    if (bar) bar.style.width = (n === 1 ? 5 : n === 2 ? 45 : 90) + "%";
+  }
   function paintSeverity() {
     var group = document.querySelector("[data-ni-severity]");
     if (!group) return;
-    Array.prototype.forEach.call(group.querySelectorAll("button"), function (btn) {
+    group.querySelectorAll("button").forEach(function (btn) {
       var on = btn.getAttribute("data-sev") === state.severity;
-      ACTIVE.forEach(function (c) { btn.classList.toggle(c, on); });
-      INACTIVE.forEach(function (c) { btn.classList.toggle(c, !on); });
+      btn.classList.toggle("bg-secondary", on);
+      btn.classList.toggle("text-white", on);
+      btn.classList.toggle("font-semibold", on);
+      btn.classList.toggle("border-secondary", on);
+      btn.classList.toggle("text-on-surface-variant", !on);
     });
   }
-
-  /* --- stepper progress --- */
-  var stepDefaults = [];
-  function initStepper() {
-    stepDefaults = [];
-    Array.prototype.forEach.call(document.querySelectorAll("[data-step]"), function (el) {
-      var badge = el.querySelector("span");
-      stepDefaults.push({ el: el, badge: badge, cls: badge ? badge.className : "" });
-    });
-  }
-  function setStep(n) {
-    stepDefaults.forEach(function (s, i) {
-      if (!s.badge) return;
-      var idx = i + 1;
-      if (idx < n) {
-        s.badge.className = "flex items-center justify-center w-5 h-5 rounded-full bg-on-tertiary-container text-white font-label-sm text-label-sm font-bold shrink-0 mt-0.5";
-      } else if (idx === n) {
-        s.badge.className = "flex items-center justify-center w-5 h-5 rounded-full bg-secondary text-white font-label-sm text-label-sm font-bold shrink-0 mt-0.5 animate-pulse";
-      } else {
-        s.badge.className = s.cls;
-      }
-    });
-  }
-  function resetStepper() {
-    stepDefaults.forEach(function (s) { if (s.badge) s.badge.className = s.cls; });
-  }
-
-  /* --- submit --- */
-  function setBusy(btn, busy, label) {
-    if (!btn) return;
-    btn.style.pointerEvents = busy ? "none" : "";
-    btn.style.opacity = busy ? "0.75" : "";
-    var inner = btn.querySelector("div");
-    if (inner) {
-      if (busy) inner.setAttribute("data-orig", inner.innerHTML);
-      else if (inner.getAttribute("data-orig")) inner.innerHTML = inner.getAttribute("data-orig");
-    }
-    if (busy && inner) {
-      inner.innerHTML = '<span class="material-symbols-outlined text-[22px] animate-spin">progress_activity</span>' +
-        '<span class="font-headline-sm text-headline-sm font-bold tracking-tight">' + Validrift.esc(label) + "</span>";
+  function pstep(n, done) {
+    var row = document.querySelector('[data-pstep="' + n + '"]');
+    if (!row) return;
+    var icon = row.querySelector("[data-picon]");
+    if (done) {
+      row.classList.add("border-secondary/40");
+      if (icon) { icon.textContent = "check_circle"; icon.classList.add("text-on-tertiary-container"); }
+    } else {
+      if (icon) { icon.textContent = "progress_activity"; icon.classList.add("animate-spin", "text-secondary"); }
     }
   }
+  function advVal(name, fallback) {
+    var el = document.querySelector('[data-adv="' + name + '"]');
+    return el && el.value ? el.value : fallback;
+  }
 
-  async function submitIncident(ev) {
+  async function submit(ev) {
     if (ev) ev.preventDefault();
     if (state.submitting) return;
-    var api = window.ValidriftAPI;
-    var V = window.Validrift;
-    if (!api) { V.toast("API client not loaded."); return; }
-
+    var api = window.ValidriftAPI, V = window.Validrift;
     var defectSel = document.querySelector('[data-ni="defect"]');
-    var notesEl = document.getElementById("problem-notes");
-    var defect = defectLabel(defectSel ? defectSel.value : "weak-seal");
-    var notes = notesEl ? notesEl.value.trim() : "";
+    var defect = DEFECT_LABELS[defectSel.value] || defectSel.value;
+    var notes = document.getElementById("f-notes").value.trim();
     var ctx = state.ctx || {};
-
-    var btn = document.querySelector('[data-action="submit-incident"]');
+    var btn = document.getElementById("btn-analyze");
     state.submitting = true;
+    document.getElementById("step1-view").classList.add("hidden");
+    document.getElementById("progress-view").classList.remove("hidden");
+    btn.disabled = true;
     try {
-      setBusy(btn, true, "Saving incident…");
-      setStep(1); // RETAIN
+      pstep(1, false);
       var incident = await api.createIncident({
-        defect: defect,
-        severity: state.severity,
-        notes: notes,
+        defect: defect, severity: state.severity, notes: notes,
         machine: ctx.machine || "Sealer-02",
-        material: ctx.material || "Film-B",
-        supplier: ctx.supplier || "FlexPack",
-        recipe: ctx.recipe || "R11",
-        firmware: ctx.firmware || "V3"
+        material: advVal("material", ctx.material || "Film-B"),
+        supplier: advVal("supplier", ctx.supplier || "FlexPack"),
+        recipe: advVal("recipe", ctx.recipe || "R11"),
+        firmware: advVal("firmware", ctx.firmware || "V3")
       });
-
-      setBusy(btn, true, "Recalling relevant fixes…");
-      setStep(2); // RECALL
-
-      setBusy(btn, true, "Checking current context…");
-      setStep(3); // VALIDATE
-
-      setBusy(btn, true, "Recommendation ready.");
-      setStep(4); // RECOMMEND
-      // Fast deterministic recommendation: REFLECT must not block this flow.
+      pstep(1, true); pstep(2, false);
+      // Deterministic path: create -> recommend without reflection blocking.
+      pstep(2, true); pstep(3, false);
       var rec = await api.recommend(incident.id, false);
-
-      V.toast("Incident " + incident.id + " logged. Recommendation ready.");
-      V.go("recommendation.html", { id: rec.recommendation_id });
+      pstep(3, true); pstep(4, true);
+      var url = "recommendation.html?id=" + encodeURIComponent(rec.recommendation_id) +
+        (state.guided ? "&guided=1" : "");
+      window.location.href = url;
     } catch (err) {
-      resetStepper();
       V.toast(V.errorMessage(err));
-    } finally {
+      document.getElementById("progress-view").classList.add("hidden");
+      document.getElementById("step1-view").classList.remove("hidden");
+      btn.disabled = false;
       state.submitting = false;
-      setBusy(btn, false);
     }
   }
 
-  /* --- init --- */
   document.addEventListener("DOMContentLoaded", function () {
-    initStepper();
+    state.guided = qs("guided") === "1";
+    setCrumb(1);
     paintSeverity();
+    var exitBtn = document.getElementById("exit-flow");
+    exitBtn.textContent = state.guided ? "Exit Demo" : "Exit";
+    exitBtn.addEventListener("click", function () { window.location.href = "index.html"; });
 
-    var group = document.querySelector("[data-ni-severity]");
-    if (group) {
-      group.addEventListener("click", function (ev) {
-        var btn = ev.target.closest("button[data-sev]");
-        if (!btn) return;
-        state.severity = btn.getAttribute("data-sev");
-        paintSeverity();
-      });
+    if (state.guided) {
+      var callout = document.getElementById("guided-callout");
+      callout.classList.remove("hidden");
+      document.getElementById("guided-where").textContent = "\u2014 Step 1 of 3";
+      document.getElementById("guided-next").textContent =
+        "Report the current problem. The Weak Seal details are filled in \u2014 just click Analyze Incident.";
+      document.querySelector('[data-ni="defect"]').value = "weak-seal";
+      document.getElementById("f-notes").value = "Weak seals on Film-B / R11 pouches.";
     }
-
-    var submit = document.querySelector('[data-action="submit-incident"]');
-    if (submit) submit.addEventListener("click", submitIncident);
+    document.querySelector("[data-ni-severity]").addEventListener("click", function (e) {
+      var b = e.target.closest("button[data-sev]");
+      if (!b) return;
+      state.severity = b.getAttribute("data-sev");
+      paintSeverity();
+    });
+    document.getElementById("incident-form").addEventListener("submit", submit);
 
     var api = window.ValidriftAPI;
-    var V = window.Validrift;
-    if (api) {
-      api.processContext().then(function (ctx) {
-        state.ctx = ctx || {};
-        var map = { machine: "machine", material: "material", supplier: "supplier", recipe: "recipe" };
-        Object.keys(map).forEach(function (k) {
-          var el = document.querySelector('[data-ni-ctx="' + k + '"]');
-          if (el && ctx && ctx[map[k]]) {
-            el.textContent = (k === "recipe" ? "Recipe " : "") + ctx[map[k]];
+    if (api) api.processContext().then(function (ctx) {
+      state.ctx = ctx || {};
+      ["machine", "material", "supplier", "recipe", "firmware"].forEach(function (k) {
+        var el = document.querySelector('[data-ctx="' + k + '"]');
+        if (el && ctx && ctx[k]) el.textContent = ctx[k];
+        var adv = document.querySelector('[data-adv="' + k + '"]');
+        if (adv && ctx && ctx[k]) {
+          for (var i = 0; i < adv.options.length; i++) {
+            if (adv.options[i].text === ctx[k] || adv.options[i].value === ctx[k]) { adv.selectedIndex = i; break; }
           }
-        });
-      }).catch(function () { /* static fallback remains */ });
-
-      V.fillMemoryActivity("[data-memory-activity]");
-    }
+        }
+      });
+    }).catch(function () {});
   });
 })();
