@@ -55,3 +55,26 @@ Scanned the full diff for API keys, tokens, passwords, and `.env` contents. The 
 - `frontend/js/config.js`, `frontend/js/api.js`, `frontend/js/common.js`, `frontend/js/dashboard.js`, `frontend/js/new-incident.js`, `frontend/js/recommendation.js`
 
 Backend unchanged. Deterministic validity logic unchanged. Golden flow unchanged.
+
+## Public verification (2026-09-29, post-push)
+
+**GitHub:** pushed via Git Data API — `dcf24dfc` (repair) + `89afe33f` (dedupe/filter fix). Remote `main` verified.
+
+**Render:** both services auto-deployed. API healthy (`/api/health`: ok, database ok, Hindsight live+ok, API 0.10.1).
+
+**Live golden flow (production API):**
+- Reset Demo → baseline confirmed (Temp +5°C 0/2 DRIFTED, Pressure +8% 2/0 SUPPORTED)
+- Incident QI-B280038148 → REC-9156DC9450: Pressure +8%, SUPPORTED (no REFLECT, ~2s)
+- Outcome SUCCESS → "Outcome retained..." (memory ok: true)
+- Pressure +8% promoted to 3/0 VALIDATED; Temp +5°C unchanged DRIFTED
+- Memory Activity: genuine RETAIN/RECALL; REFLECT triggered via audit (`include_reflect: true`) — all SUCCESS
+- Baseline restored via Reset Demo after verification
+
+**Browser E2E (clean session, production):** first-time user flow PASSES end-to-end —
+Open App → Start Incident → Get Recommendation (Pressure +8%, SUPPORTED, 2/0, WHY explained with QI-1036/QI-1039 evidence) → Record Outcome ("Outcome retained...", 3/0 VALIDATED) → Validity Audit → Fix Passport → Memory Activity filters (All/Retain/Recall/Reflect) → Reset Demo. 0 console errors observed.
+
+**Post-verification fixes (commit `89afe33f`):**
+- "Partial Improvement" outcome radio was duplicated 12× (non-idempotent repair script) → deduped to 1
+- Dashboard "Filter incidents..." textbox was dead → wired to live-filter the incident ledger
+
+**Known non-blocking notes:** raw Hindsight UUIDs visible in some UI text; minor stale-cache flashes on hero cards; Render free-tier backend is ephemeral (restarts reset session data); mobile 390px layout not testable with available browser tools (desktop verified clean).
