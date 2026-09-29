@@ -1,0 +1,37 @@
+# render.yaml — Validrift one-click deploy (Render Blueprint)
+# The Hindsight API key is NOT stored here. After applying the Blueprint,
+# add HINDSIGHT_API_KEY in the Render dashboard: validrift-api → Environment.
+services:
+  - type: web
+    name: validrift-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /api/health
+    envVars:
+      - key: HINDSIGHT_MODE
+        value: live
+      - key: HINDSIGHT_API_URL
+        value: https://api.hindsight.vectorize.io
+      - key: HINDSIGHT_BANK_ID
+        value: validrift-demo
+      - key: SEED_DEMO
+        value: "true"
+      - key: CORS_ORIGINS
+        value: https://validrift-app.onrender.com
+      - key: HINDSIGHT_API_KEY
+        sync: false
+
+  - type: web
+    name: validrift-app
+    runtime: static
+    plan: free
+    buildCommand: >-
+      printf 'window.VALIDRIFT_API_BASE_URL="https://validrift-api.onrender.com/api";'
+      > frontend/js/deploy-api.js
+    staticPublishPath: ./frontend
+    routes:
+      - type: rewrite
+        source: /
+        destination: /index.html
