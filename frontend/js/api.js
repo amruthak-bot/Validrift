@@ -56,8 +56,8 @@
       if (err && err.name === "ApiError") throw err;
       var isAbort = err && (err.name === "AbortError" || err.name === "TimeoutError");
       throw new ApiError(
-        isAbort ? "The request timed out. The server may still be working." :
-          "Cannot reach the Validrift backend at " + baseUrl() + ". Is it running?",
+        isAbort ? "The request took too long. Please try again." :
+          "Unable to connect to Validrift. Please retry in a moment.",
         0, null
       );
     }
@@ -65,7 +65,9 @@
 
   function get(path, options) { return request(path, Object.assign({ method: "GET" }, options)); }
   function post(path, body, options) {
-    return request(path, Object.assign({ method: "POST", body: body, timeoutMs: 120000 }, options));
+    // Deterministic API calls get a tight timeout; Hindsight REFLECT may take
+    // longer and passes its own timeoutMs explicitly.
+    return request(path, Object.assign({ method: "POST", body: body, timeoutMs: 30000 }, options));
   }
 
   function enc(s) { return encodeURIComponent(s); }
@@ -86,7 +88,9 @@
     processChange: function (payload) { return post("/process-changes", payload); },
     validityAudit: function (payload) { return post("/validity-audit", payload || {}); },
     recommend: function (incidentId, useReflect) {
-      return post("/recommend", { incident_id: incidentId, use_reflect: useReflect !== false });
+      var reflect = useReflect !== false;
+      return post("/recommend", { incident_id: incidentId, use_reflect: reflect },
+        { timeoutMs: reflect ? 90000 : 30000 });
     },
     recommendation: function (id) { return get("/recommendations/" + enc(id)); },
     latestRecommendation: function () { return get("/recommendations/latest"); },

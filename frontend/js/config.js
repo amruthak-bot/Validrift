@@ -3,11 +3,24 @@
  *   1. ?api=<base> query parameter (also persisted to localStorage)
  *   2. localStorage "validrift_api_base"
  *   3. window.VALIDRIFT_API_BASE_URL (set before this file loads)
- *   4. default http://127.0.0.1:8000/api
+ *   4. environment-aware default:
+ *        local page (localhost / 127.0.0.1 / file:) -> http://127.0.0.1:8000/api
+ *        public hosted page                       -> https://validrift-api.onrender.com/api
  * No secrets live here. Never put API keys in frontend files.
  */
 (function () {
-  var DEFAULT_API = "http://127.0.0.1:8000/api";
+  var LOCAL_API = "http://127.0.0.1:8000/api";
+  var PROD_API = "https://validrift-api.onrender.com/api";
+
+  function isLocalPage() {
+    try {
+      var h = String(window.location.hostname || "");
+      var p = String(window.location.protocol || "");
+      return p === "file:" || h === "" || h === "localhost" || h === "127.0.0.1" || h === "[::1]";
+    } catch (e) { return true; }
+  }
+
+  var DEFAULT_API = isLocalPage() ? LOCAL_API : PROD_API;
 
   function fromQuery() {
     try {

@@ -209,9 +209,54 @@
   }
 
   /* --- Record Outcome --- */
+  function setOsText(key, text) {
+    var el = document.querySelector('[data-os="' + key + '"]');
+    if (el && text != null) el.textContent = text;
+  }
+
+  function resetOutcomeModal() {
+    var form = document.getElementById("record-outcome-form");
+    var panel = document.getElementById("outcome-success");
+    if (form) form.style.display = "";
+    if (panel) panel.classList.add("hidden");
+  }
+
+  function showOutcomeSuccess() {
+    var form = document.getElementById("record-outcome-form");
+    var panel = document.getElementById("outcome-success");
+    if (form) form.style.display = "none";
+    if (!panel) return;
+    panel.classList.remove("hidden");
+    setOsText("os-fix", rec ? rec.recommended_fix : "");
+    setOsText("os-counts", "Updating…");
+    var ctxKey = incident ? (incident.material + "/" + incident.recipe) : "";
+    window.ValidriftAPI.fixPassport(rec.recommended_fix).then(function (pp) {
+      var contexts = pp.contexts || [];
+      var cur = null;
+      contexts.forEach(function (c) {
+        var ev0 = (c.evidence || [])[0];
+        var key = ev0 && ev0.context ? (ev0.context.material + "/" + ev0.context.recipe) : "";
+        if (ctxKey && key === ctxKey) cur = c;
+      });
+      cur = cur || contexts[contexts.length - 1] || {};
+      setOsText("os-counts",
+        (cur.successes || 0) + ((cur.successes || 0) === 1 ? " success" : " successes") + " · " +
+        (cur.failures || 0) + ((cur.failures || 0) === 1 ? " failure" : " failures"));
+      var st = document.querySelector('[data-os="os-status"]');
+      if (st) st.innerHTML = window.Validrift.statusChip(cur.status || "—");
+      var link = document.querySelector('[data-os="os-passport"]');
+      if (link && rec) link.href = window.Validrift.passportUrl(rec.recommended_fix);
+    }).catch(function () {
+      setOsText("os-counts", "Saved — reopen the Fix Passport to see updated counts.");
+    });
+    window.Validrift.fillMemoryActivity("[data-memory-activity]");
+  }
+
   function wireOutcome() {
     var form = document.getElementById("record-outcome-form");
     if (!form) return;
+    var openBtn = document.getElementById("open-record-outcome");
+    if (openBtn) openBtn.addEventListener("click", resetOutcomeModal);
     form.addEventListener("submit", function (ev) {
       ev.preventDefault();
       var checked = form.querySelector('input[name="outcome"]:checked');
@@ -219,7 +264,7 @@
       var notesEl = form.querySelector("textarea");
       var notes = notesEl ? notesEl.value.trim() : "";
       var btn = document.getElementById("submit-modal-btn");
-      if (btn) btn.disabled = true;
+      if (btn) { btn.disabled = true; btn.textContent = "Saving…"; }
       window.ValidriftAPI.recordOutcome(recId, {
           followed: true,
           action_taken: rec ? rec.recommended_fix : "",
@@ -228,11 +273,17 @@
         })
         .then(function (res) {
           window.Validrift.toast((res && res.message) || ("Outcome recorded: " + outcome));
-          if (typeof toggleModal === "function") toggleModal("record-outcome-modal");
-          load(); // refresh evidence + counts
+          if (typeof toggleModal === "function") toggleModal(true); // keep modal open for the success state
+          return load();
         })
-        .catch(function (err) { window.Validrift.toast(window.Validrift.errorMessage(err)); })
-        .finally(function () { if (btn) btn.disabled = false; });
+        .then(function () { showOutcomeSuccess(); })
+        .catch(function (err) {
+          window.Validrift.toast(window.Validrift.errorMessage(err));
+          if (typeof toggleModal === "function") toggleModal(false);
+        })
+        .finally(function () {
+          if (btn) { btn.disabled = false; btn.textContent = "Save Outcome & Learn"; }
+        });
     });
   }
 

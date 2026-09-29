@@ -127,7 +127,7 @@
 <span class="font-label-sm text-label-sm tracking-wider uppercase text-on-primary-container/70 px-space-xs">Operations</span>
 </div>
 <nav class="flex flex-col gap-1 px-space-sm">
-<a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg transition-colors bg-secondary text-on-secondary font-medium shadow-sm" href="#">
+<a aria-current="page" data-path="overview-dashboard" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg transition-colors bg-secondary text-on-secondary font-medium shadow-sm" href="#">
 <span class="material-symbols-outlined text-[18px]">dashboard</span>
 <span>Overview</span>
 </a>
@@ -175,7 +175,7 @@
 <span class="material-symbols-outlined text-[16px]">memory</span>
 <span class="font-body-md text-body-md text-on-surface font-medium">Manufacturing Memory</span>
 <span class="text-outline">/</span>
-<span class="text-on-surface-variant">Telemetry</span>
+<span class="text-on-surface-variant">Overview</span>
 </div>
 </div>
 <div class="hidden md:flex items-center gap-space-xs px-space-md py-1 bg-surface-container-low border border-outline-variant/40 rounded-full font-label-sm text-label-sm text-on-surface-variant shadow-sm">
@@ -199,9 +199,7 @@
 <span class="material-symbols-outlined text-[18px]">add</span>
 <span>New Incident</span>
 </button>
-<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-sm text-on-primary font-bold text-xs">
-          OP
-        </div>
+<div class="flex items-center gap-2 ml-space-xs px-3 py-1.5 rounded-full bg-surface-container-low border border-outline-variant/40" title="Demo Operator — Sealer-02 Quality Workspace"><span class="material-symbols-outlined text-on-surface-variant text-[18px]">person</span><span class="font-label-sm text-label-sm font-semibold text-on-surface hidden lg:inline">Demo Operator</span></div>
 </div>
 </header>
 <!-- Main Workspace -->
@@ -227,6 +225,15 @@
 <p class="font-body-lg text-body-lg text-on-surface-variant">
                 Know not only what worked before — know whether it still works here.
               </p>
+<div class="mt-2 rounded-xl border border-outline-variant/40 bg-surface-container-lowest p-space-md">
+<div class="font-label-sm text-label-sm font-bold text-on-surface uppercase tracking-widest mb-2">Resolve a quality incident with Validrift</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm mb-3">
+<div class="flex items-start gap-2"><span class="w-6 h-6 rounded-full bg-secondary text-on-secondary font-label-sm text-label-sm font-bold flex items-center justify-center shrink-0">1</span><div><div class="font-body-sm text-body-sm font-semibold text-on-surface">Log Incident</div><div class="font-label-sm text-label-sm text-on-surface-variant">Describe the quality problem</div></div></div>
+<div class="flex items-start gap-2"><span class="w-6 h-6 rounded-full bg-secondary text-on-secondary font-label-sm text-label-sm font-bold flex items-center justify-center shrink-0">2</span><div><div class="font-body-sm text-body-sm font-semibold text-on-surface">Review Context-Valid Recommendation</div><div class="font-label-sm text-label-sm text-on-surface-variant">See which past fix still applies</div></div></div>
+<div class="flex items-start gap-2"><span class="w-6 h-6 rounded-full bg-secondary text-on-secondary font-label-sm text-label-sm font-bold flex items-center justify-center shrink-0">3</span><div><div class="font-body-sm text-body-sm font-semibold text-on-surface">Record Outcome &amp; Learn</div><div class="font-label-sm text-label-sm text-on-surface-variant">Save the result so memory improves</div></div></div>
+</div>
+<a href="new-incident.html" data-path="new-quality-incident" class="inline-flex items-center gap-2 px-space-md py-2 rounded-lg bg-secondary text-on-secondary font-body-md font-semibold hover:bg-secondary-container transition-colors"><span class="material-symbols-outlined text-[18px]">add</span>Start New Incident</a>
+</div>
 </div>
 <!-- Signature Component: The Memory Validity Rail -->
 <div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm border border-outline-variant/40 flex flex-col gap-space-sm">
@@ -823,10 +830,10 @@
 <!-- Filter chips -->
 <div class="px-space-lg py-2 border-b border-outline-variant/30 bg-surface-container-low/50">
 <div class="flex items-center gap-1 bg-surface-container rounded-lg p-0.5 font-label-sm text-label-sm">
-<button class="flex-1 py-1 text-center bg-surface-container-lowest text-on-surface font-semibold rounded shadow-xs" type="button">All (42)</button>
-<button class="flex-1 py-1 text-center text-on-surface-variant hover:text-on-surface rounded" type="button">Retain</button>
-<button class="flex-1 py-1 text-center text-on-surface-variant hover:text-on-surface rounded" type="button">Recall</button>
-<button class="flex-1 py-1 text-center text-on-surface-variant hover:text-on-surface rounded" type="button">Reflect</button>
+<button data-mf="ALL" class="flex-1 py-1 text-center bg-surface-container-lowest text-on-surface font-semibold rounded shadow-xs cursor-pointer" type="button">All</button>
+<button data-mf="RETAIN" class="flex-1 py-1 text-center text-on-surface-variant hover:text-on-surface rounded cursor-pointer" type="button">Retain</button>
+<button data-mf="RECALL" class="flex-1 py-1 text-center text-on-surface-variant hover:text-on-surface rounded cursor-pointer" type="button">Recall</button>
+<button data-mf="REFLECT" class="flex-1 py-1 text-center text-on-surface-variant hover:text-on-surface rounded cursor-pointer" type="button">Reflect</button>
 </div>
 </div>
 <!-- Drawer Stream -->
@@ -961,12 +968,6 @@
       }
     }
 
-    function triggerAudit() {
-      showToast('Running Memory Validity Audit on Sealer-02 (Film-B / R11)...');
-      setTimeout(() => {
-        showToast('Memory Audit Complete: 1 Supported (Pressure +8%), 1 Drifted (Temp +5°C).');
-      }, 1400);
-    }
 
     function toggleDrawer() {
       const drawer = document.getElementById('activity-drawer');
@@ -1013,17 +1014,7 @@
       openModal('record-incident-modal');
     }
 
-    function handleProcessSubmit(e) {
-      e.preventDefault();
-      closeModal('record-process-modal');
-      showToast('Process change recorded: Validity boundaries updated in Hindsight.');
-    }
 
-    function handleIncidentSubmit(e) {
-      e.preventDefault();
-      closeModal('record-incident-modal');
-      showToast('Incident outcome logged and retained in plant memory ledger.');
-    }
 
     function toggleExtraLedger() {
       const row1 = document.getElementById('extra-row-1');

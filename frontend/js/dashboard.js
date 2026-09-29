@@ -151,7 +151,13 @@
     '</div>';
   }
 
+  var lastActivity = [];
+  var lastDegraded = false;
+  var memoryFilter = 'ALL';
+  var MF_ACTIVE = ['bg-surface-container-lowest', 'text-on-surface', 'font-semibold', 'shadow-xs'];
   function renderMemory(activity, degraded) {
+    lastActivity = Array.isArray(activity) ? activity : [];
+    lastDegraded = !!degraded;
     var panel = $('[data-memory-panel]');
     var drawer = $('[data-memory-drawer-list]');
     var badge = $('[data-memory-count]');
@@ -164,8 +170,31 @@
     var rows = Array.isArray(activity) ? activity : [];
     var empty = '<div class="p-space-md text-center font-body-sm text-body-sm text-on-surface-variant">No memory activity recorded yet.</div>';
     if (panel) panel.innerHTML = rows.length ? rows.slice(0, 3).map(memoryRow).join('') : empty;
-    if (drawer) drawer.innerHTML = rows.length ? rows.map(memoryRow).join('') : empty;
+    if (drawer) drawer.innerHTML = filteredMemoryRows(rows);
     if (badge) badge.textContent = String(rows.length);
+  }
+  function filteredMemoryRows(rows) {
+    var list = rows.filter(function (t) { return memoryFilter === 'ALL' || t.operation === memoryFilter; });
+    if (!list.length) return '<div class="p-space-md text-center font-body-sm text-body-sm text-on-surface-variant">No ' + memoryFilter.toLowerCase() + ' activity recorded yet.</div>';
+    return list.map(memoryRow).join('');
+  }
+  function paintMemoryFilter() {
+    Array.prototype.forEach.call(document.querySelectorAll('[data-mf]'), function (b) {
+      var on = b.getAttribute('data-mf') === memoryFilter;
+      MF_ACTIVE.forEach(function (c) { b.classList.toggle(c, on); });
+      b.classList.toggle('hover:text-on-surface', !on);
+    });
+  }
+  function wireMemoryFilter() {
+    Array.prototype.forEach.call(document.querySelectorAll('[data-mf]'), function (b) {
+      b.addEventListener('click', function () {
+        memoryFilter = b.getAttribute('data-mf') || 'ALL';
+        paintMemoryFilter();
+        var drawer = $('[data-memory-drawer-list]');
+        if (drawer && !lastDegraded) drawer.innerHTML = filteredMemoryRows(lastActivity);
+      });
+    });
+    paintMemoryFilter();
   }
 
   /* ---------- incidents ledger ---------- */
@@ -259,8 +288,6 @@
         window.location.href = 'validity-audit.html?autorun=1';
       } else if (action === 'view-recommendation') {
         viewRecommendation(btn);
-      } else if (action === 'reset-demo') {
-        resetDemo();
       }
     });
   }
@@ -279,16 +306,6 @@
         btn.innerHTML = original;
         H.toast(H.errorMessage(err));
       });
-  }
-
-  function resetDemo() {
-    if (!window.confirm('Reset the demo scenario to the Film-B / R11 baseline? This clears all incidents, interventions, and memory traces.')) return;
-    api.resetDemo()
-      .then(function () {
-        H.toast('Demo scenario reset to Film-B / R11 baseline.');
-        window.location.reload();
-      })
-      .catch(function (err) { H.toast(H.errorMessage(err)); });
   }
 
   /* ---------- modals: real submits ---------- */
@@ -312,10 +329,8 @@
           .then(function () {
             if (window.closeModal) window.closeModal('record-process-modal');
             H.toast('Process change recorded: Validity boundaries updated in Hindsight.');
-            setTimeout(function () {
-              if (runAudit) window.location.href = 'validity-audit.html?autorun=1';
-              else window.location.reload();
-            }, 600);
+            if (runAudit) window.location.href = 'validity-audit.html?autorun=1';
+            else window.location.reload();
           })
           .catch(function (err) {
             if (btn) { btn.disabled = false; btn.textContent = original; }
@@ -341,7 +356,7 @@
           .then(function () {
             if (window.closeModal) window.closeModal('record-incident-modal');
             H.toast('Incident outcome logged and retained in plant memory ledger.');
-            setTimeout(function () { window.location.reload(); }, 600);
+            window.location.reload();
           })
           .catch(function (err) {
             if (btn) { btn.disabled = false; btn.textContent = original; }
@@ -358,6 +373,7 @@
       H.toast('Backend unreachable. Showing designed fallback content.');
       wireActions();
       wireForms();
+      wireMemoryFilter();
       return;
     }
     var degraded = !H.hindsightOk(health);
@@ -377,6 +393,7 @@
     }
     wireActions();
     wireForms();
+    wireMemoryFilter();
   }
 
   if (document.readyState === 'loading') {

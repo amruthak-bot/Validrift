@@ -13,7 +13,31 @@
     "fix-passport": "fix-passport.html",
   };
 
-  function go(path) { window.location.href = path; }
+  function go(path, params) {
+    var url = path;
+    var query = "";
+    if (params) {
+      if (typeof params === "object") {
+        query = Object.keys(params).map(function (k) {
+          return encodeURIComponent(k) + "=" + encodeURIComponent(params[k]);
+        }).join("&");
+      } else {
+        var t = String(params).trim();
+        if (t.charAt(0) === "{") {
+          try {
+            var obj = JSON.parse(t);
+            query = Object.keys(obj).map(function (k) {
+              return encodeURIComponent(k) + "=" + encodeURIComponent(obj[k]);
+            }).join("&");
+          } catch (e) { query = t.replace(/^\?/, ""); }
+        } else {
+          query = t.replace(/^\?/, "");
+        }
+      }
+    }
+    if (query) url += (path.indexOf("?") >= 0 ? "&" : "?") + query;
+    window.location.href = url;
+  }
 
   // --- navigation ---------------------------------------------------------
   document.addEventListener("click", function (e) {
@@ -24,8 +48,68 @@
     // Let explicit handlers (with data-nav="custom") do their own work.
     if (el.getAttribute("data-nav") === "custom") return;
     e.preventDefault();
-    var params = el.getAttribute("data-path-params");
-    go(dest + (params ? "?" + params : ""));
+    go(dest, el.getAttribute("data-path-params"));
+  });
+
+  // --- shared actions (used by every page) --------------------------------
+  function resetDemo() {
+    if (!window.confirm("Reset the demo to the canonical Film-B / R11 baseline? This clears incidents, interventions, and memory traces.")) return;
+    window.ValidriftAPI.resetDemo().then(function () {
+      toast("Demo reset successfully.");
+      window.location.reload();
+    }).catch(function (err) { toast(errorMessage(err)); });
+  }
+
+  var DRAWER_HTML =
+    '<div class="hidden fixed inset-0 z-50 overflow-hidden" id="memory-drawer">' +
+    '<div class="absolute inset-0 bg-inverse-surface/40 backdrop-blur-sm transition-opacity" data-drawer-close></div>' +
+    '<div class="fixed inset-y-0 right-0 max-w-full flex pl-10">' +
+    '<div class="w-screen max-w-md bg-surface-container-lowest shadow-2xl flex flex-col">' +
+    '<div class="p-space-lg border-b border-surface-container flex items-center justify-between">' +
+    '<div class="flex items-center gap-space-xs">' +
+    '<span class="material-symbols-outlined text-secondary text-[22px]">history</span>' +
+    "<div><h3 class=\"font-headline-sm text-headline-sm font-bold text-on-surface\">Memory Activity</h3>" +
+    '<p class="font-label-sm text-label-sm text-on-surface-variant">Hindsight Engine Recall Feed</p></div></div>' +
+    '<button class="p-1 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors cursor-pointer" data-action="close-drawer" type="button">' +
+    '<span class="material-symbols-outlined text-[20px]">close</span></button></div>' +
+    '<div class="p-space-lg flex flex-col gap-space-md overflow-y-auto" data-memory-drawer-list></div>' +
+    "</div></div></div>";
+
+  function ensureDrawer() {
+    var d = document.getElementById("memory-drawer");
+    if (!d) {
+      // Pages with their own drawer keep it; the shared drawer is only a fallback.
+      if (document.getElementById("memory-activity-drawer") || document.getElementById("activity-drawer")) return null;
+      var tmp = document.createElement("div");
+      tmp.innerHTML = DRAWER_HTML;
+      d = tmp.firstChild;
+      document.body.appendChild(d);
+    }
+    return d;
+  }
+
+  function openDrawer() {
+    var d = ensureDrawer();
+    if (!d) {
+      if (typeof window.toggleDrawer === "function") window.toggleDrawer();
+      return;
+    }
+    d.classList.remove("hidden");
+    fillMemoryActivity("[data-memory-drawer-list]", 30);
+  }
+
+  function closeDrawer() {
+    var d = document.getElementById("memory-drawer");
+    if (d) d.classList.add("hidden");
+  }
+
+  document.addEventListener("click", function (e) {
+    var opener = e.target && e.target.closest ? e.target.closest('[data-action="open-drawer"]') : null;
+    if (opener) { e.preventDefault(); openDrawer(); return; }
+    var closer = e.target && e.target.closest ? e.target.closest('[data-action="close-drawer"], [data-drawer-close]') : null;
+    if (closer) { closeDrawer(); return; }
+    var resetter = e.target && e.target.closest ? e.target.closest('[data-action="reset-demo"]') : null;
+    if (resetter) { e.preventDefault(); resetDemo(); }
   });
 
   function passportUrl(fixName, defect) {
@@ -206,6 +290,9 @@
     go: go,
     passportUrl: passportUrl,
     toast: toast,
+    resetDemo: resetDemo,
+    openDrawer: openDrawer,
+    closeDrawer: closeDrawer,
     esc: esc,
     fmtDate: fmtDate,
     fmtDay: fmtDay,

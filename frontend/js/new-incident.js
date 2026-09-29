@@ -89,7 +89,7 @@
     var btn = document.querySelector('[data-action="submit-incident"]');
     state.submitting = true;
     try {
-      setBusy(btn, true, "Retaining incident memory…");
+      setBusy(btn, true, "Saving incident…");
       setStep(1); // RETAIN
       var incident = await api.createIncident({
         defect: defect,
@@ -102,17 +102,16 @@
         firmware: ctx.firmware || "V3"
       });
 
-      setBusy(btn, true, "Recalling similar fixes…");
+      setBusy(btn, true, "Recalling relevant fixes…");
       setStep(2); // RECALL
-      await new Promise(function (r) { setTimeout(r, 350); });
 
-      setBusy(btn, true, "Validating against current context…");
+      setBusy(btn, true, "Checking current context…");
       setStep(3); // VALIDATE
-      await new Promise(function (r) { setTimeout(r, 350); });
 
-      setBusy(btn, true, "Generating recommendation…");
+      setBusy(btn, true, "Recommendation ready.");
       setStep(4); // RECOMMEND
-      var rec = await api.recommend({ incident_id: incident.id });
+      // Fast deterministic recommendation: REFLECT must not block this flow.
+      var rec = await api.recommend(incident.id, false);
 
       V.toast("Incident " + incident.id + " logged. Recommendation ready.");
       V.go("recommendation.html", { id: rec.recommendation_id });
