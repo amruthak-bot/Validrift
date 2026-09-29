@@ -13,6 +13,7 @@
     "memory-validity-audit": "validity-audit.html",
     "fix-passport": "fix-passport.html",
     "memory-activity": "memory-activity.html",
+    "knowledge-map": "knowledge-map.html",
   };
 
   function go(path, params) {
@@ -182,31 +183,36 @@
     var h = Math.floor(m / 60);
     if (h < 24) return h + " hr ago";
     var days = Math.floor(h / 24);
-    return days + (days === 1 ? " day ago" : " days ago");
+    if (days < 7) return days + (days === 1 ? " day ago" : " days ago");
+    var weeks = Math.floor(days / 7);
+    if (weeks < 5) return weeks + (weeks === 1 ? " week ago" : " weeks ago");
+    var months = Math.floor(days / 30);
+    if (months < 12) return months + (months === 1 ? " month ago" : " months ago");
+    var years = Math.floor(days / 365);
+    return years + (years === 1 ? " year ago" : " years ago");
   }
 
-  // --- status chips (same palette language as the Stitch markup) ----------
+  // --- status chips (theme-aware classes defined in css/theme.css) --------------
   var STATUS_STYLE = {
-    "VALIDATED": "background:#E4F4E8;color:#166534;border:1px solid #16653433;",
-    "SUPPORTED": "background:#DFF5F0;color:#0C6E63;border:1px solid #0C6E6333;",
-    "DRIFTED": "background:#FDECEA;color:#C62828;border:1px solid #C6282833;",
-    "REVALIDATION REQUIRED": "background:#FFF7E0;color:#9A6B1A;border:1px solid #9A6B1A33;",
-    "UNVERIFIED": "background:#E8EEF7;color:#3F5B8A;border:1px solid #3F5B8A33;",
-    "INSUFFICIENT EVIDENCE": "background:#F1F3F7;color:#6B7280;border:1px solid #6B728033;",
-    "SUCCESS": "background:#E4F4E8;color:#166534;border:1px solid #16653433;",
-    "FAILURE": "background:#FDECEA;color:#C62828;border:1px solid #C6282833;",
-    "PARTIAL IMPROVEMENT": "background:#FFF7E0;color:#9A6B1A;border:1px solid #9A6B1A33;",
-    "RETAIN": "background:#E4F4E8;color:#166534;border:1px solid #16653433;",
-    "RECALL": "background:#E8EEF7;color:#3F5B8A;border:1px solid #3F5B8A33;",
-    "REFLECT": "background:#EFE7FB;color:#6D3BC7;border:1px solid #6D3BC733;",
+    "VALIDATED": "vr-chip vr-chip-validated",
+    "SUPPORTED": "vr-chip vr-chip-supported",
+    "DRIFTED": "vr-chip vr-chip-drifted",
+    "REVALIDATION REQUIRED": "vr-chip vr-chip-revalidation",
+    "UNVERIFIED": "vr-chip vr-chip-unverified",
+    "INSUFFICIENT EVIDENCE": "vr-chip vr-chip-insufficient",
+    "SUCCESS": "vr-chip vr-chip-success",
+    "FAILURE": "vr-chip vr-chip-failure",
+    "PARTIAL IMPROVEMENT": "vr-chip vr-chip-partial",
+    "RETAIN": "vr-chip vr-chip-retain",
+    "RECALL": "vr-chip vr-chip-recall",
+    "REFLECT": "vr-chip vr-chip-reflect",
   };
 
   function statusChip(status, extraClass) {
     var s = String(status || "—").toUpperCase();
-    var style = STATUS_STYLE[s] || STATUS_STYLE["INSUFFICIENT EVIDENCE"];
-    return '<span class="' + (extraClass || "") + '" style="display:inline-flex;align-items:center;gap:6px;' +
-      'padding:3px 10px;border-radius:6px;font:600 10px \'JetBrains Mono\',monospace;letter-spacing:.04em;white-space:nowrap;' +
-      style + '"><span style="width:6px;height:6px;border-radius:9999px;background:currentColor;display:inline-block;"></span>' +
+    var cls = STATUS_STYLE[s] || STATUS_STYLE["INSUFFICIENT EVIDENCE"];
+    return '<span class="' + cls + (extraClass ? " " + extraClass : "") + '">' +
+      '<span style="width:6px;height:6px;border-radius:9999px;background:currentColor;display:inline-block;flex-shrink:0;"></span>' +
       esc(status || "—") + "</span>";
   }
 

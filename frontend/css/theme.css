@@ -1,0 +1,363 @@
+/* ============================================================
+   VALIDRIFT theme system — "Forge" (dark, default) + "Dayshift" (light)
+   Industrial palette. No blue anywhere. All colors as RGB triplets so
+   Tailwind's <alpha-value> opacity modifiers keep working:
+     tailwind.config colors -> "rgb(var(--token) / <alpha-value>)"
+   ============================================================ */
+
+/* ---------- FORGE (dark industrial, default) ---------- */
+:root {
+  --background: 20 17 13;
+  --on-background: 243 238 229;
+  --surface: 28 24 19;
+  --surface-dim: 14 12 9;
+  --surface-bright: 36 31 25;
+  --surface-container-lowest: 24 20 16;
+  --surface-container-low: 28 24 19;
+  --surface-container: 37 32 26;
+  --surface-container-high: 47 40 32;
+  --surface-container-highest: 58 49 39;
+  --surface-variant: 47 40 32;
+  --surface-tint: 232 163 61;
+  --on-surface: 243 238 229;
+  --on-surface-variant: 172 161 144;
+  --inverse-surface: 233 225 209;
+  --inverse-on-surface: 30 25 20;
+  --inverse-primary: 241 201 131;
+
+  --primary: 232 163 61;
+  --on-primary: 26 18 6;
+  --primary-container: 64 46 22;
+  --on-primary-container: 244 215 161;
+  --primary-fixed: 232 163 61;
+  --primary-fixed-dim: 201 141 51;
+  --on-primary-fixed: 26 18 6;
+  --on-primary-fixed-variant: 203 172 121;
+
+  --secondary: 232 163 61;
+  --on-secondary: 26 18 6;
+  --secondary-container: 99 68 31;
+  --on-secondary-container: 251 236 211;
+  --secondary-fixed: 99 68 31;
+  --secondary-fixed-dim: 152 112 61;
+  --on-secondary-fixed: 251 236 211;
+  --on-secondary-fixed-variant: 203 163 102;
+
+  --tertiary: 125 178 120;
+  --on-tertiary: 18 28 20;
+  --tertiary-container: 32 54 40;
+  --on-tertiary-container: 196 224 199;
+  --tertiary-fixed: 134 203 154;
+  --tertiary-fixed-dim: 103 173 124;
+  --on-tertiary-fixed: 20 32 24;
+  --on-tertiary-fixed-variant: 164 212 174;
+
+  --error: 226 103 92;
+  --on-error: 30 12 10;
+  --error-container: 72 31 27;
+  --on-error-container: 249 206 196;
+
+  --outline: 98 88 72;
+  --outline-variant: 63 55 45;
+
+  /* machine-art + decor */
+  --steel: 138 129 119;
+  --steel-dim: 88 80 70;
+  --hazard: 232 163 61;
+  --grid-line: 255 255 255;
+}
+
+/* ---------- DAYSHIFT (light warm paper) ---------- */
+[data-theme="dayshift"] {
+  --background: 250 246 238;
+  --on-background: 34 26 18;
+  --surface: 255 253 249;
+  --surface-dim: 233 223 206;
+  --surface-bright: 255 253 249;
+  --surface-container-lowest: 255 255 255;
+  --surface-container-low: 247 241 230;
+  --surface-container: 242 234 219;
+  --surface-container-high: 232 221 201;
+  --surface-container-highest: 220 207 185;
+  --surface-variant: 232 221 201;
+  --surface-tint: 179 78 18;
+  --on-surface: 34 26 18;
+  --on-surface-variant: 108 96 80;
+  --inverse-surface: 41 33 25;
+  --inverse-on-surface: 250 246 238;
+  --inverse-primary: 141 61 13;
+
+  --primary: 179 78 18;
+  --on-primary: 255 255 255;
+  --primary-container: 247 225 197;
+  --on-primary-container: 97 45 11;
+  --primary-fixed: 179 78 18;
+  --primary-fixed-dim: 201 121 61;
+  --on-primary-fixed: 255 255 255;
+  --on-primary-fixed-variant: 121 71 31;
+
+  --secondary: 179 78 18;
+  --on-secondary: 255 255 255;
+  --secondary-container: 233 184 133;
+  --on-secondary-container: 81 39 9;
+  --secondary-fixed: 233 184 133;
+  --secondary-fixed-dim: 201 141 71;
+  --on-secondary-fixed: 61 31 7;
+  --on-secondary-fixed-variant: 141 81 31;
+
+  --tertiary: 62 122 92;
+  --on-tertiary: 255 255 255;
+  --tertiary-container: 215 233 219;
+  --on-tertiary-container: 31 71 56;
+  --tertiary-fixed: 151 211 171;
+  --tertiary-fixed-dim: 121 181 141;
+  --on-tertiary-fixed: 21 41 31;
+  --on-tertiary-fixed-variant: 61 111 81;
+
+  --error: 187 27 27;
+  --on-error: 255 255 255;
+  --error-container: 255 219 215;
+  --on-error-container: 151 21 21;
+
+  --outline: 151 136 116;
+  --outline-variant: 206 191 166;
+
+  --steel: 110 100 88;
+  --steel-dim: 150 138 120;
+  --hazard: 179 78 18;
+  --grid-line: 60 45 25;
+}
+
+/* ---------- base ---------- */
+html { scroll-behavior: smooth; }
+body {
+  background: rgb(var(--background));
+  color: rgb(var(--on-surface));
+  transition: background-color .35s ease, color .35s ease;
+}
+::selection { background: rgb(var(--primary) / .35); }
+:focus-visible { outline: 2px solid rgb(var(--primary)); outline-offset: 2px; border-radius: 4px; }
+
+/* blueprint grid backdrop (forge) */
+.blueprint-bg {
+  background-image:
+    linear-gradient(rgb(var(--grid-line) / .045) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--grid-line) / .045) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 20%, black 30%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 20%, black 30%, transparent 100%);
+}
+[data-theme="dayshift"] .blueprint-bg {
+  background-image:
+    linear-gradient(rgb(var(--grid-line) / .06) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--grid-line) / .06) 1px, transparent 1px);
+}
+
+/* hazard stripe divider — thin industrial accent */
+.hazard {
+  height: 6px; border-radius: 3px;
+  background: repeating-linear-gradient(-45deg,
+    rgb(var(--hazard)) 0 12px, transparent 12px 24px);
+  opacity: .85;
+}
+.hazard-thin { height: 3px; }
+
+/* ---------- entrance + motion ---------- */
+@keyframes vr-fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.vr-enter { animation: vr-fade-up .55s cubic-bezier(.22,.8,.3,1) both; }
+.vr-enter-1 { animation-delay: .06s; } .vr-enter-2 { animation-delay: .14s; }
+.vr-enter-3 { animation-delay: .22s; } .vr-enter-4 { animation-delay: .3s; }
+.vr-enter-5 { animation-delay: .38s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .vr-enter, .film-flow, .gear-spin, .beacon-pulse, .glow-pulse { animation: none !important; }
+  * { transition-duration: .01ms !important; }
+}
+
+/* recommended-fix glow (slow, tasteful) */
+@keyframes vr-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(var(--primary) / 0); }
+  50%      { box-shadow: 0 0 34px 2px rgb(var(--primary) / .22); }
+}
+.glow-pulse { animation: vr-glow 4.5s ease-in-out infinite; }
+
+/* progress shimmer */
+@keyframes vr-shimmer { from { transform: translateX(-100%); } to { transform: translateX(250%); } }
+.shimmer-bar { position: relative; overflow: hidden; }
+.shimmer-bar::after {
+  content: ""; position: absolute; inset: 0; width: 40%;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / .25), transparent);
+  animation: vr-shimmer 1.6s ease-in-out infinite;
+}
+
+/* card lift */
+.lift { transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+.lift:hover { transform: translateY(-3px); box-shadow: 0 14px 30px -12px rgb(0 0 0 / .45); }
+
+/* primary button press */
+.btn-press { transition: transform .12s ease, box-shadow .2s ease, background-color .2s ease; }
+.btn-press:active { transform: scale(.97); }
+
+/* ---------- status chips (theme-aware, no blue) ---------- */
+.vr-chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-family: "JetBrains Mono", monospace; font-size: 10px; font-weight: 600;
+  letter-spacing: .04em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 999px; border: 1px solid;
+  white-space: nowrap;
+}
+.vr-chip-validated, .vr-chip-success, .vr-chip-retain {
+  background: rgb(var(--tertiary-container)); color: rgb(var(--on-tertiary-container));
+  border-color: rgb(var(--tertiary) / .4);
+}
+.vr-chip-supported {
+  background: rgb(var(--tertiary-container) / .6); color: rgb(var(--on-tertiary-container));
+  border-color: rgb(var(--tertiary-fixed-dim) / .5);
+}
+.vr-chip-drifted, .vr-chip-failure, .vr-chip-error {
+  background: rgb(var(--error-container)); color: rgb(var(--on-error-container));
+  border-color: rgb(var(--error) / .4);
+}
+.vr-chip-revalidation, .vr-chip-partial {
+  background: rgb(var(--primary) / .14); color: rgb(var(--primary));
+  border-color: rgb(var(--primary) / .45);
+}
+.vr-chip-unverified, .vr-chip-insufficient, .vr-chip-neutral {
+  background: rgb(var(--surface-container-high)); color: rgb(var(--on-surface-variant));
+  border-color: rgb(var(--outline-variant));
+}
+.vr-chip-recall {
+  background: rgb(var(--surface-container-high)); color: rgb(var(--on-surface));
+  border-color: rgb(var(--steel) / .5);
+}
+.vr-chip-reflect {
+  background: rgb(var(--primary-container)); color: rgb(var(--on-primary-container));
+  border-color: rgb(var(--primary) / .4);
+}
+
+/* ---------- machine line-art (landing hero) ---------- */
+.machine-art .ma-stroke { stroke: rgb(var(--steel)); fill: none; stroke-width: 2; stroke-linecap: round; }
+.machine-art .ma-accent { stroke: rgb(var(--primary)); fill: none; stroke-width: 2.5; stroke-linecap: round; }
+.machine-art .ma-fill-accent { fill: rgb(var(--primary)); stroke: none; }
+.machine-art .ma-fill-steel { fill: rgb(var(--steel)); stroke: none; }
+.machine-art .ma-ghost { stroke: rgb(var(--steel) / .28); fill: none; stroke-width: 1.5; }
+
+@keyframes vr-dash-flow { to { stroke-dashoffset: -28; } }
+.machine-art .film-flow {
+  stroke-dasharray: 10 18;
+  animation: vr-dash-flow 2.2s linear infinite;
+}
+@keyframes vr-gear { to { transform: rotate(360deg); } }
+.machine-art .gear-spin {
+  transform-origin: center; transform-box: fill-box;
+  animation: vr-gear 14s linear infinite;
+}
+.machine-art .gear-spin-rev {
+  transform-origin: center; transform-box: fill-box;
+  animation: vr-gear 18s linear infinite reverse;
+}
+@keyframes vr-beacon { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+.machine-art .beacon-pulse { animation: vr-beacon 2.4s ease-in-out infinite; }
+@keyframes vr-jaw { 0%,100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+.machine-art .jaw-move {
+  transform-box: fill-box;
+  animation: vr-jaw 3.6s ease-in-out infinite;
+}
+
+/* ---------- guided tour (coachmarks) ---------- */
+#vr-tour-backdrop {
+  position: fixed; inset: 0; z-index: 90;
+  background: rgb(10 8 6 / .62); backdrop-filter: blur(2px);
+  opacity: 0; transition: opacity .3s ease;
+}
+#vr-tour-backdrop.vr-show { opacity: 1; }
+.vr-spotlight {
+  position: fixed; z-index: 91; pointer-events: none;
+  border: 2px solid rgb(var(--primary)); border-radius: 14px;
+  box-shadow: 0 0 0 4000px rgb(10 8 6 / .0), 0 0 28px rgb(var(--primary) / .55);
+  transition: all .35s cubic-bezier(.22,.8,.3,1);
+}
+.vr-spotlight::after {
+  content: ""; position: absolute; inset: -2px; border-radius: 14px;
+  border: 2px solid rgb(var(--primary) / .5);
+  animation: vr-beacon 1.8s ease-in-out infinite;
+}
+#vr-tour-card {
+  position: fixed; z-index: 92; max-width: 320px;
+  background: rgb(var(--surface-container-highest));
+  border: 1px solid rgb(var(--outline-variant));
+  border-radius: 14px; padding: 18px;
+  box-shadow: 0 24px 60px -12px rgb(0 0 0 / .6);
+  transition: all .35s cubic-bezier(.22,.8,.3,1);
+}
+#vr-tour-card h4 { font-weight: 700; font-size: 15px; margin-bottom: 6px; color: rgb(var(--on-surface)); }
+#vr-tour-card p { font-size: 13px; line-height: 1.55; color: rgb(var(--on-surface-variant)); }
+#vr-tour-card .vr-tour-steps { font-family: "JetBrains Mono", monospace; font-size: 10px; letter-spacing: .08em; color: rgb(var(--primary)); text-transform: uppercase; margin-bottom: 8px; }
+
+/* inline hint chip (contextual, dismissible) */
+.vr-hint {
+  display: flex; gap: 10px; align-items: flex-start;
+  background: rgb(var(--primary) / .1);
+  border: 1px solid rgb(var(--primary) / .35);
+  border-radius: 12px; padding: 12px 14px;
+  font-size: 13px; line-height: 1.5; color: rgb(var(--on-surface));
+  animation: vr-fade-up .5s ease both;
+}
+.vr-hint .material-symbols-outlined { color: rgb(var(--primary)); font-size: 20px; flex-shrink: 0; }
+.vr-hint button { margin-left: auto; flex-shrink: 0; opacity: .6; }
+.vr-hint button:hover { opacity: 1; }
+
+/* ---------- how-it-works strip ---------- */
+.hiw-step { transition: transform .25s ease, border-color .25s ease, background-color .25s ease; cursor: pointer; }
+.hiw-step:hover { transform: translateY(-4px); }
+.hiw-step.hiw-active { border-color: rgb(var(--primary)) !important; background: rgb(var(--primary) / .07); }
+.hiw-step.hiw-active .hiw-num { background: rgb(var(--primary)); color: rgb(var(--on-primary)); }
+.hiw-num {
+  width: 30px; height: 30px; border-radius: 999px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: "JetBrains Mono", monospace; font-size: 12px; font-weight: 700;
+  background: rgb(var(--surface-container-high)); color: rgb(var(--on-surface-variant));
+  transition: all .25s ease;
+}
+
+/* ---------- knowledge map ---------- */
+#km-svg { width: 100%; height: 100%; display: block; touch-action: none; }
+.km-node { cursor: pointer; }
+.km-node circle.km-halo { fill: transparent; }
+.km-node:hover circle.km-halo { fill: rgb(var(--primary) / .18); }
+.km-node.km-selected circle.km-core { stroke: rgb(var(--primary)); stroke-width: 3; }
+.km-label {
+  font-family: "Inter", sans-serif; font-size: 11px; font-weight: 600;
+  fill: rgb(var(--on-surface)); paint-order: stroke;
+  stroke: rgb(var(--background)); stroke-width: 3px; pointer-events: none;
+}
+.km-edge { stroke-linecap: round; }
+.km-edge-label {
+  font-family: "JetBrains Mono", monospace; font-size: 9px;
+  fill: rgb(var(--on-surface-variant)); pointer-events: none;
+}
+#km-panel { animation: vr-fade-up .35s ease both; }
+
+/* memory reference line */
+.mem-ref {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-size: 12.5px; color: rgb(var(--on-surface-variant));
+}
+.mem-ref .material-symbols-outlined { font-size: 17px; color: rgb(var(--primary)); }
+
+/* theme toggle */
+#vr-theme-toggle { transition: transform .3s ease, background-color .2s ease; }
+#vr-theme-toggle:hover { transform: rotate(18deg); }
+
+/* ---------- knowledge map ---------- */
+#km-svg { width: 100%; height: 100%; display: block; cursor: grab; background: transparent; }
+#km-svg:active { cursor: grabbing; }
+.km-node { cursor: pointer; }
+.km-node .km-halo { fill: rgb(var(--primary) / 0.0); transition: fill .18s ease; }
+.km-node:hover .km-halo, .km-node.km-selected .km-halo { fill: rgb(var(--primary) / 0.14); }
+.km-node.km-selected .km-core { stroke: rgb(var(--primary)); stroke-width: 3; }
+.km-label { fill: rgb(var(--on-surface)); font-size: 12px; font-weight: 600; paint-order: stroke; stroke: rgb(var(--surface-container-lowest)); stroke-width: 3px; }
+.km-edge-label { fill: rgb(var(--on-surface-variant)); font-size: 10px; font-weight: 600; paint-order: stroke; stroke: rgb(var(--surface-container-lowest)); stroke-width: 3px; }

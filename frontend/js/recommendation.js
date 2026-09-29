@@ -39,6 +39,56 @@
     return (s || 0) + ((s || 0) === 1 ? " success" : " successes") + " \u00b7 " +
            (f || 0) + ((f || 0) === 1 ? " failure" : " failures");
   }
+
+  /* Honest long-term-memory references, derived from real evidence timestamps. */
+  function memRefLine(evidence) {
+    var V = window.Validrift;
+    var items = (evidence || []).filter(function (e) { return e && e.date; });
+    if (!items.length) return "";
+    var times = items.map(function (e) { return new Date(e.date).getTime(); })
+      .filter(function (t) { return !isNaN(t); }).sort(function (a, b) { return a - b; });
+    if (!times.length) return "";
+    var first = V.timeAgo(new Date(times[0]).toISOString());
+    var last = V.timeAgo(new Date(times[times.length - 1]).toISOString());
+    var n = items.length;
+    return '<div class="mem-ref"><span class="material-symbols-outlined">history</span><span>' +
+      "First recorded " + V.esc(first) + " \u00b7 most recent " + V.esc(last) +
+      " \u00b7 " + n + (n === 1 ? " dated record" : " dated records") + "</span></div>";
+  }
+
+  function relatedCtxStrip(evidence, curCtx) {
+    var V = window.Validrift;
+    var groups = {};
+    (evidence || []).forEach(function (e) {
+      var c = e.context || {};
+      var key = (c.material || "?") + " / " + (c.recipe || "?");
+      if (key === curCtx) return;
+      if (!groups[key]) groups[key] = { n: 0, s: 0 };
+      groups[key].n++;
+      if (e.outcome === "SUCCESS") groups[key].s++;
+    });
+    var keys = Object.keys(groups);
+    if (!keys.length) return "";
+    var chips = keys.map(function (k) {
+      return '<span class="vr-chip vr-chip-neutral">' + V.esc(k) + " \u00b7 " +
+        groups[k].s + "/" + groups[k].n + " worked</span>";
+    }).join("");
+    return '<div class="mt-3"><p class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant font-semibold">Also remembered in other contexts</p>' +
+      '<div class="mt-1.5 flex flex-wrap gap-1.5">' + chips + "</div></div>";
+  }
+
+  function evidenceRows(evidence) {
+    var V = window.Validrift;
+    return (evidence || []).map(function (e) {
+      var c = e.context || {};
+      var ctx = ((c.material || "") + " / " + (c.recipe || "")).replace(/^ \/ | \/ $/g, "") || "\u2014";
+      return '<div class="flex items-center justify-between gap-2 py-1.5 border-b border-outline-variant/30 last:border-0">' +
+        "<span>" + V.statusChip(e.outcome || "") +
+        ' <span class="font-body-sm text-body-sm">' + V.esc(e.fix_name || "") + " \u00b7 " + V.esc(ctx) + "</span></span>" +
+        '<span class="font-label-sm text-label-sm text-on-surface-variant whitespace-nowrap">recorded ' +
+        V.esc(V.timeAgo(e.date) || V.fmtDay(e.date)) + "</span></div>";
+    }).join("");
+  }
   function pickRejected() {
     var alts = rec.alternative_fixes || [];
     if (!alts.length) return null;
@@ -69,6 +119,11 @@
     setText("ctx", ctx);
     setText("why-text", rec.recommended_fix + " has worked " + (s || 0) +
       ((s || 0) === 1 ? " time" : " times") + " in the current " + ctx + " production context.");
+    var sup = rec.supporting_evidence || [];
+    var memRef = document.querySelector('[data-r="mem-ref"]');
+    if (memRef) memRef.innerHTML = memRefLine(sup);
+    var relCtx = document.querySelector('[data-r="related-ctx"]');
+    if (relCtx) relCtx.innerHTML = relatedCtxStrip(sup, ctx);
 
     var rej = pickRejected();
     if (rej) {
@@ -91,6 +146,8 @@
       var supN = (rec.supporting_evidence || []).length, conN = (rec.conflicting_evidence || []).length;
       parts.push("<p class=\"mt-2\">" + supN + " supporting record(s) and " + conN +
         " conflicting record(s) in the current context.</p>");
+      var rows = evidenceRows(rec.supporting_evidence);
+      if (rows) parts.push('<div class="mt-2">' + rows + "</div>");
       det.innerHTML = parts.join("");
     }
   }
@@ -225,6 +282,11 @@
     document.getElementById("btn-why-changed").addEventListener("click", function () {
       window.location.href = "overview.html";
     });
+    var helpBtn = document.getElementById("btn-help");
+    if (helpBtn && window.ValidriftTour) {
+      helpBtn.addEventListener("click", function () { window.ValidriftTour.start("recommendation"); });
+      if (!guided) window.ValidriftTour.auto("recommendation");
+    }
     load();
   });
 })();
