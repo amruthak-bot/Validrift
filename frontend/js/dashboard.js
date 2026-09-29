@@ -197,6 +197,16 @@
     paintMemoryFilter();
   }
 
+  var lastDash = null;
+  function wireIncidentFilter() {
+    var input = $('[data-incidents-filter]');
+    if (!input) return;
+    input.addEventListener('input', function () {
+      incidentFilterText = input.value || '';
+      if (lastDash) renderIncidents(lastDash);
+    });
+  }
+
   /* ---------- incidents ledger ---------- */
   function validityPill(status) {
     if (!status) return '<span class="font-label-sm text-[10px] px-2 py-0.5 rounded font-bold bg-surface-container text-on-surface-variant">\u2014</span>';
@@ -208,14 +218,23 @@
     return '<span class="font-label-sm text-[10px] px-2 py-0.5 rounded font-bold ' + (good ? 'bg-[#DCFCE7] text-[#15803D]' : 'bg-[#FEE2E2] text-[#DC2626]') + '">' + esc(outcome) + '</span>';
   }
 
+  var incidentFilterText = '';
+
   function renderIncidents(dash) {
     var tbody = $('[data-incidents-tbody]');
     var note = $('[data-incidents-note]');
     var rows = dash.recent_incidents || [];
     if (rows.length) latestIncidentId = rows[0].incident_id;
-    if (note) note.textContent = 'Showing latest ' + rows.length + ' records';
+    var q = incidentFilterText.trim().toLowerCase();
+    var shown = q ? rows.filter(function (r) {
+      return [r.incident_id, r.defect, r.context, r.action_taken, r.outcome, r.validity_status]
+        .join(' ').toLowerCase().indexOf(q) !== -1;
+    }) : rows;
+    if (note) note.textContent = q
+      ? 'Showing ' + shown.length + ' of ' + rows.length + ' records (filter: "' + incidentFilterText.trim() + '")'
+      : 'Showing latest ' + rows.length + ' records';
     if (!tbody) return;
-    tbody.innerHTML = rows.map(function (r) {
+    tbody.innerHTML = shown.map(function (r) {
       return '<tr class="h-11 hover:bg-surface-container-low/50 transition-colors">' +
         '<td class="px-space-md font-label-md text-label-md font-bold text-secondary">' +
           '<span class="cursor-pointer hover:underline" data-incident="' + esc(r.incident_id) + '">' + esc(r.incident_id) + '</span></td>' +
@@ -374,6 +393,7 @@
       wireActions();
       wireForms();
       wireMemoryFilter();
+      wireIncidentFilter();
       return;
     }
     var degraded = !H.hindsightOk(health);
@@ -386,6 +406,7 @@
       renderAttention(dash);
       renderLearning(dash);
       renderMemory(activity, degraded);
+      lastDash = dash;
       renderIncidents(dash);
       renderRecommendation(latest);
     } catch (err) {
@@ -394,6 +415,7 @@
     wireActions();
     wireForms();
     wireMemoryFilter();
+    wireIncidentFilter();
   }
 
   if (document.readyState === 'loading') {
