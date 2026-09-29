@@ -308,14 +308,11 @@
       wireIncidentFilter();
       return;
     }
-    var degraded = !H.hindsightOk(health);
     try {
       var dash = await api.dashboard();
-      var activity = await api.memoryActivity(50).catch(function () { return []; });
       var latest = await api.latestRecommendation().catch(function () { return null; });
       renderAttention(dash);
       renderStory();
-      renderMemory(activity, degraded);
       lastDash = dash;
       renderIncidents(dash);
       renderRecommendation(latest);

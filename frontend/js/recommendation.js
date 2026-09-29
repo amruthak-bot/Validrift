@@ -46,15 +46,22 @@
     return d[0] || alts[0];
   }
 
-  function renderStep2() {
-    var V = window.Validrift;
-    var ev = rec.evaluation || {};
+  function currentCounts() {
+    // GET /recommendations/{id} does not persist the evaluation snapshot, so
+    // derive current-context counts from supporting_evidence when needed.
+    var ev = (rec && rec.evaluation) || {};
     var s = ev.current_successes, f = ev.current_failures;
     if (s == null && f == null) {
-      var sup = rec.supporting_evidence || [];
+      var sup = (rec && rec.supporting_evidence) || [];
       s = sup.filter(function (e) { return e.outcome === "SUCCESS"; }).length;
       f = sup.filter(function (e) { return e.outcome === "FAILURE" || e.outcome === "FAILED"; }).length;
     }
+    return { s: s || 0, f: f || 0 };
+  }
+
+  function renderStep2() {
+    var V = window.Validrift;
+    var cf = currentCounts(), s = cf.s, f = cf.f;
     var ctx = incident ? ctxLabel({ material: incident.material, recipe: incident.recipe }) : "Film-B / R11";
     setText("fix-name", rec.recommended_fix);
     document.querySelector('[data-r="status-chip"]').innerHTML = V.statusChip(rec.validity_status);
@@ -89,11 +96,12 @@
   }
 
   function enterStep3() {
-    if (rec && rec.evaluation) {
+    if (rec) {
+      var cf = currentCounts();
       beforeSnapshot = {
         status: rec.validity_status,
-        successes: rec.evaluation.current_successes || 0,
-        failures: rec.evaluation.current_failures || 0
+        successes: cf.s,
+        failures: cf.f
       };
     }
     selectedOutcome = guided ? "SUCCESS" : null;
