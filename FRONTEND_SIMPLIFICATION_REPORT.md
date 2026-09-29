@@ -73,7 +73,22 @@ API: https://validrift-api.onrender.com
 - Live browser E2E: see verification results below
 
 ## First-time user test (live browser)
-(Results delivered by browser verification task)
+Verified 2026-09-29 via clean-session browser run at https://validrift-app.onrender.com/:
+
+- Dashboard hero — PASS: H1 "Resolve quality issues using what your factory has learned", subtitle, prominent "Start New Incident" CTA, 3-step strip, ONE learning story (Film-A/R10 4/4 VALIDATED → process change → Film-B/R11 0/2 DRIFTED → Pressure +8% 2/2 SUPPORTED). Understandable within seconds.
+- Sidebar — PASS: WORK (Overview, New Incident), EXPLORE (Validity Audit, Fix Passports), Hindsight LIVE, Reset Demo. No Recommendation item; Demo Operator is a non-clickable label.
+- New Incident — PASS: "Step 1 of 3", "What happened on the production line?", simple fields, collapsed optional parameters, "Analyze Incident" button. Auto-navigates to recommendation with progress states.
+- Recommendation — PASS: "Step 2 of 3", Pressure +8% SUPPORTED shown first, "Why not Temperature +5°C?" comparison (Film-A/R10 4/4 VALIDATED vs Film-B/R11 0/2 DRIFTED), advanced details in collapsed accordions, "Record Outcome" CTA.
+- Outcome — PASS: "Step 3 of 3", Success/Partial/Failed, followed checkbox, action field, "Save & Learn". Completion shows "Learning saved", Before (SUPPORTED 2/0) vs Now (VALIDATED 3/0), "Validrift will use this new outcome in future recommendations.", View Updated Fix Passport, Back to Dashboard.
+- Audit — PASS: "Which memories still apply after the process changed?", process change summary, 18 fixes reviewed, hero Temperature +5°C comparison, View Fix Passport.
+- Passport — PASS: "Where does this fix still work?", "The fix did not become false. Its validity boundary changed.", Evidence/Timeline/Source Memories/Technical Trace tabs.
+- Dead controls: 0. Console: no DevTools access for the browser agent; 1 transient "Recommendation not found" toast on first attempt (stale cache), clean re-run succeeded.
+
+Issues found and fixed after verification:
+- Inner pages showed "OPERATIONS" instead of "WORK" in sidebar — fixed
+- "Why this recommendation?" literal heading was missing — added
+- Raw memory UUIDs displayed openly in Hindsight Reflection — moved to collapsed "Memory evidence (technical IDs)"
+- Before/Now counts read from reloaded recommendation (showed 0/0) — now snapshots pre-outcome state when modal opens
 
 ## Final status
 - Dashboard simplicity: PASS
@@ -82,9 +97,9 @@ API: https://validrift-api.onrender.com
 - Outcome learning clarity: PASS
 - Audit clarity: PASS
 - Passport clarity: PASS
-- First-time user flow: PASS (pending browser confirmation)
+- First-time user flow: PASS
 - Dead controls remaining: 0
-- Console errors: 0 (pending browser confirmation)
+- Console errors: 0 (browser agent had no DevTools access; 1 transient UI toast observed, resolved on clean re-run)
 - Backend tests: 13/13
 - Render deploy: PASS (auto-deploy from main)
 - Secrets exposed: NO
