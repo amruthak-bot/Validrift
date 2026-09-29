@@ -244,12 +244,12 @@ Seal peel test verified at 15.2 N/15mm. Resolved in 4 minutes with continuous ru
 </div>
 <!-- 5. PROGRESSIVE DISCLOSURE ACCORDIONS (COLLAPSED BY DEFAULT) -->
 <div class="flex flex-col gap-space-sm">
-<!-- Accordion 1: Technical Decision Trace (5-Stage Pipeline) -->
+<!-- Accordion 1: How Validrift decided -->
 <div class="rounded-xl bg-surface-container-lowest shadow-sm border border-surface-container overflow-hidden">
 <button class="w-full p-space-md flex items-center justify-between text-left hover:bg-surface-container-low/50 transition-colors cursor-pointer" onclick="toggleAccordion('trace-accordion', 'trace-icon')" type="button">
 <div class="flex items-center gap-space-sm">
 <span class="material-symbols-outlined text-secondary text-[20px]">account_tree</span>
-<span class="font-headline-sm text-headline-sm font-bold text-on-surface">Technical Decision Trace (5-Stage Pipeline)</span>
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">How Validrift decided</span>
 <span class="font-label-sm text-label-sm text-on-surface-variant font-mono" data-rec="trace-id">TRACE: TR-9428-R11</span>
 </div>
 <span class="material-symbols-outlined text-[20px] text-on-surface-variant transition-transform duration-200" id="trace-icon">expand_more</span>
@@ -299,12 +299,12 @@ Seal peel test verified at 15.2 N/15mm. Resolved in 4 minutes with continuous ru
 </div>
 </div>
 </div>
-<!-- Accordion 2: Before vs After Persistent Memory -->
+<!-- Accordion 2: Before vs after: generic vs context-aware -->
 <div class="rounded-xl bg-surface-container-lowest shadow-sm border border-surface-container overflow-hidden">
 <button class="w-full p-space-md flex items-center justify-between text-left hover:bg-surface-container-low/50 transition-colors cursor-pointer" onclick="toggleAccordion('comparison-accordion', 'comparison-icon')" type="button">
 <div class="flex items-center gap-space-sm">
 <span class="material-symbols-outlined text-secondary text-[20px]">compare</span>
-<span class="font-headline-sm text-headline-sm font-bold text-on-surface">Before vs After Persistent Memory</span>
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">Before vs after: generic vs context-aware</span>
 <span class="font-label-sm text-label-sm text-on-surface-variant">Generic vs. Context-Aware Comparison</span>
 </div>
 <span class="material-symbols-outlined text-[20px] text-on-surface-variant transition-transform duration-200" id="comparison-icon">expand_more</span>
@@ -356,13 +356,13 @@ Deterministic memory indexing isolates parameter validity boundaries, eliminatin
 </div>
 </div>
 </div>
-<!-- Accordion 3: Ground-Truth Hindsight Memories -->
+<!-- Accordion 3: Memory evidence -->
 <div class="rounded-xl bg-surface-container-lowest shadow-sm border border-surface-container overflow-hidden">
 <button class="w-full p-space-md flex items-center justify-between text-left hover:bg-surface-container-low/50 transition-colors cursor-pointer" onclick="toggleAccordion('memories-accordion', 'memories-icon')" type="button">
 <div class="flex items-center gap-space-sm">
 <span class="material-symbols-outlined text-secondary text-[20px]">database</span>
-<span class="font-headline-sm text-headline-sm font-bold text-on-surface">Ground-Truth Hindsight Memories</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">Full Historical Audit Log (4 records)</span>
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">Memory evidence</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Supporting records (4 records)</span>
 </div>
 <span class="material-symbols-outlined text-[20px] text-on-surface-variant transition-transform duration-200" id="memories-icon">expand_more</span>
 </button>
@@ -436,45 +436,40 @@ Deterministic memory indexing isolates parameter validity boundaries, eliminatin
 <span class="font-label-sm text-label-sm text-secondary">Sealer-02 | Film-B | R11</span>
 </div>
 <form class="flex flex-col gap-space-md" id="record-outcome-form">
+<div class="font-headline-sm text-headline-sm font-bold text-on-surface">Did the recommendation work?</div>
 <div class="flex flex-col gap-1">
-<label class="font-label-sm text-label-sm text-on-surface-variant uppercase font-semibold">Immediate Execution Result</label>
 <div class="grid grid-cols-3 gap-space-sm">
 <label class="flex items-center gap-2 p-2.5 rounded bg-surface-container-low hover:bg-surface-container cursor-pointer transition-colors">
 <input checked="" class="text-secondary focus:ring-secondary" name="outcome" type="radio" value="SUCCESS"/>
-<div class="flex flex-col">
-<span class="font-body-md text-body-md font-semibold text-on-surface">Resolved (Success)</span>
-<span class="font-label-sm text-label-sm text-on-tertiary-container">Seal tensile &gt;12.5 N</span>
-</div>
-</label>
-<label class="flex items-center gap-2 p-2.5 rounded bg-surface-container-low hover:bg-surface-container cursor-pointer transition-colors">
-<input class="text-secondary focus:ring-secondary" name="outcome" type="radio" value="FAILURE"/>
-<div class="flex flex-col">
-<span class="font-body-md text-body-md font-semibold text-on-surface">Unresolved (Fail)</span>
-<span class="font-label-sm text-label-sm text-error">Weak seal persists</span>
-</div>
+<span class="font-body-md text-body-md font-semibold text-on-surface">Success</span>
 </label>
 <label class="flex items-center gap-2 p-2.5 rounded bg-surface-container-low hover:bg-surface-container cursor-pointer transition-colors">
 <input class="text-secondary focus:ring-secondary" name="outcome" type="radio" value="PARTIAL IMPROVEMENT"/>
-<div class="flex flex-col">
 <span class="font-body-md text-body-md font-semibold text-on-surface">Partial Improvement</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">Better, not fully resolved</span>
-</div>
+</label>
+<label class="flex items-center gap-2 p-2.5 rounded bg-surface-container-low hover:bg-surface-container cursor-pointer transition-colors">
+<input class="text-secondary focus:ring-secondary" name="outcome" type="radio" value="FAILURE"/>
+<span class="font-body-md text-body-md font-semibold text-on-surface">Failed</span>
 </label>
 </div>
 </div>
+<label class="flex items-center gap-2 font-body-md text-body-md text-on-surface cursor-pointer">
+<input checked class="text-secondary focus:ring-secondary rounded" name="followed" type="checkbox"/>
+<span>Recommendation followed?</span>
+</label>
 <div class="flex flex-col gap-1">
-<label class="font-label-sm text-label-sm text-on-surface-variant uppercase font-semibold">Observed Seal Strength (N/15mm)</label>
-<input class="w-full h-9 px-space-sm rounded bg-surface-container-low text-on-surface font-label-md text-label-md focus:bg-surface-container-lowest focus:outline-none border border-surface-container" step="0.1" type="number" value="15.2"/>
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase font-semibold" for="os-action">Action actually taken</label>
+<input id="os-action" name="action_taken" class="w-full h-9 px-space-sm rounded bg-surface-container-low text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:outline-none border border-surface-container" type="text" placeholder="e.g. Pressure +8%"/>
 </div>
 <div class="flex flex-col gap-1">
-<label class="font-label-sm text-label-sm text-on-surface-variant uppercase font-semibold">Operator Audit Note</label>
-<textarea class="w-full p-space-sm rounded bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:bg-surface-container-lowest focus:outline-none border border-surface-container" placeholder="Confirm batch release or secondary inspection notes..." rows="2"></textarea>
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase font-semibold" for="os-notes">Notes <span class="normal-case font-normal">(optional)</span></label>
+<textarea id="os-notes" class="w-full p-space-sm rounded bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:bg-surface-container-lowest focus:outline-none border border-surface-container" placeholder="Anything worth remembering…" rows="2"></textarea>
 </div>
 <div class="pt-space-sm flex items-center justify-end gap-space-sm">
 <button class="px-space-md py-1.5 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-body-md text-body-md font-medium transition-colors cursor-pointer" id="cancel-modal-btn" type="button">
 Cancel
 </button>
-<button class="px-space-md py-1.5 rounded bg-secondary hover:bg-secondary-container text-on-secondary font-body-md text-body-md font-semibold transition-colors cursor-pointer" id="submit-modal-btn" type="submit">Save Outcome &amp; Learn</button>
+<button class="px-space-md py-1.5 rounded bg-secondary hover:bg-secondary-container text-on-secondary font-body-md text-body-md font-semibold transition-colors cursor-pointer" id="submit-modal-btn" type="submit">Save &amp; Learn</button>
 </div>
 </form>
 <div id="outcome-success" class="hidden">
@@ -482,9 +477,20 @@ Cancel
 <div class="p-space-md rounded-xl bg-surface-container-low border border-surface-container flex flex-col gap-space-sm items-center text-center">
 <span class="material-symbols-outlined text-on-tertiary-container text-[36px]">check_circle</span>
 <div class="font-headline-md text-headline-md font-bold text-on-surface">Learning saved</div>
-<div class="font-body-md text-body-md text-on-surface"><span class="font-bold" data-os="os-fix"></span> now stands at:</div>
-<div class="font-body-sm text-body-sm text-on-surface-variant" data-os="os-counts"></div>
-<div data-os="os-status"></div>
+<div class="font-body-lg text-body-lg font-bold text-on-surface" data-os="os-fix"></div>
+<div class="grid grid-cols-2 gap-space-sm w-full text-left">
+<div class="rounded-lg bg-surface-container-lowest border border-outline-variant/30 p-space-sm">
+<div class="font-label-sm text-label-sm uppercase tracking-wider font-bold text-on-surface-variant">Before</div>
+<div class="mt-1" data-os="os-before-status"></div>
+<div class="font-body-sm text-body-sm text-on-surface-variant mt-1" data-os="os-before-counts"></div>
+</div>
+<div class="rounded-lg bg-surface-container-lowest border border-secondary/30 p-space-sm">
+<div class="font-label-sm text-label-sm uppercase tracking-wider font-bold text-on-surface-variant">Now</div>
+<div class="mt-1" data-os="os-status"></div>
+<div class="font-body-sm text-body-sm text-on-surface-variant mt-1" data-os="os-counts"></div>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Validrift will use this new outcome in future recommendations.</p>
 </div>
 <div class="flex flex-col sm:flex-row gap-space-sm">
 <a data-os="os-passport" href="fix-passport.html" class="flex-1 text-center px-space-md py-2 rounded bg-secondary text-on-secondary font-body-md font-semibold hover:bg-secondary-container transition-colors">View Updated Fix Passport</a>

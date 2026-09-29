@@ -217,7 +217,13 @@
   function resetOutcomeModal() {
     var form = document.getElementById("record-outcome-form");
     var panel = document.getElementById("outcome-success");
-    if (form) form.style.display = "";
+    if (form) {
+      form.style.display = "";
+      var actionEl = form.querySelector("#os-action");
+      if (actionEl && rec) actionEl.value = rec.recommended_fix || "";
+      var followedEl = form.querySelector('input[name="followed"]');
+      if (followedEl) followedEl.checked = true;
+    }
     if (panel) panel.classList.add("hidden");
   }
 
@@ -229,6 +235,12 @@
     panel.classList.remove("hidden");
     setOsText("os-fix", rec ? rec.recommended_fix : "");
     setOsText("os-counts", "Updating…");
+    // Before: snapshot from the recommendation's pre-outcome evaluation
+    var bev = rec && rec.evaluation ? rec.evaluation : {};
+    var bs = bev.current_successes || 0, bf = bev.current_failures || 0;
+    setOsText("os-before-counts", bs + (bs === 1 ? " success" : " successes") + " / " + bf + (bf === 1 ? " failure" : " failures"));
+    var bst = document.querySelector('[data-os="os-before-status"]');
+    if (bst && rec) bst.innerHTML = window.Validrift.statusChip(rec.validity_status || "—");
     var ctxKey = incident ? (incident.material + "/" + incident.recipe) : "";
     window.ValidriftAPI.fixPassport(rec.recommended_fix).then(function (pp) {
       var contexts = pp.contexts || [];
@@ -261,13 +273,17 @@
       ev.preventDefault();
       var checked = form.querySelector('input[name="outcome"]:checked');
       var outcome = checked ? checked.value : "SUCCESS";
-      var notesEl = form.querySelector("textarea");
+      var notesEl = form.querySelector("#os-notes");
       var notes = notesEl ? notesEl.value.trim() : "";
+      var followedEl = form.querySelector('input[name="followed"]');
+      var followed = followedEl ? followedEl.checked : true;
+      var actionEl = form.querySelector("#os-action");
+      var actionTaken = actionEl && actionEl.value.trim() ? actionEl.value.trim() : (rec ? rec.recommended_fix : "");
       var btn = document.getElementById("submit-modal-btn");
       if (btn) { btn.disabled = true; btn.textContent = "Saving…"; }
       window.ValidriftAPI.recordOutcome(recId, {
-          followed: true,
-          action_taken: rec ? rec.recommended_fix : "",
+          followed: followed,
+          action_taken: actionTaken,
           result: outcome,
           notes: notes
         })
@@ -282,7 +298,7 @@
           if (typeof toggleModal === "function") toggleModal(false);
         })
         .finally(function () {
-          if (btn) { btn.disabled = false; btn.textContent = "Save Outcome & Learn"; }
+          if (btn) { btn.disabled = false; btn.textContent = "Save & Learn"; }
         });
     });
   }
