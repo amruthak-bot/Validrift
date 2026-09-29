@@ -313,7 +313,6 @@
       var latest = await api.latestRecommendation().catch(function () { return null; });
       renderAttention(dash);
       renderStory();
-      lastDash = dash;
       renderIncidents(dash);
       renderRecommendation(latest);
     } catch (err) {
