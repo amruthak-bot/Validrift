@@ -214,9 +214,18 @@
     if (el && text != null) el.textContent = text;
   }
 
+  var beforeSnapshot = null;
   function resetOutcomeModal() {
     var form = document.getElementById("record-outcome-form");
     var panel = document.getElementById("outcome-success");
+    // Snapshot pre-outcome state for the Before/Now comparison
+    if (rec && rec.evaluation) {
+      beforeSnapshot = {
+        status: rec.validity_status,
+        successes: rec.evaluation.current_successes || 0,
+        failures: rec.evaluation.current_failures || 0
+      };
+    }
     if (form) {
       form.style.display = "";
       var actionEl = form.querySelector("#os-action");
@@ -235,12 +244,12 @@
     panel.classList.remove("hidden");
     setOsText("os-fix", rec ? rec.recommended_fix : "");
     setOsText("os-counts", "Updating…");
-    // Before: snapshot from the recommendation's pre-outcome evaluation
-    var bev = rec && rec.evaluation ? rec.evaluation : {};
-    var bs = bev.current_successes || 0, bf = bev.current_failures || 0;
+    // Before: use the snapshot captured when the modal opened (pre-outcome)
+    var bs = beforeSnapshot ? beforeSnapshot.successes : 0;
+    var bf = beforeSnapshot ? beforeSnapshot.failures : 0;
     setOsText("os-before-counts", bs + (bs === 1 ? " success" : " successes") + " / " + bf + (bf === 1 ? " failure" : " failures"));
     var bst = document.querySelector('[data-os="os-before-status"]');
-    if (bst && rec) bst.innerHTML = window.Validrift.statusChip(rec.validity_status || "—");
+    if (bst) bst.innerHTML = window.Validrift.statusChip(beforeSnapshot ? beforeSnapshot.status : "—");
     var ctxKey = incident ? (incident.material + "/" + incident.recipe) : "";
     window.ValidriftAPI.fixPassport(rec.recommended_fix).then(function (pp) {
       var contexts = pp.contexts || [];
