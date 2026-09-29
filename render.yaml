@@ -26,7 +26,6 @@ services:
   - type: web
     name: validrift-app
     runtime: static
-    plan: free
     buildCommand: >-
       printf 'window.VALIDRIFT_API_BASE_URL="https://validrift-api.onrender.com/api";'
       > frontend/js/deploy-api.js
