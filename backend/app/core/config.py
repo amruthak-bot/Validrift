@@ -21,6 +21,7 @@ class Settings(BaseSettings):
     hindsight_api_url: str = "https://api.hindsight.vectorize.io"
     hindsight_api_key: str | None = None
     hindsight_bank_id: str = "validrift-demo"
+    hindsight_longterm_tag: str = "validrift-longterm"
     hindsight_recall_budget: str = "mid"
     hindsight_recall_max_tokens: int = 2500
     hindsight_timeout_seconds: float = 60.0

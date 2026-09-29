@@ -4,8 +4,9 @@ from sqlalchemy.orm import Session
 from sqlalchemy import select
 
 from ..core.database import get_db
+from ..core.config import settings
 from ..models import Incident, Intervention, ProcessChange, PlantContext, Recommendation, RecommendationOutcome, MemoryTrace
-from ..schemas import IncidentCreate, InterventionCreate, ProcessChangeCreate, RecommendationRequest, RecommendationOutcomeCreate, AuditRequest
+from ..schemas import IncidentCreate, InterventionCreate, ProcessChangeCreate, RecommendationRequest, RecommendationOutcomeCreate, AuditRequest, MemoryChatRequest
 from ..utils import new_id
 from ..services.hindsight_service import memory_service
 from ..services.recommendation_service import recommend
@@ -158,6 +159,83 @@ async def get_recommendation(payload: RecommendationRequest, db: Session = Depen
         return await recommend(db, payload.incident_id, use_reflect=payload.use_reflect)
     except ValueError as exc:
         raise HTTPException(404, str(exc))
+
+
+@router.post("/memory-chat")
+async def memory_chat(payload: MemoryChatRequest, db: Session = Depends(get_db)):
+    """Ask the plant's long-term memory a question.
+
+    Triggers Hindsight RECALL over a year of recorded incidents/fixes/
+    outcomes (tag: validrift-longterm) plus recent September-2026 context,
+    then returns a grounded REFLECT answer. Nothing here writes to the
+    demo ledger; the primary 3-step flow is untouched.
+    """
+    request_id = new_id("RQ")
+    question = payload.question.strip()
+    if not question:
+        raise HTTPException(400, "question is required")
+    service = memory_service
+    if not service.enabled:
+        return {"ok": False, "answer": None,
+                "message": "Long-term memory is unavailable: Hindsight is disabled on this deployment."}
+    longterm_tag = settings.hindsight_longterm_tag
+
+    lt = await service.recall(db, request_id=request_id, query=question, tags=[longterm_tag])
+    recent = await service.recall(db, request_id=request_id, query=question)
+
+    recent_ctx = ""
+    if recent.results:
+        bits = [(r.get("text") or r.get("content") or "")[:320] for r in recent.results[:5]]
+        bits = [b for b in bits if b]
+        if bits:
+            recent_ctx = ("\nRecent September 2026 records (current context):\n- "
+                          + "\n- ".join(bits))
+
+    # Deterministic process-change history: the exact context shifts that
+    # make old fixes drift. Always available, even if recall misses them.
+    pc_ctx = ""
+    try:
+        pcs = db.execute(select(ProcessChange).order_by(ProcessChange.timestamp.desc()).limit(5)).scalars().all()
+        lines = []
+        for pc in pcs:
+            ch = pc.changes or {}
+            parts = [f"{f}: {v.get('old')} -> {v.get('new')}" for f, v in ch.items()
+                     if isinstance(v, dict)]
+            ts = pc.timestamp.strftime("%Y-%m-%d") if pc.timestamp else "?"
+            lines.append(f"{ts} on {pc.machine}: " + "; ".join(parts)
+                         + (f" ({pc.reason})" if pc.reason else ""))
+        if lines:
+            pc_ctx = "\nKnown process changes:\n- " + "\n- ".join(lines)
+    except Exception:
+        pc_ctx = ""
+
+    context = ("You are Validrift's long-term memory assistant for a packaging plant. "
+               "Answer the operator's question using ONLY the plant's recorded history "
+               "from the past year (incidents, fixes applied, outcomes, process changes). "
+               "Be specific: name fixes, cite timeframes like 'last winter' or 'June 2026', "
+               "and say plainly when the history is thin. "
+               "If asked why a fix stopped working, compare its long-term success pattern "
+               "against the recent records and the known process changes, and name the "
+               "material/supplier/recipe/firmware change if one explains the drift. "
+               "Keep the answer under 150 words." + recent_ctx + pc_ctx)
+    reflection = await service.reflect(db, request_id=request_id, query=question,
+                                       context=context, tags=[longterm_tag], max_tokens=900)
+
+    samples = []
+    for r in (lt.results or [])[:4]:
+        txt = r.get("text") or r.get("content") or ""
+        if txt:
+            samples.append({"id": r.get("id"), "content": txt[:420]})
+
+    return {
+        "ok": True,
+        "question": question,
+        "answer": reflection.get("text"),
+        "longterm_memories_recalled": len(lt.memory_ids),
+        "recent_memories_recalled": len(recent.memory_ids),
+        "memory_ids": lt.memory_ids[:20],
+        "samples": samples,
+    }
 
 
 @router.get("/recommendations/latest")

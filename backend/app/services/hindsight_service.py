@@ -144,7 +144,8 @@ class HindsightService:
             self._trace(db, request_id, MemoryOperation.RECALL, query, started, status="ERROR", details={"error": str(exc)})
             return MemoryRecall([], [], {"error": str(exc)})
 
-    async def reflect(self, db: Session, *, request_id: str, query: str, context: str | None = None) -> dict[str, Any]:
+    async def reflect(self, db: Session, *, request_id: str, query: str, context: str | None = None,
+                      tags: list[str] | None = None, max_tokens: int = 700) -> dict[str, Any]:
         started = time.perf_counter()
         if self.mode == "disabled":
             self._trace(db, request_id, MemoryOperation.REFLECT, query, started, status="DISABLED")
@@ -162,8 +163,8 @@ class HindsightService:
                 query=query,
                 budget="low",
                 context=context,
-                max_tokens=700,
-                tags=["validrift"],
+                max_tokens=max_tokens,
+                tags=tags or ["validrift"],
                 tags_match="any",
                 include_facts=True,
                 fact_types=["world", "experience", "observation"],

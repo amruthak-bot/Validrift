@@ -59,6 +59,10 @@ class AuditRequest(BaseModel):
     include_reflect: bool = True
 
 
+class MemoryChatRequest(BaseModel):
+    question: str = Field(..., min_length=1, max_length=600)
+
+
 class HealthResponse(BaseModel):
     status: str
     database: str

@@ -14,6 +14,7 @@
     "fix-passport": "fix-passport.html",
     "memory-activity": "memory-activity.html",
     "knowledge-map": "knowledge-map.html",
+    "memory-chat": "memory-chat.html",
   };
 
   function go(path, params) {

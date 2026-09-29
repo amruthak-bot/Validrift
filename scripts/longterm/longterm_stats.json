@@ -1,0 +1,26 @@
+{
+ "incidents": 439,
+ "by_defect": {
+  "Wrinkling": 96,
+  "Channel Leak": 42,
+  "Misalignment": 36,
+  "Weak Seal": 79,
+  "Surface Burn": 42,
+  "Surface Damage": 33,
+  "Surface Wrinkle": 48,
+  "Film Misalignment": 30,
+  "Seal Blistering": 33
+ },
+ "by_outcome": {
+  "SUCCESS": 349,
+  "FAILURE": 48,
+  "PARTIAL": 42
+ },
+ "by_era": {
+  "era-1": 182,
+  "era-2": 97,
+  "era-3": 160
+ },
+ "recommendations": 16,
+ "process_changes": 2
+}

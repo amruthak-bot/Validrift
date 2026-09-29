@@ -108,5 +108,8 @@
     },
     resetDemo: function () { return post("/admin/reset-demo", {}); },
     syncHindsight: function () { return post("/admin/sync-hindsight", {}); },
+    memoryChat: function (question) {
+      return post("/memory-chat", { question: question }, { timeoutMs: 120000 });
+    },
   };
 })();
